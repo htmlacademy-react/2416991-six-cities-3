@@ -1,5 +1,6 @@
 import CitiesPanel from '../../components/cities-panel/cities-panel';
 import Header from '../../components/header/header';
+import Map from '../../components/map/map';
 import OfferCard from '../../components/offer-card/offer-card';
 import SortSelector from '../../components/sort-selector/sort-selector';
 import UserPanel from '../../components/user-panel/user-panel';
@@ -37,7 +38,7 @@ function Main({ numberOfOffers, activeCity, currentSortType }: MainProps): JSX.E
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map />
             </div>
           </div>
         </div>
