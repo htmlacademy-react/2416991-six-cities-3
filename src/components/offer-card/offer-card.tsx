@@ -1,15 +1,20 @@
-function OfferCard(): JSX.Element {
+import { OfferCardBlockName } from '../../types/common';
+import CardMark from '../card-mark/card-mark';
+
+type OfferCardProps = {
+  blockClassName?: OfferCardBlockName;
+}
+
+function OfferCard({ blockClassName = 'cities' }: OfferCardProps): JSX.Element {
   return (
-    <article className="cities__card place-card">
-      <div className="place-card__mark">
-        <span>Premium</span>
-      </div>
-      <div className="cities__image-wrapper place-card__image-wrapper">
+    <article className={`${blockClassName}__card place-card`}>
+      <CardMark />
+      <div className={`${blockClassName}__image-wrapper place-card__image-wrapper`}>
         <a href="#">
           <img className="place-card__image" src="img/apartment-03.jpg" width="260" height="200" alt="Place image" />
         </a>
       </div>
-      <div className="place-card__info">
+      <div className={`${blockClassName}__info place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">€180</b>
