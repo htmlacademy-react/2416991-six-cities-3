@@ -1,7 +1,6 @@
 import Header from '../../components/header/header';
-import OfferCard from '../../components/offer-card/offer-card';
+import NearOffers from '../../components/near-offers/near-offers';
 import UserPanel from '../../components/user-panel/user-panel';
-import { OfferCardBlock } from '../../const';
 
 function Offer(): JSX.Element {
   return (
@@ -207,14 +206,7 @@ function Offer(): JSX.Element {
           <section className="offer__map map"></section>
         </section>
         <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-              <OfferCard blockClassName={OfferCardBlock.NEAR_PLACES} />
-              <OfferCard blockClassName={OfferCardBlock.NEAR_PLACES} />
-              <OfferCard blockClassName={OfferCardBlock.NEAR_PLACES} />
-            </div>
-          </section>
+          <NearOffers />
         </div>
       </main>
     </div>

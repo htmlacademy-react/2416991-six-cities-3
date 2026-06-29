@@ -1,4 +1,4 @@
-import { OfferCardBlockName } from './types/common';
+import { BlockName } from './types/common';
 
 export const Setting = {
   NumberOfOffers: 312,
@@ -11,8 +11,10 @@ export const SortType = {
   TopRatedFirst: 'Top rated first',
 } as const;
 
-export const OfferCardBlock: Record<string, OfferCardBlockName> = {
+export const Block: Record<string, BlockName> = {
   CITIES: 'cities',
   FAVORITES: 'favorites',
   NEAR_PLACES: 'near-places',
+  OFFER: 'offer',
+  PLACE_CARD: 'place-card',
 } as const;

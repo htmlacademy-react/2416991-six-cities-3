@@ -2,7 +2,7 @@ import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import OfferCard from '../../components/offer-card/offer-card';
 import UserPanel from '../../components/user-panel/user-panel';
-import { OfferCardBlock } from '../../const';
+import { Block } from '../../const';
 
 function Favorites(): JSX.Element {
   return (
@@ -25,8 +25,8 @@ function Favorites(): JSX.Element {
                   </div>
                 </div>
                 <div className="favorites__places">
-                  <OfferCard blockClassName={OfferCardBlock.FAVORITES} />
-                  <OfferCard blockClassName={OfferCardBlock.FAVORITES} />
+                  <OfferCard blockClassName={Block.FAVORITES} />
+                  <OfferCard blockClassName={Block.FAVORITES} />
                 </div>
               </li>
 

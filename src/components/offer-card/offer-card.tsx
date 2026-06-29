@@ -1,11 +1,12 @@
-import { OfferCardBlockName } from '../../types/common';
-import CardMark from '../card-mark/card-mark';
+import { Block } from '../../const';
+import { BlockName } from '../../types/common';
+import CardMark from '../mark/mark';
 
 type OfferCardProps = {
-  blockClassName?: OfferCardBlockName;
+  blockClassName?: BlockName;
 }
 
-function OfferCard({ blockClassName = 'cities' }: OfferCardProps): JSX.Element {
+function OfferCard({ blockClassName = Block.CITIES }: OfferCardProps): JSX.Element {
   return (
     <article className={`${blockClassName}__card place-card`}>
       <CardMark />
