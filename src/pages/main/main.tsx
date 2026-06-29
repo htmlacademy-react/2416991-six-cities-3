@@ -1,12 +1,15 @@
+import CitiesPanel from '../../components/cities-panel/cities-panel';
 import Header from '../../components/header/header';
 import OfferCard from '../../components/offer-card/offer-card';
 import UserPanel from '../../components/user-panel/user-panel';
+import { City } from '../../types/common';
 
 type MainProps = {
   numberOfOffers: number;
+  activeCity: City;
 };
 
-function Main({ numberOfOffers }: MainProps): JSX.Element {
+function Main({ numberOfOffers, activeCity }: MainProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Header>
@@ -15,42 +18,7 @@ function Main({ numberOfOffers }: MainProps): JSX.Element {
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
-          </section>
-        </div>
+        <CitiesPanel activeCity={activeCity} />
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
