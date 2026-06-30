@@ -1,6 +1,8 @@
 import { Block } from '../../const';
 import { BlockName } from '../../types/common';
-import CardMark from '../mark/mark';
+import Bookmark from '../bookmark/bookmark';
+import Mark from '../mark/mark';
+import Rating from '../rating/rating';
 
 type OfferCardProps = {
   blockClassName?: BlockName;
@@ -9,7 +11,7 @@ type OfferCardProps = {
 function OfferCard({ blockClassName = Block.CITIES }: OfferCardProps): JSX.Element {
   return (
     <article className={`${blockClassName}__card place-card`}>
-      <CardMark />
+      <Mark />
       <div className={`${blockClassName}__image-wrapper place-card__image-wrapper`}>
         <a href="#">
           <img className="place-card__image" src="img/apartment-03.jpg" width="260" height="200" alt="Place image" />
@@ -21,19 +23,9 @@ function OfferCard({ blockClassName = Block.CITIES }: OfferCardProps): JSX.Eleme
             <b className="place-card__price-value">€180</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <Bookmark />
         </div>
-        <div className="place-card__rating rating">
-          <div className="place-card__stars rating__stars">
-            <span style={{ width: '100%' }}></span>
-            <span className="visually-hidden">Rating</span>
-          </div>
-        </div>
+        <Rating starCount={5} />
         <h2 className="place-card__name">
           <a href="#">Nice, cozy, warm big bed apartment</a>
         </h2>

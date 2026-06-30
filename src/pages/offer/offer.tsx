@@ -1,6 +1,11 @@
+import Bookmark from '../../components/bookmark/bookmark';
 import Header from '../../components/header/header';
+import Mark from '../../components/mark/mark';
 import NearOffers from '../../components/near-offers/near-offers';
+import OfferGallery from '../../components/offer-gallery/offer-gallery';
+import Rating from '../../components/rating/rating';
 import UserPanel from '../../components/user-panel/user-panel';
+import { Block } from '../../const';
 
 function Offer(): JSX.Element {
   return (
@@ -11,51 +16,20 @@ function Offer(): JSX.Element {
 
       <main className="page__main page__main--offer">
         <section className="offer">
-          <div className="offer__gallery-container container">
-            <div className="offer__gallery">
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/room.jpg" alt="Photo studio" />
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio" />
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-02.jpg" alt="Photo studio" />
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-03.jpg" alt="Photo studio" />
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/studio-01.jpg" alt="Photo studio" />
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio" />
-              </div>
-            </div>
-          </div>
+          <OfferGallery />
           <div className="offer__container container">
             <div className="offer__wrapper">
-              <div className="offer__mark">
-                <span>Premium</span>
-              </div>
+              <Mark blockClassName={Block.OFFER} />
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
                   Beautiful &amp; luxurious studio at great location
                 </h1>
-                <button className="offer__bookmark-button button" type="button">
-                  <svg className="offer__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <Bookmark block={Block.OFFER} isSmall={false} />
               </div>
-              <div className="offer__rating rating">
-                <div className="offer__stars rating__stars">
-                  <span style={{ width: '80%' }}></span>
-                  <span className="visually-hidden">Rating</span>
-                </div>
-                <span className="offer__rating-value rating__value">4.8</span>
-              </div>
+
+              {/*!   */}
+              <Rating block={Block.OFFER} starCount={4} />
+
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
                   Apartment
