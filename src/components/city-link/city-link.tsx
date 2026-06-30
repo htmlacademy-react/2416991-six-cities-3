@@ -1,0 +1,17 @@
+import { City } from '../../types/common';
+
+type CityLinkProps = {
+  city: City;
+};
+
+function CityLink({ city }: CityLinkProps): JSX.Element {
+  return (
+    <div className="locations__item">
+      <a className="locations__item-link" href="#">
+        <span>{city}</span>
+      </a>
+    </div>
+  );
+}
+
+export default CityLink;
