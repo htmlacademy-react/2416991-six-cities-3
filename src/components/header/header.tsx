@@ -1,8 +1,11 @@
-type HeaderProps = {
-  children?: JSX.Element;
-};
+import { useLocation } from 'react-router-dom';
+import UserPanel from '../user-panel/user-panel';
+import { AppRoute } from '../../const/infrastructure';
 
-function Header({children}: HeaderProps): JSX.Element {
+function Header(): JSX.Element {
+  const location = useLocation();
+  const isLoginPage = location.pathname === AppRoute.Login;
+
   return (
     <header className="header">
       <div className="container">
@@ -12,8 +15,7 @@ function Header({children}: HeaderProps): JSX.Element {
               <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
             </a>
           </div>
-
-          {children}
+          {!isLoginPage && <UserPanel />}
         </div>
       </div>
     </header>

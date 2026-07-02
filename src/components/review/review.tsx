@@ -1,4 +1,4 @@
-import { Block } from '../../const';
+import { Block } from '../../const/common';
 import Rating from '../rating/rating';
 
 function Review(): JSX.Element {
