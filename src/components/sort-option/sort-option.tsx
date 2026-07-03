@@ -1,4 +1,4 @@
-import { SortType } from '../../const';
+import { SortType } from '../../const/common';
 
 type SortOptionProps = {
   title: typeof SortType[keyof typeof SortType];

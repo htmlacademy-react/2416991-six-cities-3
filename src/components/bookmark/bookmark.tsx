@@ -1,4 +1,4 @@
-import { Block } from '../../const';
+import { Block } from '../../const/common';
 import { BlockName } from '../../types/common';
 
 type BookmarkProps = {

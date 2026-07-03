@@ -1,4 +1,4 @@
-import { SortType } from '../../const';
+import { SortType } from '../../const/common';
 import SortOption from '../sort-option/sort-option';
 
 type SortSelectorProps = {

@@ -1,5 +1,4 @@
-import { BlockName } from './types/common';
-
+//! temp
 export const Setting = {
   NumberOfOffers: 312,
 } as const;
@@ -11,7 +10,7 @@ export const SortType = {
   TopRatedFirst: 'Top rated first',
 } as const;
 
-export const Block: Record<string, BlockName> = {
+export const Block = {
   CITIES: 'cities',
   FAVORITES: 'favorites',
   NEAR_PLACES: 'near-places',
