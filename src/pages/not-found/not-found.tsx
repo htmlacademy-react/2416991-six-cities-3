@@ -65,7 +65,6 @@ function NotFound(): JSX.Element {
         Вернуться на главную
       </Link>
     </section>
-
   );
 }
 

@@ -6,8 +6,12 @@ import Rating from '../../components/rating/rating';
 import ReviewForm from '../../components/review-form/review-form';
 import Review from '../../components/review/review';
 import { Block } from '../../const/common';
+import { AuthorizationStatus } from '../../const/infrastructure';
+import { getAuthStatus } from '../../mocks/mock';
 
 function Offer(): JSX.Element {
+  const authorizationStatus = getAuthStatus();
+  const isAuth = authorizationStatus === AuthorizationStatus.Auth;
   return (
     <>
       <section className="offer">
@@ -102,7 +106,7 @@ function Offer(): JSX.Element {
                 {/* will be map of reviews */}
                 <Review />
               </ul>
-              <ReviewForm />
+              {isAuth && <ReviewForm />}
             </section>
           </div>
         </div>
