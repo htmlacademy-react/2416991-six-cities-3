@@ -3,12 +3,14 @@ import Map from '../../components/map/map';
 import OfferCard from '../../components/offer-card/offer-card';
 import SortSelector from '../../components/sort-selector/sort-selector';
 import { SortType } from '../../const/common';
-import { City } from '../../types/common';
+import { CityName } from '../../types/common';
+import { OfferPreview } from '../../types/offer';
 
 type MainProps = {
   numberOfOffers: number;
-  activeCity: City;
+  activeCity: CityName;
   currentSortType: typeof SortType[keyof typeof SortType];
+  offers: OfferPreview[];
 };
 
 function Main({ numberOfOffers, activeCity, currentSortType }: MainProps): JSX.Element {

@@ -1,4 +1,6 @@
-export const reviews = [
+import { Review } from '../types/offer';
+
+export const reviews: { id: string; reviews: Review[] }[] = [
   {
     'id': 'b13fcd51-1658-4b75-a06c-554264221f44',
     reviews: []

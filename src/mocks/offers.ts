@@ -1,6 +1,6 @@
 import { type Offer, type OfferPreview } from '../types/offer';
 
-export const offersPreview: OfferPreview[] = [
+export const previewOffers: OfferPreview[] = [
   {
     'id': 'b13fcd51-1658-4b75-a06c-554264221f44',
     'title': 'The Joshua Tree House',

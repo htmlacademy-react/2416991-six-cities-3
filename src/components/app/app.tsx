@@ -5,23 +5,25 @@ import Favorites from '../../pages/favorites/favorites';
 import Login from '../../pages/login/login';
 import Main from '../../pages/main/main';
 import Offer from '../../pages/offer/offer';
-import { City } from '../../types/common';
+import { CityName } from '../../types/common';
 import AuthGuard from '../auth-guard/auth-guard';
 import Layout from '../layout/layout';
 import NotFound from '../../pages/not-found/not-found';
+import { OfferPreview } from '../../types/offer';
 
 type AppProps = {
   numberOfOffers: number;
+  previewOffers: OfferPreview[];
 }
 
-const tempActiveCity: City = 'Dusseldorf';
+const tempActiveCity: CityName = 'Dusseldorf';
 
-function App({ numberOfOffers }: AppProps): JSX.Element {
+function App({ numberOfOffers, previewOffers }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Root} element={<Layout />} >
-          <Route index element={<Main numberOfOffers={numberOfOffers} activeCity={tempActiveCity} currentSortType={SortType.Popular} />} />
+          <Route index element={<Main numberOfOffers={numberOfOffers} activeCity={tempActiveCity} currentSortType={SortType.Popular}, offers={previewOffers} />} />
           <Route path={AppRoute.Login} element={
             <AuthGuard expectedStatus={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Root}>
               <Login />
