@@ -12,4 +12,8 @@
   flex-grow: 1;
 }
 
-
+/* isPro для аватарки в отзыве */
+.reviews__avatar-wrapper--pro {
+  outline: 3px solid #ff9000;
+  border-radius: 50%;
+}

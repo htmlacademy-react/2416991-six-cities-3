@@ -1,119 +1,54 @@
-import Bookmark from '../../components/bookmark/bookmark';
-import Mark from '../../components/mark/mark';
+import { useParams } from 'react-router-dom';
 import NearOffers from '../../components/near-offers/near-offers';
+import OfferFeatures from '../../components/offer-features/offer-features';
 import OfferGallery from '../../components/offer-gallery/offer-gallery';
+import OfferGoods from '../../components/offer-goods/offer-goods';
+import OfferHeading from '../../components/offer-heading/offer-heading';
+import OfferHost from '../../components/offer-host/offer-host';
+import OfferPrice from '../../components/offer-price/offer-price';
+import OfferReviews from '../../components/offer-reviews/offer-reviews';
 import Rating from '../../components/rating/rating';
-import ReviewForm from '../../components/review-form/review-form';
-import Review from '../../components/review/review';
 import { Block } from '../../const/common';
-import { AuthorizationStatus } from '../../const/infrastructure';
-import { getAuthStatus } from '../../mocks/mock';
+import { getOfferById } from '../../mocks/mock';
+import { type Offer } from '../../types/offer';
+import { previewOffers } from '../../mocks/offers';
 
 function Offer(): JSX.Element {
-  const authorizationStatus = getAuthStatus();
-  const isAuth = authorizationStatus === AuthorizationStatus.Auth;
+  const nearOffers = previewOffers.slice(0, 3);
+  const { id } = useParams<{ id: string }>() as { id: string }; //! mock
+  const offer = getOfferById(id) as Offer;
+  // console.log(offer);
   return (
     <>
       <section className="offer">
-        <OfferGallery />
+        <OfferGallery images={offer.images} />
         <div className="offer__container container">
           <div className="offer__wrapper">
-            <Mark blockClassName={Block.OFFER} />
-            <div className="offer__name-wrapper">
-              <h1 className="offer__name">
-                Beautiful &amp; luxurious studio at great location
-              </h1>
-              <Bookmark block={Block.OFFER} isSmall={false} />
-            </div>
 
-            <Rating block={Block.OFFER} starCount={4} />
+            <OfferHeading title={offer.title} isFavorite={offer.isFavorite} isPremium={offer.isPremium} />
 
-            <ul className="offer__features">
-              <li className="offer__feature offer__feature--entire">
-                Apartment
-              </li>
-              <li className="offer__feature offer__feature--bedrooms">
-                3 Bedrooms
-              </li>
-              <li className="offer__feature offer__feature--adults">
-                Max 4 adults
-              </li>
-            </ul>
-            <div className="offer__price">
-              <b className="offer__price-value">&euro;120</b>
-              <span className="offer__price-text">&nbsp;night</span>
-            </div>
-            <div className="offer__inside">
-              <h2 className="offer__inside-title">What&apos;s inside</h2>
-              <ul className="offer__inside-list">
-                <li className="offer__inside-item">
-                  Wi-Fi
-                </li>
-                <li className="offer__inside-item">
-                  Washing machine
-                </li>
-                <li className="offer__inside-item">
-                  Towels
-                </li>
-                <li className="offer__inside-item">
-                  Heating
-                </li>
-                <li className="offer__inside-item">
-                  Coffee machine
-                </li>
-                <li className="offer__inside-item">
-                  Baby seat
-                </li>
-                <li className="offer__inside-item">
-                  Kitchen
-                </li>
-                <li className="offer__inside-item">
-                  Dishwasher
-                </li>
-                <li className="offer__inside-item">
-                  Cabel TV
-                </li>
-                <li className="offer__inside-item">
-                  Fridge
-                </li>
-              </ul>
-            </div>
-            <div className="offer__host">
-              <h2 className="offer__host-title">Meet the host</h2>
-              <div className="offer__host-user user">
-                <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                  <img className="offer__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
-                </div>
-                <span className="offer__user-name">
-                  Angelina
-                </span>
-                <span className="offer__user-status">
-                  Pro
-                </span>
-              </div>
-              <div className="offer__description">
-                <p className="offer__text">
-                  A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                </p>
-                <p className="offer__text">
-                  An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
-                </p>
-              </div>
-            </div>
-            <section className="offer__reviews reviews">
-              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-              <ul className="reviews__list">
-                {/* will be map of reviews */}
-                <Review />
-              </ul>
-              {isAuth && <ReviewForm />}
-            </section>
+            <Rating block={Block.OFFER} rating={offer.rating} />
+
+            <OfferFeatures type={offer.type} bedroomsQuantity={offer.bedrooms} maxAdults={offer.maxAdults} />
+
+            <OfferPrice price={offer.price} />
+
+            <OfferGoods goods={offer.goods} />
+
+            <OfferHost
+              name={offer.host.name}
+              avatarUrl={offer.host.avatarUrl}
+              isPro={offer.host.isPro}
+              description={offer.description}
+            />
+
+            <OfferReviews id={id} />
           </div>
         </div>
         <section className="offer__map map"></section>
       </section>
       <div className="container">
-        <NearOffers />
+        <NearOffers offers={nearOffers} />
       </div>
     </>
   );

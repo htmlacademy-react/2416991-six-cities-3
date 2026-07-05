@@ -21,7 +21,7 @@ export const previewOffers: OfferPreview[] = [
       'zoom': 16
     },
     'isFavorite': false,
-    'isPremium': false,
+    'isPremium': true,
     'rating': 2
   },
   {
@@ -44,7 +44,7 @@ export const previewOffers: OfferPreview[] = [
       'zoom': 16
     },
     'isFavorite': false,
-    'isPremium': false,
+    'isPremium': true,
     'rating': 2
   },
   {
@@ -139,7 +139,7 @@ export const offers: Offer[] = [
       'name': 'Angelina',
       'avatarUrl': 'https://15.design.htmlacademy.pro/static/host/avatar-angelina.jpg'
     },
-    'isPremium': false,
+    'isPremium': true,
     'isFavorite': false,
     'rating': 2,
     'bedrooms': 2,
@@ -191,7 +191,7 @@ export const offers: Offer[] = [
       'name': 'Angelina',
       'avatarUrl': 'https://15.design.htmlacademy.pro/static/host/avatar-angelina.jpg'
     },
-    'isPremium': false,
+    'isPremium': true,
     'isFavorite': false,
     'rating': 2,
     'bedrooms': 1,

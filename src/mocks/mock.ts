@@ -4,7 +4,7 @@ import { offers } from './offers';
 import { reviews } from './reviews';
 
 //! Auth NoAuth Unknown;
-const authorizationStatus = AuthorizationStatus.NoAuth;
+const authorizationStatus = AuthorizationStatus.Auth;
 
 export const getAuthStatus = (): (typeof AuthorizationStatus[keyof typeof AuthorizationStatus]) => authorizationStatus;
 

@@ -1,41 +1,43 @@
-import { Outlet, useLocation } from 'react-router-dom';
-import { AppRoute } from '../../const/infrastructure';
+import { matchPath, Outlet, useLocation } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../../const/infrastructure';
+import { getAuthStatus } from '../../mocks/mock';
 import Footer from '../footer/footer';
 import Header from '../header/header';
-import { getAuthStatus } from '../../mocks/mock';
-import { AuthorizationStatus } from '../../const/infrastructure';
 
 const getContainerModifications = (pathname: string): string => {
-  switch (pathname) {
-    case AppRoute.Root:
-      return 'page--gray page--main';
-    case AppRoute.Login:
-      return 'page--gray page--login';
-    default:
-      return '';
+  if (matchPath(AppRoute.Root, pathname)) {
+    return 'page--gray page--main';
   }
+  if (matchPath(AppRoute.Login, pathname)) {
+    return 'page--gray page--login';
+  }
+  return '';
 };
 
 const getMainElementModifications = (pathname: string): string => {
-  switch (pathname) {
-    case AppRoute.Root:
-      return 'page__main--index';
-    case AppRoute.Login:
-      return 'page__main--login';
-    case AppRoute.Favorites:
-      return 'page__main--favorites';
-    case AppRoute.Offer:
-      return 'page__main--offer';
-    default:
-      return '';
+  if (matchPath(AppRoute.Root, pathname)) {
+    return 'page__main--index';
   }
+  if (matchPath(AppRoute.Login, pathname)) {
+    return 'page__main--login';
+  }
+  if (matchPath(AppRoute.Favorites, pathname)) {
+    return 'page__main--favorites';
+  }
+  if (matchPath(`${AppRoute.Offer}/:id`, pathname)) {
+    return 'page__main--offer';
+  }
+  return '';
 };
 
 function Layout(): JSX.Element {
   const location = useLocation();
   const authStatus = getAuthStatus();
 
-  const isFooterNeeded = location.pathname !== AppRoute.Root && location.pathname !== AppRoute.Login && location.pathname !== AppRoute.Offer;
+  const isFooterNeeded =
+    !matchPath(AppRoute.Root, location.pathname) &&
+    !matchPath(AppRoute.Login, location.pathname) &&
+    !matchPath(`${AppRoute.Offer}/:id`, location.pathname);
 
   const containerModifications = authStatus !== AuthorizationStatus.Unknown ? getContainerModifications(location.pathname) : '';
 

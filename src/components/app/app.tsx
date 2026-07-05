@@ -33,7 +33,7 @@ function App({ previewOffers }: AppProps): JSX.Element {
 
           <Route path={AppRoute.Favorites} element={
             <AuthGuard expectedStatus={AuthorizationStatus.Auth} redirectTo={AppRoute.Login}>
-              <Favorites />
+              <Favorites favoriteOffers={previewOffers} />
             </AuthGuard>
           }
           />
