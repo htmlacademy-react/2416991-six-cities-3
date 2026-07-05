@@ -8,6 +8,7 @@ import Rating from '../rating/rating';
 type OfferCardProps = {
   block?: BlockName;
   offer: OfferPreview;
+  setActiveCardId: (offerId: string | null) => void;
 }
 
 const ImageSize = {
@@ -21,11 +22,11 @@ const ImageSize = {
   },
 } as const;
 
-function OfferCard({ block = Block.CITIES, offer }: OfferCardProps): JSX.Element {
+function OfferCard({ block = Block.CITIES, offer, setActiveCardId }: OfferCardProps): JSX.Element {
   const imageSize = block === Block.FAVORITES ? ImageSize.SMALL : ImageSize.REGULAR;
 
   return (
-    <article className={`${block}__card place-card`}>
+    <article className={`${block}__card place-card`} onMouseEnter={() => setActiveCardId(offer.id)} onMouseLeave={() => setActiveCardId(null)}>
       {offer.isPremium && <Mark />}
       <div className={`${block}__image-wrapper place-card__image-wrapper`}>
         <a href="#">
