@@ -23,14 +23,14 @@ type HousingType = 'apartment' | 'room' | 'house' | 'hotel';
 
 type BaseOffer = {
   id: string;
-  title: string;
-  type: HousingType;
-  price: number;
+  title: string; //
+  type: HousingType; //
+  price: number; //
   city: City;
   location: CityLocation;
-  isFavorite: boolean;
-  isPremium: boolean;
-  rating: number;
+  isFavorite: boolean; //
+  isPremium: boolean; //
+  rating: number; //
 };
 
 export type OfferPreview = BaseOffer & {
