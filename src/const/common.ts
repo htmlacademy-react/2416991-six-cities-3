@@ -1,8 +1,3 @@
-//! temp
-export const Setting = {
-  NumberOfOffers: 312,
-} as const;
-
 export const SortType = {
   Popular: 'Popular',
   PriceLowToHigh: 'Price: low to high',

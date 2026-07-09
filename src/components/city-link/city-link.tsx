@@ -1,7 +1,7 @@
-import { City } from '../../types/common';
+import { CityName } from '../../types/common';
 
 type CityLinkProps = {
-  city: City;
+  city: CityName;
 };
 
 function CityLink({ city }: CityLinkProps): JSX.Element {

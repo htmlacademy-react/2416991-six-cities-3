@@ -1,6 +1,16 @@
 import { AuthorizationStatus } from '../const/infrastructure';
+import { Review } from '../types/offer';
+import { offers } from './offers';
+import { reviews } from './reviews';
 
-// const authorizationStatus = Math.random() > 0.5 ? AuthorizationStatus.Auth : AuthorizationStatus.NoAuth;
-const authorizationStatus = AuthorizationStatus.NoAuth;
+//! Auth NoAuth Unknown;
+const authorizationStatus = AuthorizationStatus.Auth;
 
 export const getAuthStatus = (): (typeof AuthorizationStatus[keyof typeof AuthorizationStatus]) => authorizationStatus;
+
+export const getOfferById = (id: string) => offers.find((offer) => offer.id === id);
+
+export const getReviewsById = (id: string): Review[] => {
+  const reviewsById = reviews.find((review) => review.id === id);
+  return reviewsById ? reviewsById.reviews : [];
+};
