@@ -1,6 +1,6 @@
-type OfferDescriptionProps = {
-  description: string;
-};
+import { Offer } from '../../types/offer';
+
+type OfferDescriptionProps = Pick<Offer, 'description'>;
 
 function OfferDescription({ description }: OfferDescriptionProps): JSX.Element {
   const sentences = description.split('. ').map((sentence) => `${sentence}. `);

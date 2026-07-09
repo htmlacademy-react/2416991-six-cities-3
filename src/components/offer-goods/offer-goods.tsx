@@ -1,6 +1,6 @@
-type OfferGoodsProps = {
-  goods: string[];
-};
+import { Offer } from '../../types/offer';
+
+type OfferGoodsProps = Pick<Offer, 'goods'>;
 
 function OfferGoods({ goods }: OfferGoodsProps): JSX.Element {
   return (

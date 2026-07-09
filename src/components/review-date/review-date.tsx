@@ -1,6 +1,6 @@
-type ReviewDateProps = {
-  date: string;
-};
+import { Review } from '../../types/offer';
+
+type ReviewDateProps = Pick<Review, 'date'>;
 
 const humanizeDate = (dateString: string): string => {
   const date = new Date(dateString);
@@ -11,7 +11,7 @@ const humanizeDate = (dateString: string): string => {
 
   return new Intl.DateTimeFormat('en-US', {
     month: 'long',
-    year: 'numeric'
+    year: 'numeric',
   }).format(date);
 };
 

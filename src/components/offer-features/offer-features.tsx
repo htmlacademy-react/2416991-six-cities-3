@@ -1,10 +1,7 @@
+import { Offer } from '../../types/offer';
 import { capitalize } from '../../utils/common';
 
-type OfferFeaturesProps = {
-  type: string;
-  bedroomsQuantity: number;
-  maxAdults: number;
-};
+type OfferFeaturesProps = Pick<Offer, 'type' | 'bedroomsQuantity' | 'maxAdults'>;
 
 function OfferFeatures({ type, bedroomsQuantity, maxAdults }: OfferFeaturesProps): JSX.Element {
   return (

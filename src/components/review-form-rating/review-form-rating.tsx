@@ -1,12 +1,16 @@
 import { Rating } from '../../const/business';
+import { RatingInForm } from '../../types/offer';
 import ReviewFormRatingStar from '../review-form-rating-star/review-form-rating-star';
 
 type ReviewFormRatingProps = {
-  rating: '5' | '4' | '3' | '2' | '1' | '';
+  rating: RatingInForm;
   onChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-function ReviewFormRating({ rating, onChange }: ReviewFormRatingProps): JSX.Element {
+function ReviewFormRating({
+  rating,
+  onChange,
+}: ReviewFormRatingProps): JSX.Element {
   const ratings = Object.keys(Rating).reverse() as (keyof typeof Rating)[];
   return (
     <div className="reviews__rating-form form__rating">

@@ -1,7 +1,7 @@
-import { City } from '../../types/common';
+import { CityName } from '../../types/common';
 
 type CityTabProps = {
-  city: City;
+  city: CityName;
   isActive: boolean;
 }
 

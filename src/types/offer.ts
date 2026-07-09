@@ -11,7 +11,7 @@ type City = {
   location: CityLocation;
 };
 
-type Host = {
+export type Host = {
   name: string;
   avatarUrl: string;
   isPro: boolean;
@@ -42,7 +42,7 @@ export type Offer = BaseOffer & {
   images: string[];
   goods: string[];
   host: Host;
-  bedrooms: number;
+  bedroomsQuantity: number;
   maxAdults: number;
 };
 
@@ -53,3 +53,5 @@ export type Review = {
   comment: string;
   date: string;
 }
+
+export type RatingInForm = '' | '5' | '4' | '3' | '2' | '1';

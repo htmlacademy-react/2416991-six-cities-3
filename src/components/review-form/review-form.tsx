@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import ReviewFormRating from '../review-form-rating/review-form-rating';
+import { RatingInForm } from '../../types/offer';
 
-type ReviewRating = '' | '5' | '4' | '3' | '2' | '1';
+type ReviewRating = RatingInForm;
 
 function ReviewForm(): JSX.Element {
   const [formData, setFormData] = useState<{ review: string; rating: ReviewRating }>({

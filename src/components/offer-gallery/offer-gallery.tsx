@@ -1,6 +1,6 @@
-type OfferGalleryProps = {
-  images: string[];
-};
+import { Offer } from '../../types/offer';
+
+type OfferGalleryProps = Pick<Offer, 'images'>;
 
 function OfferGallery({ images }: OfferGalleryProps): JSX.Element {
   return (
