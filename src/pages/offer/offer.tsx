@@ -37,7 +37,7 @@ function Offer(): JSX.Element {
 
             <OfferFeatures
               type={offer.type}
-              bedroomsQuantity={offer.bedrooms}
+              bedroomsQuantity={offer.bedroomsQuantity}
               maxAdults={offer.maxAdults}
             />
 

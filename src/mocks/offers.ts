@@ -142,7 +142,7 @@ export const offers: Offer[] = [
     'isPremium': true,
     'isFavorite': false,
     'rating': 2,
-    'bedrooms': 2,
+    'bedroomsQuantity': 2,
     'maxAdults': 10
   },
   {
@@ -194,7 +194,7 @@ export const offers: Offer[] = [
     'isPremium': true,
     'isFavorite': false,
     'rating': 2,
-    'bedrooms': 1,
+    'bedroomsQuantity': 1,
     'maxAdults': 3
   },
   {
@@ -244,7 +244,7 @@ export const offers: Offer[] = [
     'isPremium': false,
     'isFavorite': false,
     'rating': 2.7,
-    'bedrooms': 4,
+    'bedroomsQuantity': 4,
     'maxAdults': 6
   },
   {
@@ -297,7 +297,7 @@ export const offers: Offer[] = [
     'isPremium': false,
     'isFavorite': false,
     'rating': 1.5,
-    'bedrooms': 4,
+    'bedroomsQuantity': 4,
     'maxAdults': 6
   }
 ];

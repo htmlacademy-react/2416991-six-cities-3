@@ -1,6 +1,6 @@
 import { CityName } from '../types/common';
 
-export const Cities: CityName[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'] as const;
+export const Cities: readonly CityName[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'] as const;
 
 export const Rating = {
   '5': 'perfect',
