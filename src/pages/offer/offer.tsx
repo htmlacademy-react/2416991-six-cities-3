@@ -12,24 +12,34 @@ import { Block } from '../../const/common';
 import { getOfferById } from '../../mocks/mock';
 import { type Offer } from '../../types/offer';
 import { previewOffers } from '../../mocks/offers';
+import { Helmet } from 'react-helmet-async';
 
 function Offer(): JSX.Element {
   const nearOffers = previewOffers.slice(0, 3);
   const { id } = useParams<{ id: string }>() as { id: string }; //! mock
   const offer = getOfferById(id) as Offer;
-  // console.log(offer);
   return (
     <>
+      <Helmet>
+        <title>6 Cities | {offer.title}</title>
+      </Helmet>
       <section className="offer">
         <OfferGallery images={offer.images} />
         <div className="offer__container container">
           <div className="offer__wrapper">
-
-            <OfferHeading title={offer.title} isFavorite={offer.isFavorite} isPremium={offer.isPremium} />
+            <OfferHeading
+              title={offer.title}
+              isFavorite={offer.isFavorite}
+              isPremium={offer.isPremium}
+            />
 
             <Rating block={Block.OFFER} rating={offer.rating} />
 
-            <OfferFeatures type={offer.type} bedroomsQuantity={offer.bedrooms} maxAdults={offer.maxAdults} />
+            <OfferFeatures
+              type={offer.type}
+              bedroomsQuantity={offer.bedrooms}
+              maxAdults={offer.maxAdults}
+            />
 
             <OfferPrice price={offer.price} />
 

@@ -10,32 +10,55 @@ import { CityName } from '../../types/common';
 import { OfferPreview } from '../../types/offer';
 import AuthGuard from '../auth-guard/auth-guard';
 import Layout from '../layout/layout';
+import { Helmet } from 'react-helmet-async';
 
 type AppProps = {
   previewOffers: OfferPreview[];
-}
+};
 
 const tempActiveCity: CityName = 'Dusseldorf';
-
 function App({ previewOffers }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
+      <Helmet>
+        <title>6 Cities</title>
+      </Helmet>
       <Routes>
-        <Route path={AppRoute.Root} element={<Layout />} >
-          <Route index element={<Main activeCity={tempActiveCity} currentSortType={SortType.Popular} offers={previewOffers} />} />
-          <Route path={AppRoute.Login} element={
-            <AuthGuard expectedStatus={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Root}>
-              <Login />
-            </AuthGuard>
-          }
+        <Route path={AppRoute.Root} element={<Layout />}>
+          <Route
+            index
+            element={
+              <Main
+                activeCity={tempActiveCity}
+                currentSortType={SortType.Popular}
+                offers={previewOffers}
+              />
+            }
           />
+          <Route
+            path={AppRoute.Login}
+            element={
+              <AuthGuard
+                expectedStatus={AuthorizationStatus.NoAuth}
+                redirectTo={AppRoute.Root}
+              >
+                <Login />
+              </AuthGuard>
+            }
+          />
+
           <Route path={`${AppRoute.Offer}/:id`} element={<Offer />} />
 
-          <Route path={AppRoute.Favorites} element={
-            <AuthGuard expectedStatus={AuthorizationStatus.Auth} redirectTo={AppRoute.Login}>
-              <Favorites favoriteOffers={previewOffers} />
-            </AuthGuard>
-          }
+          <Route
+            path={AppRoute.Favorites}
+            element={
+              <AuthGuard
+                expectedStatus={AuthorizationStatus.Auth}
+                redirectTo={AppRoute.Login}
+              >
+                <Favorites favoriteOffers={previewOffers} />
+              </AuthGuard>
+            }
           />
 
           <Route path="*" element={<NotFound />} />
