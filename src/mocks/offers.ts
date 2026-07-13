@@ -85,8 +85,8 @@ export const previewOffers: OfferPreview[] = [
       },
     },
     location: {
-      latitude: 52.3809553943508,
-      longitude: 4.939309666406198,
+      latitude: 52.3609553943508,
+      longitude: 4.939209666406198,
       zoom: 16,
     },
     isFavorite: false,
@@ -277,8 +277,8 @@ export const offers: Offer[] = [
       },
     },
     location: {
-      latitude: 52.3809553943508,
-      longitude: 4.939309666406198,
+      latitude: 52.3609553943508,
+      longitude: 4.939209666406198,
       zoom: 16,
     },
     goods: [
@@ -309,4 +309,3 @@ export const offers: Offer[] = [
     maxAdults: 6,
   },
 ];
-
