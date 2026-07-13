@@ -48,7 +48,7 @@ function Map({ city, offers, selectedOfferId }: MapProps): JSX.Element {
         map.removeLayer(markerLayer);
       };
     }
-  });
+  }, [map, offers, selectedOfferId]);
   return <section className="cities__map map" ref={mapRef}></section>;
 }
 
