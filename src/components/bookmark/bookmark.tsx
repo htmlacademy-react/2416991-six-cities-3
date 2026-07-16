@@ -1,21 +1,11 @@
 import { Block } from '../../const/common';
 import { BlockName } from '../../types/common';
+import { Size } from './const';
 
 type BookmarkProps = {
   isActive: boolean;
   block?: BlockName;
   isSmall?: boolean;
-};
-
-const Size = {
-  SMALL: {
-    width: '18',
-    height: '19',
-  },
-  BIG: {
-    width: '31',
-    height: '33',
-  },
 };
 
 function Bookmark({

@@ -1,15 +1,13 @@
 import { PropsWithChildren, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const/infrastructure';
+import { AuthorizationStatus } from '../../const/infrastructure';
 import { getAuthStatus } from '../../mocks/mock';
 import Spinner from '../spinner/spinner';
+import { AuthStatus, Route } from '../../types/infrastructure';
 
 type AuthGuardProps = {
-  expectedStatus: Omit<
-    (typeof AuthorizationStatus)[keyof typeof AuthorizationStatus],
-    typeof AuthorizationStatus.Unknown
-  >;
-  redirectTo: (typeof AppRoute)[keyof typeof AppRoute];
+  expectedStatus: Exclude<AuthStatus, typeof AuthorizationStatus.Unknown>;
+  redirectTo: Route;
 };
 
 function AuthGuard({
