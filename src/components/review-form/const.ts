@@ -1,0 +1,1 @@
+export const MIN_REVIEW_CHARACTERS = 50;

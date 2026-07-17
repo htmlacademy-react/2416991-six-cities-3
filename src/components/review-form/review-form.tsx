@@ -1,16 +1,14 @@
 import { useState } from 'react';
 import ReviewFormRating from '../review-form-rating/review-form-rating';
-import { RatingInForm } from '../../types/offer';
-
-type ReviewRating = RatingInForm;
+import { ReviewFormData, ReviewRating } from './types';
+import { validateReviewForm } from './utils';
 
 function ReviewForm(): JSX.Element {
-  const [formData, setFormData] = useState<{ review: string; rating: ReviewRating }>({
+  const [formData, setFormData] = useState<ReviewFormData>({
     review: '',
     rating: '',
   });
 
-  const isFormValid = formData.review.length >= 50 && formData.rating !== '';
   return (
     <form
       className="reviews__form form"
@@ -37,7 +35,9 @@ function ReviewForm(): JSX.Element {
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={!isFormValid}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={!validateReviewForm(formData)}>
+          Submit review
+        </button>
       </div>
     </form>
   );

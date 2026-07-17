@@ -6,7 +6,7 @@ type CityLocation = {
   zoom: number;
 };
 
-type City = {
+export type City = {
   name: CityName;
   location: CityLocation;
 };
