@@ -9,15 +9,17 @@ import OfferPrice from '../../components/offer-price/offer-price';
 import OfferReviews from '../../components/offer-reviews/offer-reviews';
 import Rating from '../../components/rating/rating';
 import { Block } from '../../const/common';
-import { getOfferById } from '../../mocks/mock';
-import { type Offer } from '../../types/offer';
+import { getOfferById, getPreviewOfferById } from '../../mocks/mock';
+import { OfferPreview, type Offer } from '../../types/offer';
 import { previewOffers } from '../../mocks/offers';
 import { Helmet } from 'react-helmet-async';
+import Map from '../../components/map/map';
 
 function Offer(): JSX.Element {
-  const nearOffers = previewOffers.slice(0, 3);
   const { id } = useParams<{ id: string }>() as { id: string }; //! mock
+  const nearOffers = previewOffers.filter((offer) => offer.id !== id);
   const offer = getOfferById(id) as Offer;
+  const previewOffer = getPreviewOfferById(id) as OfferPreview;
   return (
     <>
       <Helmet>
@@ -55,7 +57,7 @@ function Offer(): JSX.Element {
             <OfferReviews id={id} />
           </div>
         </div>
-        <section className="offer__map map"></section>
+        <Map city={offer.city} offers={[...nearOffers, previewOffer]} selectedOfferId={offer.id} block={Block.OFFER} />
       </section>
       <div className="container">
         <NearOffers offers={nearOffers} />
