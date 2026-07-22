@@ -1,26 +1,51 @@
-import { SortType } from '../../const/common';
-import SortOption from '../sort-option/sort-option';
+import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 
-type SortSelectorProps = {
-  currentSortType: typeof SortType[keyof typeof SortType];
-}
+import { SortType } from '../../types/common';
+import { setSortType } from '../../store/action';
+import { SortOption } from '../../const/business';
+import SortItem from '../sort-item/sort-item';
 
-function SortSelector({ currentSortType }: SortSelectorProps): JSX.Element {
-  const sortTypes = Object.values(SortType);
+function SortSelector(): JSX.Element {
+  const currentSortType = useAppSelector((state) => state.sortOption);
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+
+  useEffect(() => {
+    setIsOptionsOpen(false);
+  }, [currentSortType]);
+
+  const dispatch = useAppDispatch();
+
+  const setSortOption = (sortType: SortType) => {
+    dispatch(setSortType(sortType));
+  };
+
+  const sortTypes = Object.values(SortOption);
   return (
     <form className="places__sorting" action="#" method="get">
-      <span className="places__sorting-caption">Sort by</span>
-      <span className="places__sorting-type" tabIndex={0}>
+      <span className="places__sorting-caption">Sort by</span>{' '}
+      <span
+        className="places__sorting-type"
+        tabIndex={0}
+        onClick={() => setIsOptionsOpen(!isOptionsOpen)}
+      >
         {currentSortType}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      <ul className="places__options places__options--custom places__options--opened">
-        {sortTypes.map((sortItem) => (
-          <SortOption key={sortItem} title={sortItem} isActive={sortItem === currentSortType} />
-        ))}
-      </ul>
+      {isOptionsOpen && (
+        <ul className="places__options places__options--custom places__options--opened">
+          {sortTypes.map((sortItem) => (
+            <SortItem
+              key={sortItem}
+              title={sortItem}
+              isActive={sortItem === currentSortType}
+              onItemClick={setSortOption}
+            />
+          ))}
+        </ul>
+      )}
     </form>
   );
 }

@@ -1,23 +1,18 @@
 import { useEffect, useState } from 'react';
-import CardList from '../../components/card-list/card-list';
 import CitiesPanel from '../../components/cities-panel/cities-panel';
 import Map from '../../components/map/map';
-import SortSelector from '../../components/sort-selector/sort-selector';
-import { SortType } from '../../const/common';
 import { OfferPreview } from '../../types/offer';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loadOffers, setCurrentCity } from '../../store/action';
 import { City } from '../../types/common';
 import { previewOffers } from '../../mocks/offers';
+import OffersBoard from '../../components/offers-board/offers-board';
+import NoPlaces from '../../components/no-places/no-places';
 
-type MainProps = {
-  currentSortType: (typeof SortType)[keyof typeof SortType];
-};
-
-function Main({ currentSortType }: MainProps): JSX.Element {
-
+function Main(): JSX.Element {
   const currentCity = useAppSelector((state) => state.currentCity);
-  const offers = useAppSelector((state) => state.offersByCity);
+  const offers = useAppSelector((state) => state.processedOffers);
+  const isEmpty = offers.length < 1;
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -40,21 +35,25 @@ function Main({ currentSortType }: MainProps): JSX.Element {
         onCityClick={changeActiveCity}
       />
       <div className="cities">
-        <div className="cities__places-container container">
-          <section className="cities__places places">
-            <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">
-              {offers.length} places to stay in {currentCity.name}
-            </b>
-            <SortSelector currentSortType={currentSortType} />
-            <CardList offers={offers} setActiveCardId={setActiveOfferId} />
-          </section>
-          <div className="cities__right-section">
-            <Map
-              city={currentCity}
+        <div
+          className={`cities__places-container ${isEmpty ? 'cities__places-container--empty' : ''} container`}
+        >
+          {isEmpty && <NoPlaces />}
+          {!isEmpty && (
+            <OffersBoard
               offers={offers}
-              selectedOfferId={activeOfferId}
+              currentCity={currentCity}
+              setActiveOfferId={setActiveOfferId}
             />
+          )}
+          <div className="cities__right-section">
+            {!isEmpty && (
+              <Map
+                city={currentCity}
+                offers={offers}
+                selectedOfferId={activeOfferId}
+              />
+            )}
           </div>
         </div>
       </div>

@@ -7,10 +7,12 @@ import {
   getContainerModifications,
   getMainElementModifications,
 } from './utils';
+import { useAppSelector } from '../../hooks';
 
 function Layout(): JSX.Element {
   const locationPathname = useLocation().pathname;
   const authStatus = getAuthStatus();
+  const isEmpty = useAppSelector((state) => state.processedOffers.length < 1);
 
   const isFooterNeeded =
     !matchPath(AppRoute.Root, locationPathname) &&
@@ -23,7 +25,7 @@ function Layout(): JSX.Element {
   );
 
   const mainElementModifications =
-    getMainElementModifications(locationPathname);
+    getMainElementModifications(locationPathname, isEmpty);
 
   return (
     <div className={`page ${containerModifications}`}>
