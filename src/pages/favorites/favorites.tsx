@@ -10,7 +10,7 @@ type FavoritesProps = {
 function Favorites({ favoriteOffers }: FavoritesProps): JSX.Element {
   const groupedOffers = [...Cities].map((city) => ({
     city,
-    offers: favoriteOffers.filter((offer) => offer.city.name === city),
+    offers: favoriteOffers.filter((offer) => offer.city.name === city.name),
   }));
 
   return (
@@ -22,7 +22,7 @@ function Favorites({ favoriteOffers }: FavoritesProps): JSX.Element {
         <h1 className="favorites__title">Saved listing</h1>
         <ul className="favorites__list">
           {groupedOffers.map(({ city, offers }) => (
-            <FavoritesItem key={city} city={city} offers={offers} />
+            <FavoritesItem key={city.name} city={city.name} offers={offers} />
           ))}
         </ul>
       </section>
