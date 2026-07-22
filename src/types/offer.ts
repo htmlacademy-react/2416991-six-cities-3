@@ -1,15 +1,4 @@
-import { type CityName } from './common';
-
-type CityLocation = {
-  latitude: number;
-  longitude: number;
-  zoom: number;
-};
-
-export type City = {
-  name: CityName;
-  location: CityLocation;
-};
+import { City, CityLocation } from './common';
 
 export type Host = {
   name: string;
@@ -52,6 +41,6 @@ export type Review = {
   rating: number;
   comment: string;
   date: string;
-}
+};
 
 export type RatingInForm = '' | '5' | '4' | '3' | '2' | '1';

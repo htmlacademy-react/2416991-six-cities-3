@@ -10,7 +10,6 @@ import { OfferPreview } from '../../types/offer';
 import AuthGuard from '../auth-guard/auth-guard';
 import Layout from '../layout/layout';
 import { Helmet } from 'react-helmet-async';
-import { tempActiveCity } from '../../mocks/mock';
 
 type AppProps = {
   previewOffers: OfferPreview[];
@@ -28,9 +27,7 @@ function App({ previewOffers }: AppProps): JSX.Element {
             index
             element={
               <Main
-                activeCity={tempActiveCity}
                 currentSortType={SortType.Popular}
-                offers={previewOffers}
               />
             }
           />

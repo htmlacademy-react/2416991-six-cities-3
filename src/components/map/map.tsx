@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
-import { City, OfferPreview } from '../../types/offer';
+import { OfferPreview } from '../../types/offer';
 import useMap from '../../hooks/use-map';
 import { layerGroup, Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { currentCustomIcon, defaultCustomIcon } from './const';
-import { BlockName } from '../../types/common';
+import { BlockName, City } from '../../types/common';
 import { Block } from '../../const/common';
 
 type MapProps = {
