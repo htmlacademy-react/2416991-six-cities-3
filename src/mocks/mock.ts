@@ -1,5 +1,5 @@
 import { AuthorizationStatus } from '../const/infrastructure';
-import { City, Review } from '../types/offer';
+import { Review } from '../types/offer';
 import { offers, previewOffers } from './offers';
 import { reviews } from './reviews';
 
@@ -17,11 +17,3 @@ export const getReviewsById = (id: string): Review[] => {
   return reviewsById ? reviewsById.reviews : [];
 };
 
-export const tempActiveCity: City = {
-  name: 'Amsterdam',
-  location: {
-    latitude: 52.37454,
-    longitude: 4.897976,
-    zoom: 12,
-  },
-};
