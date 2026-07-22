@@ -16,18 +16,30 @@ export const getContainerModifications = (pathname: string, authorizationStatus:
   return '';
 };
 
-export const getMainElementModifications = (pathname: string): string => {
-  if (matchPath(AppRoute.Root, pathname)) {
-    return 'page__main--index';
+export const getMainElementModifications = (pathname: string, isEmpty: boolean): string => {
+  let baseClass = '';
+
+  switch (true) {
+    case Boolean(matchPath(AppRoute.Root, pathname)):
+      baseClass = 'page__main--index';
+      break;
+    case Boolean(matchPath(AppRoute.Login, pathname)):
+      baseClass = 'page__main--login';
+      break;
+    case Boolean(matchPath(AppRoute.Favorites, pathname)):
+      baseClass = 'page__main--favorites';
+      break;
+    case Boolean(matchPath(`${AppRoute.Offer}/:id`, pathname)):
+      baseClass = 'page__main--offer';
+      break;
+    default:
+      return '';
   }
-  if (matchPath(AppRoute.Login, pathname)) {
-    return 'page__main--login';
+
+  if (baseClass === 'page__main--index' && isEmpty) {
+    return `${baseClass} page__main--index-empty`;
   }
-  if (matchPath(AppRoute.Favorites, pathname)) {
-    return 'page__main--favorites';
-  }
-  if (matchPath(`${AppRoute.Offer}/:id`, pathname)) {
-    return 'page__main--offer';
-  }
-  return '';
+
+
+  return baseClass;
 };

@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { SortType } from '../../const/common';
 import { AppRoute, AuthorizationStatus } from '../../const/infrastructure';
 import Favorites from '../../pages/favorites/favorites';
 import Login from '../../pages/login/login';
@@ -26,9 +25,7 @@ function App({ previewOffers }: AppProps): JSX.Element {
           <Route
             index
             element={
-              <Main
-                currentSortType={SortType.Popular}
-              />
+              <Main />
             }
           />
           <Route

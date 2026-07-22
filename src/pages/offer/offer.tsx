@@ -14,10 +14,13 @@ import { OfferPreview, type Offer } from '../../types/offer';
 import { previewOffers } from '../../mocks/offers';
 import { Helmet } from 'react-helmet-async';
 import Map from '../../components/map/map';
+import { ScrollToTop } from '../../components/scroll-to-top/scroll-to-top';
 
 function Offer(): JSX.Element {
   const { id } = useParams<{ id: string }>() as { id: string }; //! mock
-  const nearOffers = previewOffers.filter((offer) => offer.id !== id);
+  const nearOffers = [...previewOffers]
+    .filter((offer) => offer.id !== id)
+    .slice(0, 3);
   const offer = getOfferById(id) as Offer;
   const previewOffer = getPreviewOfferById(id) as OfferPreview;
   return (
@@ -25,6 +28,7 @@ function Offer(): JSX.Element {
       <Helmet>
         <title>6 Cities | {offer.title}</title>
       </Helmet>
+      <ScrollToTop />
       <section className="offer">
         <OfferGallery images={offer.images} />
         <div className="offer__container container">
@@ -57,7 +61,12 @@ function Offer(): JSX.Element {
             <OfferReviews id={id} />
           </div>
         </div>
-        <Map city={offer.city} offers={[...nearOffers, previewOffer]} selectedOfferId={offer.id} block={Block.OFFER} />
+        <Map
+          city={offer.city}
+          offers={[...nearOffers, previewOffer]}
+          selectedOfferId={offer.id}
+          block={Block.OFFER}
+        />
       </section>
       <div className="container">
         <NearOffers offers={nearOffers} />

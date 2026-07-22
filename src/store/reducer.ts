@@ -1,19 +1,22 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { setCurrentCity, loadOffers } from './action';
+import { setCurrentCity, loadOffers, setSortType } from './action';
 import { OfferPreview } from '../types/offer';
-import { DefaultCity } from '../const/business';
-import { City } from '../types/common';
+import { DefaultCity, SortOption } from '../const/business';
+import { City, SortType } from '../types/common';
+import { filterAndSortOffers } from './utils';
 
 type State = {
   currentCity: City;
-  offersByCity: OfferPreview[];
+  processedOffers: OfferPreview[];
   offers: OfferPreview[];
+  sortOption: SortType;
 };
 
 const initialState: State = {
   currentCity: DefaultCity,
-  offersByCity: [],
+  processedOffers: [],
   offers: [],
+  sortOption: SortOption.POPULAR,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -21,11 +24,28 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(setCurrentCity, (state, action) => {
       const currentCity = action.payload;
       state.currentCity = currentCity;
-      state.offersByCity = [...state.offers].filter((offer) => offer.city.name === currentCity.name);
+      state.processedOffers = filterAndSortOffers(
+        state.offers,
+        currentCity,
+        state.sortOption,
+      );
     })
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
-      state.offersByCity = [...state.offers].filter((offer) => offer.city.name === state.currentCity.name);
+      state.processedOffers = filterAndSortOffers(
+        state.offers,
+        state.currentCity,
+        state.sortOption,
+      );
+    })
+    .addCase(setSortType, (state, action) => {
+      const sortOption = action.payload;
+      state.sortOption = sortOption;
+      state.processedOffers = filterAndSortOffers(
+        state.offers,
+        state.currentCity,
+        sortOption,
+      );
     });
 });
 
