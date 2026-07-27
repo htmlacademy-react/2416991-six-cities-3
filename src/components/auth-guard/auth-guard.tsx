@@ -1,9 +1,9 @@
 import { PropsWithChildren, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthorizationStatus } from '../../const/infrastructure';
-import { getAuthStatus } from '../../mocks/mock';
 import Spinner from '../spinner/spinner';
 import { AuthStatus, Route } from '../../types/infrastructure';
+import { useAppSelector } from '../../hooks';
 
 type AuthGuardProps = {
   expectedStatus: Exclude<AuthStatus, typeof AuthorizationStatus.Unknown>;
@@ -16,7 +16,9 @@ function AuthGuard({
   children,
 }: PropsWithChildren<AuthGuardProps>) {
   const navigate = useNavigate();
-  const authorizationStatus = getAuthStatus();
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus,
+  );
 
   useEffect(() => {
     if (

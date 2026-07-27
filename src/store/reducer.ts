@@ -4,29 +4,21 @@ import {
   loadOffers,
   setSortType,
   setAuthorizationStatus,
+  setIsLoading,
 } from './action';
 import { OfferPreview } from '../types/offer';
 import { DefaultCity, SortOption } from '../const/business';
-import { City, SortType } from '../types/common';
+import { SortType } from '../types/common';
 import { filterAndSortOffers } from './utils';
 import { AuthorizationStatus } from '../const/infrastructure';
 import { AuthStatus } from '../types/infrastructure';
 
-type State = {
-  currentCity: City;
-  processedOffers: OfferPreview[];
-  offers: OfferPreview[];
-  sortOption: SortType;
-  authorizationStatus: AuthStatus;
-  isOffersLoading: boolean;
-};
-
-const initialState: State = {
+const initialState = {
   currentCity: DefaultCity,
-  processedOffers: [],
-  offers: [],
-  sortOption: SortOption.POPULAR,
-  authorizationStatus: AuthorizationStatus.Unknown,
+  processedOffers: [] as OfferPreview[],
+  offers: [] as OfferPreview[],
+  sortOption: SortOption.POPULAR as SortType,
+  authorizationStatus: AuthorizationStatus.Unknown as AuthStatus,
   isOffersLoading: true,
 };
 
@@ -43,7 +35,6 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
-      state.isOffersLoading = false;
       state.processedOffers = filterAndSortOffers(
         state.offers,
         state.currentCity,
@@ -61,6 +52,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setAuthorizationStatus, (state, action) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(setIsLoading, (state, action) => {
+      state.isOffersLoading = action.payload;
     });
 });
 export { reducer };

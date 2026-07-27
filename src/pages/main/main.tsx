@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import CitiesPanel from '../../components/cities-panel/cities-panel';
 import Map from '../../components/map/map';
 import { OfferPreview } from '../../types/offer';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { loadOffers, setCurrentCity } from '../../store/action';
+import { setCurrentCity } from '../../store/action';
 import { City } from '../../types/common';
-import { previewOffers } from '../../mocks/offers';
 import OffersBoard from '../../components/offers-board/offers-board';
 import NoPlaces from '../../components/no-places/no-places';
 
@@ -14,10 +13,6 @@ function Main(): JSX.Element {
   const offers = useAppSelector((state) => state.processedOffers);
   const isEmpty = offers.length < 1;
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(loadOffers(previewOffers));
-  }, [dispatch]);
 
   const changeActiveCity = (city: City) => {
     dispatch(setCurrentCity(city));

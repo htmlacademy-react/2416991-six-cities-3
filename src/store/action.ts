@@ -11,3 +11,5 @@ export const setSortType = createAction<SortType>('sort/set');
 
 export const setAuthorizationStatus =
   createAction<AuthStatus>('user/setAuthStatus');
+
+export const setIsLoading = createAction<boolean>('offers/load-success');

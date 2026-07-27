@@ -1,12 +1,12 @@
 import { AxiosInstance } from 'axios';
 import { AppDispatch, State } from '../types/state';
 import { APIRoute, AuthorizationStatus } from '../const/infrastructure';
-import { loadOffers, setAuthorizationStatus } from './action';
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { loadOffers, setAuthorizationStatus, setIsLoading } from './action';
 import { OfferPreview } from '../types/offer';
 import { dropToken, saveToken } from '../services/token';
 import { UserData } from '../types/user-data';
 import { AuthData } from '../types/auth-data';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchOffersAction = createAsyncThunk<
   void,
@@ -19,6 +19,7 @@ export const fetchOffersAction = createAsyncThunk<
 >('data/fetchOffers', async (_arg, { dispatch, extra: api }) => {
   const { data } = await api.get<OfferPreview[]>(APIRoute.Offers);
   dispatch(loadOffers(data));
+  dispatch(setIsLoading(false));
 });
 
 export const checkAuthAction = createAsyncThunk<
