@@ -9,12 +9,23 @@ import { OfferPreview } from '../../types/offer';
 import AuthGuard from '../auth-guard/auth-guard';
 import Layout from '../layout/layout';
 import { Helmet } from 'react-helmet-async';
+import { useAppSelector } from '../../hooks';
+import Loading from '../../pages/loading/loading';
 
 type AppProps = {
   previewOffers: OfferPreview[];
 };
 
 function App({ previewOffers }: AppProps): JSX.Element {
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus,
+  );
+  const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
+
+  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersLoading) {
+    return <Loading />;
+  }
+
   return (
     <BrowserRouter>
       <Helmet>
@@ -22,12 +33,7 @@ function App({ previewOffers }: AppProps): JSX.Element {
       </Helmet>
       <Routes>
         <Route path={AppRoute.Root} element={<Layout />}>
-          <Route
-            index
-            element={
-              <Main />
-            }
-          />
+          <Route index element={<Main />} />
           <Route
             path={AppRoute.Login}
             element={
