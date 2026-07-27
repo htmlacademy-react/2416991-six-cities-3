@@ -1,7 +1,16 @@
 import { AxiosInstance } from 'axios';
 import { AppDispatch, State } from '../types/state';
-import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const/infrastructure';
-import { loadOffers, setAuthorizationStatus, setError, setIsLoading } from './action';
+import {
+  APIRoute,
+  AuthorizationStatus,
+  TIMEOUT_SHOW_ERROR,
+} from '../const/infrastructure';
+import {
+  loadOffers,
+  setAuthorizationStatus,
+  setError,
+  setIsLoading,
+} from './action';
 import { OfferPreview } from '../types/offer';
 import { dropToken, saveToken } from '../services/token';
 import { UserData } from '../types/user-data';
@@ -73,12 +82,6 @@ export const logoutAction = createAsyncThunk<
   dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
 });
 
-export const clearErrorAction = createAsyncThunk(
-  'game/clearError',
-  () => {
-    setTimeout(
-      () => store.dispatch(setError(null)),
-      TIMEOUT_SHOW_ERROR,
-    );
-  },
-);
+export const clearErrorAction = createAsyncThunk('game/clearError', () => {
+  setTimeout(() => store.dispatch(setError(null)), TIMEOUT_SHOW_ERROR);
+});
