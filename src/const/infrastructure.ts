@@ -14,3 +14,12 @@ export const AuthorizationStatus = {
   NoAuth: 'NO_AUTH',
   Unknown: 'UNKNOWN',
 } as const;
+
+export const APIRoute = {
+  Offers: '/offers',
+  Nearby: '/nearby',
+  Favorite: '/favorite',
+  Comments: '/comments',
+  Login: '/login',
+  Logout: '/logout',
+} as const;
