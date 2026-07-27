@@ -5,6 +5,7 @@ import {
   setSortType,
   setAuthorizationStatus,
   setIsLoading,
+  setError,
 } from './action';
 import { OfferPreview } from '../types/offer';
 import { DefaultCity, SortOption } from '../const/business';
@@ -20,6 +21,7 @@ const initialState = {
   sortOption: SortOption.POPULAR as SortType,
   authorizationStatus: AuthorizationStatus.Unknown as AuthStatus,
   isOffersLoading: true,
+  error: null as string | null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -55,6 +57,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setIsLoading, (state, action) => {
       state.isOffersLoading = action.payload;
+    })
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
     });
 });
 export { reducer };
