@@ -1,6 +1,6 @@
-import { OfferPreview } from '../types/offer';
+import { Offer, OfferPreview } from '../types/offer';
 import { City, SortType } from '../types/common';
-import { AuthStatus } from '../types/infrastructure';
+import { AuthStatus, Route } from '../types/infrastructure';
 import { createAction } from '@reduxjs/toolkit';
 import { UserData } from '../types/user-data';
 
@@ -8,7 +8,13 @@ export const setCurrentCity = createAction<City>('city/setCurrent');
 
 export const loadOffers = createAction<OfferPreview[]>('offers/loadAll');
 
-export const setIsLoading = createAction<boolean>('offers/loadSuccess');
+export const setIsOffersLoading = createAction<boolean>('offers/offersLoading');
+
+export const loadOffer = createAction<Offer>('offers/loadSpecified');
+
+export const setIsOfferLoading = createAction<boolean>(
+  'offers/specifiedOfferLoading',
+);
 
 export const setFavorites = createAction<OfferPreview[]>('offers/setFavorites');
 
@@ -20,3 +26,5 @@ export const setAuthorizationStatus =
 export const setError = createAction<string | null>('data/setError');
 
 export const setUser = createAction<UserData>('user/setUserInfo');
+
+export const redirectToRoute = createAction<Route>('game/redirectToRoute');
