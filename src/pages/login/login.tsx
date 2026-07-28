@@ -1,11 +1,11 @@
 import { Helmet } from 'react-helmet-async';
 import CityLink from '../../components/city-link/city-link';
 import LoginForm from '../../components/login-form/login-form';
-import { CityName } from '../../types/common';
+import { useAppSelector } from '../../hooks';
 
 function Login(): JSX.Element {
-  //! mock
-  const mockCurrentCity: CityName = 'Amsterdam';
+  const currentCity = useAppSelector((state) => state.currentCity);
+
   return (
     <div className="page__login-container container">
       <Helmet>
@@ -16,10 +16,9 @@ function Login(): JSX.Element {
         <LoginForm />
       </section>
       <section className="locations locations--login locations--current">
-        <CityLink city={mockCurrentCity} />
+        <CityLink city={currentCity.name} />
       </section>
     </div>
-
   );
 }
 

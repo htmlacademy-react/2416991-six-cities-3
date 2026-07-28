@@ -10,6 +10,7 @@ import {
   setAuthorizationStatus,
   setError,
   setIsLoading,
+  setUser,
 } from './action';
 import { OfferPreview } from '../types/offer';
 import { dropToken, saveToken } from '../services/token';
@@ -43,7 +44,9 @@ export const checkAuthAction = createAsyncThunk<
 >('user/checkAuth', async (_arg, { dispatch, extra: api }) => {
   try {
     await api.get(APIRoute.Login);
+    const { data } = await api.get<UserData>(APIRoute.Login);
     dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+    dispatch(setUser(data));
   } catch {
     dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
   }
@@ -60,11 +63,13 @@ export const loginAction = createAsyncThunk<
 >(
   'user/login',
   async ({ email: email, password }, { dispatch, extra: api }) => {
-    const {
-      data: { token },
-    } = await api.post<UserData>(APIRoute.Login, { email, password });
-    saveToken(token);
+    const { data } = await api.post<UserData>(APIRoute.Login, {
+      email,
+      password,
+    });
+    saveToken(data.token);
     dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+    dispatch(setUser(data));
   },
 );
 

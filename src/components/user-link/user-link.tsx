@@ -1,30 +1,29 @@
 import { Link } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const/infrastructure';
-import { getAuthStatus } from '../../mocks/mock';
+import { AppRoute } from '../../const/infrastructure';
+import { useAppSelector } from '../../hooks';
+import './user-link.css';
 
 function UserLink(): JSX.Element {
-  const isAuthorized = getAuthStatus() === AuthorizationStatus.Auth;
-
-  if (isAuthorized) {
-
-    return (
-      <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
-        <div className="header__avatar-wrapper user__avatar-wrapper">
-        </div>
-        <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-        <span className="header__favorite-count">3</span>
-      </Link>
-    );
-  }
-
+  const user = useAppSelector((state) => state.userInfo);
+  const favoriteOffersCount = useAppSelector(
+    (state) => state.favoriteOffers.length,
+  );
   return (
-    <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Login}>
-      <div className="header__avatar-wrapper user__avatar-wrapper">
+    <Link
+      className="header__nav-link header__nav-link--profile"
+      to={AppRoute.Favorites}
+    >
+      <div
+        className={`header__avatar-wrapper user__avatar-wrapper ${user?.isPro ? 'user__avatar-wrapper--pro' : ''}`}
+      >
+        <img className="user__avatar-image" src={user?.avatarUrl} />
       </div>
-      <span className="header__login">Sign in</span>
+      <span className="header__user-name user__name">
+        {user?.name || user?.email || 'John Doe'}
+      </span>
+      <span className="header__favorite-count">{favoriteOffersCount}</span>
     </Link>
   );
-
 }
 
 export default UserLink;

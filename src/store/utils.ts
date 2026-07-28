@@ -5,8 +5,7 @@ import { OfferPreview } from '../types/offer';
 const filterOffersByCity = (
   offers: OfferPreview[],
   city: City,
-): OfferPreview[] =>
-  [...offers].filter((offer) => offer.city.name === city.name);
+): OfferPreview[] => offers.filter((offer) => offer.city.name === city.name);
 
 const sortOffers = (
   offers: OfferPreview[],
@@ -24,8 +23,26 @@ const sortOffers = (
   }
 };
 
-export const filterAndSortOffers = (
+const processFavoriteStatus = (
   offers: OfferPreview[],
+  favoriteOffers: OfferPreview[],
+): OfferPreview[] => {
+  const favoriteIds = new Set(favoriteOffers.map((offer) => offer.id));
+
+  return offers.map((offer) => ({
+    ...offer,
+    isFavorite: favoriteIds.has(offer.id),
+  }));
+};
+
+export const prepareOffers = (
+  offers: OfferPreview[],
+  favoriteOffers: OfferPreview[],
   city: City,
   sortBy: SortType,
-): OfferPreview[] => sortOffers(filterOffersByCity(offers, city), sortBy);
+): OfferPreview[] => {
+  const filteredOffers = filterOffersByCity(offers, city);
+  const sortedOffers = sortOffers(filteredOffers, sortBy);
+
+  return processFavoriteStatus(sortedOffers, favoriteOffers);
+};
