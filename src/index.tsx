@@ -6,6 +6,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { checkAuthAction, fetchOffersAction } from './store/api-actions';
+import ErrorMessage from './components/error-message/error-message';
 
 store.dispatch(fetchOffersAction());
 store.dispatch(checkAuthAction());
@@ -18,6 +19,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <HelmetProvider>
+        <ErrorMessage />
         {/* previewOffers пока что из моков */}
         <App previewOffers={previewOffers} />
       </HelmetProvider>
