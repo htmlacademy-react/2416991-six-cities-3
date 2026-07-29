@@ -35,7 +35,7 @@ function OfferReviews({ id }: OfferReviewsProps): JSX.Element {
 
       {authorizationStatus === AuthorizationStatus.Unknown && <Spinner />}
 
-      {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm />}
+      {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm id={id} />}
     </section>
   );
 }

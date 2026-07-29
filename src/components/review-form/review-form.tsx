@@ -2,10 +2,19 @@ import { useState } from 'react';
 import ReviewFormRating from '../review-form-rating/review-form-rating';
 import { ReviewFormData, ReviewRating } from './types';
 import { validateReviewForm } from './utils';
+import { useAppDispatch } from '../../hooks';
+import { postReview } from '../../store/api-actions';
+import { OfferPreview, ReviewServer } from '../../types/offer';
+import { MIN_REVIEW_CHARACTERS } from './const';
 
-function ReviewForm(): JSX.Element {
+type ReviewFormProps = {
+  id: OfferPreview['id'];
+}
+
+function ReviewForm({ id }: ReviewFormProps): JSX.Element {
+  const dispatch = useAppDispatch();
   const [formData, setFormData] = useState<ReviewFormData>({
-    review: '',
+    comment: '',
     rating: '',
   });
 
@@ -16,8 +25,11 @@ function ReviewForm(): JSX.Element {
       method="post"
       onSubmit={(evt) => {
         evt.preventDefault();
-        // eslint-disable-next-line
-        console.log(formData);
+        if (formData.rating !== '' && formData.comment.length >= MIN_REVIEW_CHARACTERS) {
+          const rating = Number(formData.rating) as ReviewServer['rating'];
+          const comment = formData.comment;
+          dispatch(postReview({rating, comment, id}));
+        }
       }}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
@@ -27,8 +39,8 @@ function ReviewForm(): JSX.Element {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        value={formData.review}
-        onChange={(evt) => setFormData({ ...formData, review: evt.target.value })}
+        value={formData.comment}
+        onChange={(evt) => setFormData({ ...formData, comment: evt.target.value })}
       >
       </textarea>
       <div className="reviews__button-wrapper">

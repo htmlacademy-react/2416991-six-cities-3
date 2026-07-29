@@ -17,7 +17,12 @@ import {
   setReviews,
   setUser,
 } from './action';
-import { OfferPreview, Review, ServerOffer } from '../types/offer';
+import {
+  OfferPreview,
+  Review,
+  ReviewServer,
+  ServerOffer,
+} from '../types/offer';
 import { dropToken, saveToken } from '../services/token';
 import { UserData } from '../types/user-data';
 import { AuthData } from '../types/auth-data';
@@ -77,6 +82,16 @@ export const fetchReviews = createAsyncThunk<
   const { data } = await api.get<Review[]>(`${APIRoute.Comments}/${id}`);
   dispatch(setReviews(data));
 });
+
+export const postReview = createAsyncThunk<void, ReviewServer, AppThunkConfig>(
+  'data/postReview',
+  async ({ id, comment, rating }, { dispatch, extra }) => {
+    const { api } = extra;
+
+    await api.post<Review>(`${APIRoute.Comments}/${id}`, { comment, rating });
+    dispatch(fetchReviews(id));
+  },
+);
 
 export const checkAuthAction = createAsyncThunk<
   void,

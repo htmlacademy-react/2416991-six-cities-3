@@ -47,4 +47,10 @@ export type Review = {
   date: string;
 };
 
+export type ReviewServer = {
+  id: BaseOffer['id'];
+  comment: string;
+  rating: 5 | 4 | 3 | 2 | 1;
+};
+
 export type RatingInForm = '' | '5' | '4' | '3' | '2' | '1';
