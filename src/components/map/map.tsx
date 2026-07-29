@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { OfferPreview } from '../../types/offer';
+import { Offer, OfferPreview } from '../../types/offer';
 import useMap from '../../hooks/use-map';
 import { layerGroup, Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -9,7 +9,7 @@ import { Block } from '../../const/common';
 
 type MapProps = {
   city: City;
-  offers: OfferPreview[];
+  offers: (OfferPreview | Offer)[];
   selectedOfferId: OfferPreview['id'] | null;
   block?: BlockName;
 };

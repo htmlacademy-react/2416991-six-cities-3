@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import { previewOffers } from './mocks/offers';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 import { store } from './store';
@@ -21,7 +20,7 @@ root.render(
       <HelmetProvider>
         <ErrorMessage />
         {/* previewOffers пока что из моков */}
-        <App previewOffers={previewOffers} />
+        <App />
       </HelmetProvider>
     </Provider>
   </React.StrictMode>,

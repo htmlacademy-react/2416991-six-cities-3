@@ -6,23 +6,57 @@ import OfferGoods from '../../components/offer-goods/offer-goods';
 import OfferHeading from '../../components/offer-heading/offer-heading';
 import OfferHost from '../../components/offer-host/offer-host';
 import OfferPrice from '../../components/offer-price/offer-price';
-import OfferReviews from '../../components/offer-reviews/offer-reviews';
 import Rating from '../../components/rating/rating';
 import { Block } from '../../const/common';
-import { getOfferById, getPreviewOfferById } from '../../mocks/mock';
-import { OfferPreview, type Offer } from '../../types/offer';
-import { previewOffers } from '../../mocks/offers';
-import { Helmet } from 'react-helmet-async';
+import { type Offer } from '../../types/offer';
 import Map from '../../components/map/map';
 import { ScrollToTop } from '../../components/scroll-to-top/scroll-to-top';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import {
+  fetchNearOffersAction,
+  fetchOfferAction,
+} from '../../store/api-actions';
+import { useEffect } from 'react';
+import Spinner from '../../components/spinner/spinner';
+import OfferReviews from '../../components/offer-reviews/offer-reviews';
+import { Helmet } from 'react-helmet-async';
+import { setNearOffers, setOffer, setReviews } from '../../store/action';
 
-function Offer(): JSX.Element {
-  const { id } = useParams<{ id: string }>() as { id: string }; //! mock
-  const nearOffers = [...previewOffers]
-    .filter((offer) => offer.id !== id)
-    .slice(0, 3);
-  const offer = getOfferById(id) as Offer;
-  const previewOffer = getPreviewOfferById(id) as OfferPreview;
+function Offer(): JSX.Element | null {
+  const params = useParams();
+  const dispatch = useAppDispatch();
+  const isOfferLoading = useAppSelector((state) => state.isOfferLoading);
+  const offer = useAppSelector((state) => state.offer);
+  const isNearOffersLoading = useAppSelector(
+    (state) => state.isNearOffersLoading,
+  );
+  const nearOffers = useAppSelector((state) => state.nearOffers);
+  const cuttedNearOffers = [...nearOffers].slice(0, 3);
+
+  useEffect(
+    () => () => {
+      dispatch(setOffer(null));
+      dispatch(setNearOffers([]));
+      dispatch(setReviews([]));
+    },
+    [dispatch],
+  );
+
+  useEffect(() => {
+    if (params.id) {
+      dispatch(fetchOfferAction(params.id));
+      dispatch(fetchNearOffersAction(params.id));
+    }
+  }, [params.id, dispatch]);
+
+  if (isOfferLoading) {
+    return <Spinner />;
+  }
+
+  if (!offer) {
+    return null;
+  }
+
   return (
     <>
       <Helmet>
@@ -58,19 +92,24 @@ function Offer(): JSX.Element {
               description={offer.description}
             />
 
-            <OfferReviews id={id} />
+            <OfferReviews id={offer.id} />
           </div>
         </div>
-        <Map
-          city={offer.city}
-          offers={[...nearOffers, previewOffer]}
-          selectedOfferId={offer.id}
-          block={Block.OFFER}
-        />
+        {isNearOffersLoading && <Spinner />}
+        {!isNearOffersLoading && (
+          <Map
+            city={offer.city}
+            offers={[...cuttedNearOffers, offer]}
+            selectedOfferId={offer.id}
+            block={Block.OFFER}
+          />
+        )}
       </section>
-      <div className="container">
-        <NearOffers offers={nearOffers} />
-      </div>
+      {!isNearOffersLoading && (
+        <div className="container">
+          <NearOffers offers={cuttedNearOffers} />
+        </div>
+      )}
     </>
   );
 }

@@ -5,7 +5,6 @@ import Login from '../../pages/login/login';
 import Main from '../../pages/main/main';
 import NotFound from '../../pages/not-found/not-found';
 import Offer from '../../pages/offer/offer';
-import { OfferPreview } from '../../types/offer';
 import AuthGuard from '../auth-guard/auth-guard';
 import Layout from '../layout/layout';
 import { Helmet } from 'react-helmet-async';
@@ -14,11 +13,7 @@ import Loading from '../../pages/loading/loading';
 import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
 
-type AppProps = {
-  previewOffers: OfferPreview[];
-};
-
-function App({ previewOffers }: AppProps): JSX.Element {
+function App(): JSX.Element {
   const authorizationStatus = useAppSelector(
     (state) => state.authorizationStatus,
   );
@@ -57,11 +52,11 @@ function App({ previewOffers }: AppProps): JSX.Element {
                 expectedStatus={AuthorizationStatus.Auth}
                 redirectTo={AppRoute.Login}
               >
-                <Favorites favoriteOffers={previewOffers} />
+                <Favorites />
               </AuthGuard>
             }
           />
-
+          <Route path={AppRoute.NotFound} element={<NotFound />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

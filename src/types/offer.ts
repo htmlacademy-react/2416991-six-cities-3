@@ -35,6 +35,10 @@ export type Offer = BaseOffer & {
   maxAdults: number;
 };
 
+export type ServerOffer = Omit<Offer, 'bedroomsQuantity'> & {
+  bedrooms: number;
+};
+
 export type Review = {
   id: string;
   user: User;

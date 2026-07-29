@@ -3,11 +3,9 @@ import FavoritesItem from '../../components/favorites-item/favorites-item';
 import { Cities } from '../../const/business';
 import { OfferPreview } from '../../types/offer';
 
-type FavoritesProps = {
-  favoriteOffers: OfferPreview[];
-};
-
-function Favorites({ favoriteOffers }: FavoritesProps): JSX.Element {
+function Favorites(): JSX.Element {
+  //!temp
+  const favoriteOffers = [] as OfferPreview[];
   const groupedOffers = [...Cities].map((city) => ({
     city,
     offers: favoriteOffers.filter((offer) => offer.city.name === city.name),

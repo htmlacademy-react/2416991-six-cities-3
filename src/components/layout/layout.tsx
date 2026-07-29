@@ -1,6 +1,5 @@
 import { matchPath, Outlet, useLocation } from 'react-router-dom';
 import { AppRoute } from '../../const/infrastructure';
-import { getAuthStatus } from '../../mocks/mock';
 import Footer from '../footer/footer';
 import Header from '../header/header';
 import {
@@ -11,7 +10,7 @@ import { useAppSelector } from '../../hooks';
 
 function Layout(): JSX.Element {
   const locationPathname = useLocation().pathname;
-  const authStatus = getAuthStatus();
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
   const isEmpty = useAppSelector((state) => state.processedOffers.length < 1);
 
   const isFooterNeeded =
@@ -24,8 +23,10 @@ function Layout(): JSX.Element {
     authStatus,
   );
 
-  const mainElementModifications =
-    getMainElementModifications(locationPathname, isEmpty);
+  const mainElementModifications = getMainElementModifications(
+    locationPathname,
+    isEmpty,
+  );
 
   return (
     <div className={`page ${containerModifications}`}>
