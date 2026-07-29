@@ -1,30 +1,41 @@
+import { useEffect } from 'react';
 import { AuthorizationStatus } from '../../const/infrastructure';
-import { getAuthStatus, getReviewsById } from '../../mocks/mock';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Offer } from '../../types/offer';
 import ReviewForm from '../review-form/review-form';
 import ReviewsList from '../reviews-list/reviews-list';
 import Spinner from '../spinner/spinner';
+import { fetchReviews } from '../../store/api-actions';
 
 type OfferReviewsProps = Pick<Offer, 'id'>;
 
 function OfferReviews({ id }: OfferReviewsProps): JSX.Element {
-  const authorizationStatus = getAuthStatus();
-  const reviews = getReviewsById(id);
+  const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus,
+  );
+
+  const reviews = useAppSelector((state) => state.reviews);
+
+  useEffect(() => {
+    dispatch(fetchReviews(id));
+  }, [id, dispatch]);
+
   return (
     <section className="offer__reviews reviews">
-      <h2 className="reviews__title">
-        Reviews &middot;{' '}
-        <span className="reviews__amount">{reviews.length}</span>
-      </h2>
-      {reviews.length === 0 && (
-        <p className="reviews__info">There are no reviews yet.</p>
+      {reviews.length > 0 && (
+        <>
+          <h2 className="reviews__title">
+            Reviews &middot;{' '}
+            <span className="reviews__amount">{reviews.length}</span>
+          </h2>
+          <ReviewsList reviews={reviews} />
+        </>
       )}
-      {reviews.length > 0 && <ReviewsList reviews={reviews} />}
+
       {authorizationStatus === AuthorizationStatus.Unknown && <Spinner />}
-      {authorizationStatus === AuthorizationStatus.NoAuth && (
-        <p className="reviews__info">Please log in to leave a review.</p>
-      )}
-      {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm />}
+
+      {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm id={id} />}
     </section>
   );
 }

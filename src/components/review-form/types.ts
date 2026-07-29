@@ -3,6 +3,6 @@ import { RatingInForm } from '../../types/offer';
 export type ReviewRating = RatingInForm;
 
 export type ReviewFormData = {
-  review: string;
+  comment: string;
   rating: ReviewRating;
 };

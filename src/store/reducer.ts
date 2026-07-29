@@ -4,12 +4,17 @@ import {
   loadOffers,
   setSortType,
   setAuthorizationStatus,
-  setIsLoading,
   setError,
   setUser,
+  setOffer,
+  setIsOffersLoading,
+  setIsOfferLoading,
+  setNearOffers,
+  setIsNearOffersLoading,
   setFavorites,
+  setReviews,
 } from './action';
-import { OfferPreview } from '../types/offer';
+import { Offer, OfferPreview, Review } from '../types/offer';
 import { DefaultCity, SortOption } from '../const/business';
 import { SortType } from '../types/common';
 import { prepareOffers } from './utils';
@@ -20,11 +25,16 @@ import { UserData } from '../types/user-data';
 const initialState = {
   currentCity: DefaultCity,
   offers: [] as OfferPreview[],
+  isOffersLoading: true,
+  offer: null as null | Offer,
+  isOfferLoading: false,
   processedOffers: [] as OfferPreview[],
+  nearOffers: [] as OfferPreview[],
+  isNearOffersLoading: false,
+  reviews: [] as Review[],
   favoriteOffers: [] as OfferPreview[],
   sortOption: SortOption.POPULAR as SortType,
   authorizationStatus: AuthorizationStatus.Unknown as AuthStatus,
-  isOffersLoading: true,
   userInfo: null as null | UserData,
   error: null as string | null,
 };
@@ -50,8 +60,26 @@ const reducer = createReducer(initialState, (builder) => {
         state.sortOption,
       );
     })
+    .addCase(setIsOffersLoading, (state, action) => {
+      state.isOffersLoading = action.payload;
+    })
+    .addCase(setOffer, (state, action) => {
+      state.offer = action.payload;
+    })
+    .addCase(setIsOfferLoading, (state, action) => {
+      state.isOfferLoading = action.payload;
+    })
     .addCase(setFavorites, (state, action) => {
       state.favoriteOffers = action.payload;
+    })
+    .addCase(setNearOffers, (state, action) => {
+      state.nearOffers = action.payload;
+    })
+    .addCase(setIsNearOffersLoading, (state, action) => {
+      state.isNearOffersLoading = action.payload;
+    })
+    .addCase(setReviews, (state, action) => {
+      state.reviews = action.payload;
     })
     .addCase(setSortType, (state, action) => {
       const sortOption = action.payload;
@@ -65,9 +93,6 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setAuthorizationStatus, (state, action) => {
       state.authorizationStatus = action.payload;
-    })
-    .addCase(setIsLoading, (state, action) => {
-      state.isOffersLoading = action.payload;
     })
     .addCase(setUser, (state, action) => {
       state.userInfo = action.payload;

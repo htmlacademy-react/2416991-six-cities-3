@@ -35,12 +35,22 @@ export type Offer = BaseOffer & {
   maxAdults: number;
 };
 
+export type ServerOffer = Omit<Offer, 'bedroomsQuantity'> & {
+  bedrooms: number;
+};
+
 export type Review = {
   id: string;
   user: User;
   rating: number;
   comment: string;
   date: string;
+};
+
+export type ReviewServer = {
+  id: BaseOffer['id'];
+  comment: string;
+  rating: 5 | 4 | 3 | 2 | 1;
 };
 
 export type RatingInForm = '' | '5' | '4' | '3' | '2' | '1';
