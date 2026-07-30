@@ -20,7 +20,12 @@ import { useEffect } from 'react';
 import Spinner from '../../components/spinner/spinner';
 import OfferReviews from '../../components/offer-reviews/offer-reviews';
 import { Helmet } from 'react-helmet-async';
-import { setNearOffers, setOffer, setReviews } from '../../store/action';
+import {
+  setActiveOfferId,
+  setNearOffers,
+  setOffer,
+  setReviews,
+} from '../../store/action';
 
 function Offer(): JSX.Element | null {
   const params = useParams();
@@ -33,11 +38,16 @@ function Offer(): JSX.Element | null {
   const nearOffers = useAppSelector((state) => state.nearOffers);
   const cuttedNearOffers = [...nearOffers].slice(0, 3);
 
+  useEffect(() => {
+    dispatch(setActiveOfferId(offer?.id || null));
+  }, [dispatch, offer]);
+
   useEffect(
     () => () => {
       dispatch(setOffer(null));
       dispatch(setNearOffers([]));
       dispatch(setReviews([]));
+      dispatch(setActiveOfferId(null));
     },
     [dispatch],
   );
@@ -100,7 +110,6 @@ function Offer(): JSX.Element | null {
           <Map
             city={offer.city}
             offers={[...cuttedNearOffers, offer]}
-            selectedOfferId={offer.id}
             block={Block.OFFER}
           />
         )}

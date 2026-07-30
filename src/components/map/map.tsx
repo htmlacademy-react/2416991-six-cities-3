@@ -6,15 +6,16 @@ import 'leaflet/dist/leaflet.css';
 import { currentCustomIcon, defaultCustomIcon } from './const';
 import { BlockName, City } from '../../types/common';
 import { Block } from '../../const/common';
+import { useAppSelector } from '../../hooks';
 
 type MapProps = {
   city: City;
   offers: (OfferPreview | Offer)[];
-  selectedOfferId: OfferPreview['id'] | null;
   block?: BlockName;
 };
 
-function Map({ city, offers, selectedOfferId, block = Block.CITIES }: MapProps): JSX.Element {
+function Map({ city, offers, block = Block.CITIES }: MapProps): JSX.Element {
+  const selectedOfferId = useAppSelector((state) => state.activeOfferId);
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 

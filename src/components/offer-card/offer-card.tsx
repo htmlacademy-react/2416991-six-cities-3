@@ -8,29 +8,33 @@ import Mark from '../mark/mark';
 import Rating from '../rating/rating';
 import { capitalize } from '../../utils/common';
 import { ImageSize } from './const';
+import { useAppDispatch } from '../../hooks';
+import { setActiveOfferId } from '../../store/action';
 
 type OfferCardProps = {
   block?: BlockName;
   offer: OfferPreview;
-  setActiveCardId?: (offerId: string | null) => void;
 };
 
 function OfferCard({
   block = Block.CITIES,
   offer,
-  setActiveCardId,
 }: OfferCardProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const setActiveCardId = (id: string | null) => {
+    dispatch(setActiveOfferId(id));
+  };
   const imageSize =
     block === Block.FAVORITES ? ImageSize.SMALL : ImageSize.REGULAR;
 
   const mouseEnterHandler = () => {
-    if (setActiveCardId) {
+    if (block === Block.CITIES) {
       setActiveCardId(offer.id);
     }
   };
 
   const mouseLeaveHandler = () => {
-    if (setActiveCardId) {
+    if (block === Block.CITIES) {
       setActiveCardId(null);
     }
   };

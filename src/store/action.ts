@@ -10,6 +10,8 @@ export const loadOffers = createAction<OfferPreview[]>('offers/loadAll');
 
 export const setIsOffersLoading = createAction<boolean>('offers/offersLoading');
 
+export const setActiveOfferId = createAction<null | OfferPreview['id']>('offers/activeOfferOnMap');
+
 export const setOffer = createAction<Offer | null>('offers/setSpecified');
 
 export const setIsOfferLoading = createAction<boolean>(

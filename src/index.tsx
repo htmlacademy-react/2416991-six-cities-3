@@ -19,7 +19,6 @@ root.render(
     <Provider store={store}>
       <HelmetProvider>
         <ErrorMessage />
-        {/* previewOffers пока что из моков */}
         <App />
       </HelmetProvider>
     </Provider>

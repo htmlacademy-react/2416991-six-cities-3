@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import CitiesPanel from '../../components/cities-panel/cities-panel';
 import Map from '../../components/map/map';
-import { OfferPreview } from '../../types/offer';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setCurrentCity } from '../../store/action';
 import { City } from '../../types/common';
@@ -17,10 +15,6 @@ function Main(): JSX.Element {
   const changeActiveCity = (city: City) => {
     dispatch(setCurrentCity(city));
   };
-
-  const [activeOfferId, setActiveOfferId] = useState<OfferPreview['id'] | null>(
-    null,
-  );
 
   return (
     <>
@@ -38,7 +32,6 @@ function Main(): JSX.Element {
             <OffersBoard
               offers={offers}
               currentCity={currentCity}
-              setActiveOfferId={setActiveOfferId}
             />
           )}
           <div className="cities__right-section">
@@ -46,7 +39,6 @@ function Main(): JSX.Element {
               <Map
                 city={currentCity}
                 offers={offers}
-                selectedOfferId={activeOfferId}
               />
             )}
           </div>

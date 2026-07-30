@@ -1,6 +1,6 @@
-import { AxiosInstance } from 'axios';
-import { store } from '../store/index.js';
-import { BrowserHistory } from 'history';
+import { AxiosInstance } from "axios";
+import { store } from "../store";
+import { BrowserHistory } from "history";
 
 export type State = ReturnType<typeof store.getState>;
 

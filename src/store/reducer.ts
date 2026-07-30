@@ -13,30 +13,50 @@ import {
   setIsNearOffersLoading,
   setFavorites,
   setReviews,
+  setActiveOfferId,
 } from './action';
 import { Offer, OfferPreview, Review } from '../types/offer';
 import { DefaultCity, SortOption } from '../const/business';
-import { SortType } from '../types/common';
+import { City, SortType } from '../types/common';
 import { prepareOffers } from './utils';
 import { AuthorizationStatus } from '../const/infrastructure';
 import { AuthStatus } from '../types/infrastructure';
 import { UserData } from '../types/user-data';
 
-const initialState = {
+type InitialState = {
+  currentCity: City;
+  offers: OfferPreview[];
+  activeOfferId: OfferPreview['id'] | null;
+  isOffersLoading: boolean;
+  offer: null | Offer;
+  isOfferLoading: boolean;
+  processedOffers: OfferPreview[];
+  nearOffers: OfferPreview[];
+  isNearOffersLoading: boolean;
+  reviews: Review[];
+  favoriteOffers: OfferPreview[];
+  sortOption: SortType;
+  authorizationStatus: AuthStatus;
+  userInfo: null | UserData;
+  error: string | null;
+};
+
+const initialState: InitialState = {
   currentCity: DefaultCity,
-  offers: [] as OfferPreview[],
+  offers: [],
+  activeOfferId: null,
   isOffersLoading: true,
-  offer: null as null | Offer,
+  offer: null,
   isOfferLoading: false,
-  processedOffers: [] as OfferPreview[],
-  nearOffers: [] as OfferPreview[],
+  processedOffers: [],
+  nearOffers: [],
   isNearOffersLoading: false,
-  reviews: [] as Review[],
-  favoriteOffers: [] as OfferPreview[],
-  sortOption: SortOption.POPULAR as SortType,
-  authorizationStatus: AuthorizationStatus.Unknown as AuthStatus,
-  userInfo: null as null | UserData,
-  error: null as string | null,
+  reviews: [],
+  favoriteOffers: [],
+  sortOption: SortOption.POPULAR,
+  authorizationStatus: AuthorizationStatus.Unknown,
+  userInfo: null,
+  error: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -62,6 +82,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setIsOffersLoading, (state, action) => {
       state.isOffersLoading = action.payload;
+    })
+    .addCase(setActiveOfferId, (state, action) => {
+      state.activeOfferId = action.payload;
     })
     .addCase(setOffer, (state, action) => {
       state.offer = action.payload;

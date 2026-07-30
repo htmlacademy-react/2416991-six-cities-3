@@ -6,13 +6,11 @@ import SortSelector from '../sort-selector/sort-selector';
 type OffersBoardProps = {
   offers: OfferPreview[];
   currentCity: City;
-  setActiveOfferId: (id: string | null) => void;
 };
 
 function OffersBoard({
   offers,
-  currentCity,
-  setActiveOfferId,
+  currentCity
 }: OffersBoardProps): JSX.Element {
   return (
     <section className="cities__places places">
@@ -22,7 +20,7 @@ function OffersBoard({
         {currentCity.name}
       </b>
       <SortSelector />
-      <CardList offers={offers} setActiveCardId={setActiveOfferId} />
+      <CardList offers={offers} />
     </section>
   );
 }
