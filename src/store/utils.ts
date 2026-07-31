@@ -1,6 +1,6 @@
 import { SortOption } from '../const/business';
 import { City, SortType } from '../types/common';
-import { OfferPreview } from '../types/offer';
+import { Offer, OfferPreview, ServerOffer } from '../types/offer';
 
 const filterOffersByCity = (
   offers: OfferPreview[],
@@ -46,3 +46,11 @@ export const prepareOffers = (
 
   return processFavoriteStatus(sortedOffers, favoriteOffers);
 };
+
+export const adaptOffer = (serverOffer: ServerOffer): Offer => {
+  const { bedrooms, ...rest } = serverOffer;
+  return {
+    ...rest,
+    bedroomsQuantity: bedrooms
+  };
+}

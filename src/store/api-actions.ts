@@ -28,6 +28,7 @@ import { UserData } from '../types/user-data';
 import { AuthData } from '../types/auth-data';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { store } from '.';
+import { adaptOffer } from './utils';
 
 export const fetchOffersAction = createAsyncThunk<
   void,
@@ -49,8 +50,7 @@ export const fetchOfferAction = createAsyncThunk<
   const { api, history } = extra;
   try {
     const { data } = await api.get<ServerOffer>(`${APIRoute.Offers}/${id}`);
-    const bedroomsQuantity = data.bedrooms;
-    const adaptedOffer = { ...data, bedroomsQuantity };
+    const adaptedOffer = adaptOffer(data);
     dispatch(setOffer(adaptedOffer));
   } catch {
     history.push(AppRoute.NotFound);
