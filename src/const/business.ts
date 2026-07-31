@@ -61,9 +61,9 @@ export const SortOption = {
 export const DefaultCity = Cities[0];
 
 export const Rating = {
-  '5': 'perfect',
-  '4': 'good',
-  '3': 'not bad',
-  '2': 'badly',
-  '1': 'terribly',
+  5: 'perfect',
+  4: 'good',
+  3: 'not bad',
+  2: 'badly',
+  1: 'terribly',
 } as const;

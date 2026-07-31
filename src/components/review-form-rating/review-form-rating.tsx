@@ -11,15 +11,15 @@ function ReviewFormRating({
   rating,
   onChange,
 }: ReviewFormRatingProps): JSX.Element {
-  const ratings = Object.keys(Rating).reverse() as (keyof typeof Rating)[];
+  const ratings = Object.keys(Rating).reverse();
   return (
     <div className="reviews__rating-form form__rating">
       {ratings.map((value) => (
         <ReviewFormRatingStar
           key={value}
           value={value}
-          title={Rating[value]}
-          checked={value === rating}
+          title={Rating[Number(value) as keyof typeof Rating]}
+          checked={Number(value) === rating}
           onChange={onChange}
         />
       ))}
