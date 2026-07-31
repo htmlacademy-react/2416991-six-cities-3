@@ -37,6 +37,6 @@ export const setAuthorizationStatus =
 
 export const setError = createAction<string | null>('data/setError');
 
-export const setUser = createAction<UserData>('user/setUserInfo');
+export const setUser = createAction<UserData | null>('user/setUserInfo');
 
 export const redirectToRoute = createAction<Route>('game/redirectToRoute');

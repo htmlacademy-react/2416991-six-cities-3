@@ -5,13 +5,13 @@ import Login from '../../pages/login/login';
 import Main from '../../pages/main/main';
 import NotFound from '../../pages/not-found/not-found';
 import Offer from '../../pages/offer/offer';
-import AuthGuard from '../auth-guard/auth-guard';
 import Layout from '../layout/layout';
 import { Helmet } from 'react-helmet-async';
 import { useAppSelector } from '../../hooks';
 import Loading from '../../pages/loading/loading';
 import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
+import ProtectedRoute from '../protected-route/protected-route';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(
@@ -34,12 +34,9 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Login}
             element={
-              <AuthGuard
-                expectedStatus={AuthorizationStatus.NoAuth}
-                redirectTo={AppRoute.Root}
-              >
+              <ProtectedRoute onlyNoAuth>
                 <Login />
-              </AuthGuard>
+              </ProtectedRoute>
             }
           />
 
@@ -48,12 +45,9 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Favorites}
             element={
-              <AuthGuard
-                expectedStatus={AuthorizationStatus.Auth}
-                redirectTo={AppRoute.Login}
-              >
+              <ProtectedRoute>
                 <Favorites />
-              </AuthGuard>
+              </ProtectedRoute>
             }
           />
           <Route path={AppRoute.NotFound} element={<NotFound />} />

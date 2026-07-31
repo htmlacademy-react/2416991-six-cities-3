@@ -130,6 +130,7 @@ export const logoutAction = createAsyncThunk<void, undefined, AppThunkConfig>(
     await api.delete(APIRoute.Logout);
     dropToken();
     dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+    dispatch(setUser(null));
   },
 );
 
