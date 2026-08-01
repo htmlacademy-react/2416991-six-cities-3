@@ -3,12 +3,10 @@ import {
   APIRoute,
   AppRoute,
   AuthorizationStatus,
-  TIMEOUT_SHOW_ERROR,
 } from '../const/infrastructure';
 import {
   loadOffers,
   setAuthorizationStatus,
-  setError,
   setIsNearOffersLoading,
   setIsOfferLoading,
   setIsOffersLoading,
@@ -27,7 +25,6 @@ import { dropToken, saveToken } from '../services/token';
 import { UserData } from '../types/user-data';
 import { AuthData } from '../types/auth-data';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { store } from '.';
 import { adaptOffer } from './utils';
 
 export const fetchOffersAction = createAsyncThunk<
@@ -133,7 +130,3 @@ export const logoutAction = createAsyncThunk<void, undefined, AppThunkConfig>(
     dispatch(setUser(null));
   },
 );
-
-export const clearErrorAction = createAsyncThunk('game/clearError', () => {
-  setTimeout(() => store.dispatch(setError(null)), TIMEOUT_SHOW_ERROR);
-});

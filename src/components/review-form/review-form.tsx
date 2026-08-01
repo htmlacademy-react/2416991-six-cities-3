@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import ReviewFormRating from '../review-form-rating/review-form-rating';
 import { ReviewFormData } from './types';
 import { validateReviewForm } from './utils';
@@ -6,6 +6,7 @@ import { useAppDispatch } from '../../hooks';
 import { postReview } from '../../store/api-actions';
 import { OfferPreview } from '../../types/offer';
 import { MIN_REVIEW_CHARACTERS } from './const';
+import { toast } from 'react-toastify';
 
 type ReviewFormProps = {
   id: OfferPreview['id'];
@@ -18,7 +19,13 @@ function ReviewForm({ id }: ReviewFormProps): JSX.Element {
     rating: 0,
   });
 
-  const handleSubmit = async (evt: React.FormEvent) => {
+  const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) =>
+    setFormData((prev) => ({ ...prev, rating: Number(evt.target.value) }));
+
+  const handleTextChange = (evt: ChangeEvent<HTMLTextAreaElement>) =>
+    setFormData((prev) => ({ ...prev, comment: evt.target.value }));
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (
       formData.rating !== 0 &&
@@ -27,14 +34,19 @@ function ReviewForm({ id }: ReviewFormProps): JSX.Element {
       const rating = formData.rating;
       const comment = formData.comment;
 
-      await dispatch(postReview({ rating, comment, id }))
+      void dispatch(postReview({ rating, comment, id }))
         .unwrap()
-        .then(() =>
+        .then(() => {
           setFormData({
             comment: '',
             rating: 0,
-          }),
-        );
+          });
+        })
+        .catch(() => {
+          toast.warn(
+            'A technical error occurred while submitting the form; please try again later.',
+          );
+        });
     }
   };
 
@@ -50,9 +62,7 @@ function ReviewForm({ id }: ReviewFormProps): JSX.Element {
       </label>
       <ReviewFormRating
         rating={formData.rating}
-        onChange={(evt) =>
-          setFormData({ ...formData, rating: Number(evt.target.value) })
-        }
+        onChange={handleRatingChange}
       />
       <textarea
         className="reviews__textarea form__textarea"
@@ -60,10 +70,8 @@ function ReviewForm({ id }: ReviewFormProps): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={formData.comment}
-        onChange={(evt) =>
-          setFormData({ ...formData, comment: evt.target.value })
-        }
-      ></textarea>
+        onChange={handleTextChange}
+      />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set{' '}

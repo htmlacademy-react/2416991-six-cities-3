@@ -51,6 +51,6 @@ export const adaptOffer = (serverOffer: ServerOffer): Offer => {
   const { bedrooms, ...rest } = serverOffer;
   return {
     ...rest,
-    bedroomsQuantity: bedrooms
+    bedroomsQuantity: bedrooms,
   };
-}
+};

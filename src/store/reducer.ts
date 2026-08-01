@@ -4,7 +4,6 @@ import {
   loadOffers,
   setSortType,
   setAuthorizationStatus,
-  setError,
   setUser,
   setOffer,
   setIsOffersLoading,
@@ -38,7 +37,6 @@ type InitialState = {
   sortOption: SortType;
   authorizationStatus: AuthStatus;
   userInfo: null | UserData;
-  error: string | null;
 };
 
 const initialState: InitialState = {
@@ -56,7 +54,6 @@ const initialState: InitialState = {
   sortOption: SortOption.POPULAR,
   authorizationStatus: AuthorizationStatus.Unknown,
   userInfo: null,
-  error: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -119,9 +116,6 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setUser, (state, action) => {
       state.userInfo = action.payload;
-    })
-    .addCase(setError, (state, action) => {
-      state.error = action.payload;
     });
 });
 export { reducer };

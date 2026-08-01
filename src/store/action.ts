@@ -35,8 +35,6 @@ export const setSortType = createAction<SortType>('sort/set');
 export const setAuthorizationStatus =
   createAction<AuthStatus>('user/setAuthStatus');
 
-export const setError = createAction<string | null>('data/setError');
-
 export const setUser = createAction<UserData | null>('user/setUserInfo');
 
 export const redirectToRoute = createAction<Route>('game/redirectToRoute');
