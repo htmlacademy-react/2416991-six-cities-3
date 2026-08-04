@@ -1,62 +1,17 @@
-import { ChangeEvent, FormEvent, memo, useCallback, useState } from 'react';
+import { memo } from 'react';
 import ReviewFormRating from '../review-form-rating/review-form-rating';
-import { ReviewFormData } from './types';
-import { validateReviewForm } from './utils';
-import { useAppDispatch } from '../../hooks';
-import { postReview } from '../../store/api-actions';
 import { MIN_REVIEW_CHARACTERS } from './const';
-import { toast } from 'react-toastify';
-import { useParams } from 'react-router-dom';
+import { useReviewForm } from '../../hooks/use-review-form';
 
 function ReviewForm(): JSX.Element {
-  const { id } = useParams<{ id: string }>();
-  const dispatch = useAppDispatch();
-  const [formData, setFormData] = useState<ReviewFormData>({
-    comment: '',
-    rating: 0,
-  });
-
-  const handleRatingChange = useCallback(
-    (evt: ChangeEvent<HTMLInputElement>) => {
-      const rating = Number(evt.target.value);
-      setFormData((prev) => ({ ...prev, rating }));
-    },
-    [],
-  );
-
-  const handleTextChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
-    const comment = evt.target.value;
-    setFormData((prev) => ({ ...prev, comment }));
-  };
-
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
-
-    if (!id) {
-      return;
-    }
-
-    if (
-      formData.rating !== 0 &&
-      formData.comment.length >= MIN_REVIEW_CHARACTERS
-    ) {
-      void dispatch(
-        postReview({ rating: formData.rating, comment: formData.comment, id }),
-      )
-        .unwrap()
-        .then(() => {
-          setFormData({
-            comment: '',
-            rating: 0,
-          });
-        })
-        .catch(() => {
-          toast.warn(
-            'A technical error occurred while submitting the form; please try again later.',
-          );
-        });
-    }
-  };
+  const {
+    formData,
+    isValid,
+    isSubmitting,
+    handleRatingChange,
+    handleTextChange,
+    handleSubmit,
+  } = useReviewForm();
 
   return (
     <form
@@ -68,10 +23,13 @@ function ReviewForm(): JSX.Element {
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
+
       <ReviewFormRating
         rating={formData.rating}
         onChange={handleRatingChange}
+        disabled={isSubmitting}
       />
+
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
@@ -79,19 +37,26 @@ function ReviewForm(): JSX.Element {
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={formData.comment}
         onChange={handleTextChange}
+        disabled={isSubmitting}
       />
+
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set{' '}
           <span className="reviews__star">rating</span> and describe your stay
-          with at least <b className="reviews__text-amount">50 characters</b>.
+          with at least{' '}
+          <b className="reviews__text-amount">
+            {MIN_REVIEW_CHARACTERS} characters
+          </b>
+          .
         </p>
+
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={!validateReviewForm(formData)}
+          disabled={!isValid || isSubmitting}
         >
-          Submit
+          {isSubmitting ? 'Submitting...' : 'Submit'}
         </button>
       </div>
     </form>

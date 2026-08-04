@@ -5,6 +5,7 @@ import ReviewFormRatingStar from '../review-form-rating-star/review-form-rating-
 
 type ReviewFormRatingProps = {
   rating: RatingInForm;
+  disabled: boolean;
   onChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -12,6 +13,7 @@ const RATINGS = Object.keys(Rating).reverse();
 
 function ReviewFormRating({
   rating,
+  disabled,
   onChange,
 }: ReviewFormRatingProps): JSX.Element {
   return (
@@ -23,6 +25,7 @@ function ReviewFormRating({
           title={Rating[Number(value) as keyof typeof Rating]}
           checked={Number(value) === rating}
           onChange={onChange}
+          disabled={disabled}
         />
       ))}
     </div>
