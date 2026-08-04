@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 type ReviewFormRatingStarProps = {
   value: string;
   title: string;
@@ -35,4 +37,6 @@ function ReviewFormRatingStar({
   );
 }
 
-export default ReviewFormRatingStar;
+const MemoizedReviewFormRatingStar = memo(ReviewFormRatingStar);
+
+export default MemoizedReviewFormRatingStar;

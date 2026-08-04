@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Rating } from '../../const/business';
 import { RatingInForm } from '../../types/offer';
 import ReviewFormRatingStar from '../review-form-rating-star/review-form-rating-star';
@@ -7,14 +8,15 @@ type ReviewFormRatingProps = {
   onChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
+const RATINGS = Object.keys(Rating).reverse();
+
 function ReviewFormRating({
   rating,
   onChange,
 }: ReviewFormRatingProps): JSX.Element {
-  const ratings = Object.keys(Rating).reverse();
   return (
     <div className="reviews__rating-form form__rating">
-      {ratings.map((value) => (
+      {RATINGS.map((value) => (
         <ReviewFormRatingStar
           key={value}
           value={value}
@@ -27,4 +29,6 @@ function ReviewFormRating({
   );
 }
 
-export default ReviewFormRating;
+const MemoizedReviewFormRating = memo(ReviewFormRating);
+
+export default MemoizedReviewFormRating;

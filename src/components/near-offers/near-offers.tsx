@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Block } from '../../const/common';
 import { OfferPreview } from '../../types/offer';
 import OfferCard from '../offer-card/offer-card';
@@ -19,4 +20,6 @@ function NearOffers({ offers }: NearOffersProps): JSX.Element {
   );
 }
 
-export default NearOffers;
+const MemoizedNearOffers = memo(NearOffers);
+
+export default MemoizedNearOffers;

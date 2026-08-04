@@ -5,16 +5,17 @@ import { setCurrentCity } from '../../store/action';
 import { City } from '../../types/common';
 import OffersBoard from '../../components/offers-board/offers-board';
 import NoPlaces from '../../components/no-places/no-places';
+import { useCallback } from 'react';
 
 function Main(): JSX.Element {
   const currentCity = useAppSelector((state) => state.currentCity);
   const offers = useAppSelector((state) => state.processedOffers);
-  const isEmpty = offers.length < 1;
+  const isEmpty = offers.length === 0;
   const dispatch = useAppDispatch();
 
-  const changeActiveCity = (city: City) => {
+  const changeActiveCity = useCallback((city: City) => {
     dispatch(setCurrentCity(city));
-  };
+  }, [dispatch]);
 
   return (
     <>
@@ -29,18 +30,10 @@ function Main(): JSX.Element {
         >
           {isEmpty && <NoPlaces />}
           {!isEmpty && (
-            <OffersBoard
-              offers={offers}
-              currentCity={currentCity}
-            />
+            <OffersBoard />
           )}
           <div className="cities__right-section">
-            {!isEmpty && (
-              <Map
-                city={currentCity}
-                offers={offers}
-              />
-            )}
+            {!isEmpty && <Map city={currentCity} offers={offers} />}
           </div>
         </div>
       </div>

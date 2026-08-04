@@ -1,40 +1,48 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, memo, useCallback, useState } from 'react';
 import ReviewFormRating from '../review-form-rating/review-form-rating';
 import { ReviewFormData } from './types';
 import { validateReviewForm } from './utils';
 import { useAppDispatch } from '../../hooks';
 import { postReview } from '../../store/api-actions';
-import { OfferPreview } from '../../types/offer';
 import { MIN_REVIEW_CHARACTERS } from './const';
 import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
 
-type ReviewFormProps = {
-  id: OfferPreview['id'];
-};
-
-function ReviewForm({ id }: ReviewFormProps): JSX.Element {
+function ReviewForm(): JSX.Element {
+  const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
   const [formData, setFormData] = useState<ReviewFormData>({
     comment: '',
     rating: 0,
   });
 
-  const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) =>
-    setFormData((prev) => ({ ...prev, rating: Number(evt.target.value) }));
+  const handleRatingChange = useCallback(
+    (evt: ChangeEvent<HTMLInputElement>) => {
+      const rating = Number(evt.target.value);
+      setFormData((prev) => ({ ...prev, rating }));
+    },
+    [],
+  );
 
-  const handleTextChange = (evt: ChangeEvent<HTMLTextAreaElement>) =>
-    setFormData((prev) => ({ ...prev, comment: evt.target.value }));
+  const handleTextChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
+    const comment = evt.target.value;
+    setFormData((prev) => ({ ...prev, comment }));
+  };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+
+    if (!id) {
+      return;
+    }
+
     if (
       formData.rating !== 0 &&
       formData.comment.length >= MIN_REVIEW_CHARACTERS
     ) {
-      const rating = formData.rating;
-      const comment = formData.comment;
-
-      void dispatch(postReview({ rating, comment, id }))
+      void dispatch(
+        postReview({ rating: formData.rating, comment: formData.comment, id }),
+      )
         .unwrap()
         .then(() => {
           setFormData({
@@ -90,4 +98,6 @@ function ReviewForm({ id }: ReviewFormProps): JSX.Element {
   );
 }
 
-export default ReviewForm;
+const MemoizedReviewForm = memo(ReviewForm);
+
+export default MemoizedReviewForm;

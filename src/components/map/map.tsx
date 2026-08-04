@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import { Offer, OfferPreview } from '../../types/offer';
 import useMap from '../../hooks/use-map';
 import { layerGroup, Marker } from 'leaflet';
@@ -44,5 +44,31 @@ function Map({ city, offers, block = Block.CITIES }: MapProps): JSX.Element {
   return <section className={`${block}__map map`} ref={mapRef}></section>;
 }
 
-export default Map;
+const MemoizedMap = memo(
+  Map,
+  (prevProps: MapProps, nextProps: MapProps): boolean => {
+    if (
+      prevProps.block !== nextProps.block ||
+      prevProps.city.name !== nextProps.city.name
+    ) {
+      return false;
+    }
 
+    if (prevProps.offers.length !== nextProps.offers.length) {
+      return false;
+    }
+
+    const prevIds = prevProps.offers
+      .map((offer) => offer.id)
+      .sort()
+      .join(',');
+    const nextIds = nextProps.offers
+      .map((offer) => offer.id)
+      .sort()
+      .join(',');
+
+    return prevIds === nextIds;
+  },
+);
+
+export default MemoizedMap;

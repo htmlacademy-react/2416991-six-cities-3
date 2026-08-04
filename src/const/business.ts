@@ -67,3 +67,5 @@ export const Rating = {
   2: 'badly',
   1: 'terribly',
 } as const;
+
+export const MAX_NEAR_OFFERS_COUNT = 3;

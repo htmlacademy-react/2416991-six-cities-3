@@ -11,7 +11,7 @@ import { useAppSelector } from '../../hooks';
 function Layout(): JSX.Element {
   const locationPathname = useLocation().pathname;
   const authStatus = useAppSelector((state) => state.authorizationStatus);
-  const isEmpty = useAppSelector((state) => state.processedOffers.length < 1);
+  const isEmpty = useAppSelector((state) => state.processedOffers.length === 0);
 
   const isFooterNeeded =
     !matchPath(AppRoute.Root, locationPathname) &&

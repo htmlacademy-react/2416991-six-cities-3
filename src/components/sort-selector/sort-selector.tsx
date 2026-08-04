@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 
 import { SortType } from '../../types/common';
@@ -16,9 +16,12 @@ function SortSelector(): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const setSortOption = (sortType: SortType) => {
-    dispatch(setSortType(sortType));
-  };
+  const setSortOption = useCallback(
+    (sortType: SortType) => {
+      dispatch(setSortType(sortType));
+    },
+    [dispatch],
+  );
 
   const sortTypes = Object.values(SortOption);
   return (
@@ -50,4 +53,6 @@ function SortSelector(): JSX.Element {
   );
 }
 
-export default SortSelector;
+const MemoizedSortSelector = memo(SortSelector);
+
+export default MemoizedSortSelector;

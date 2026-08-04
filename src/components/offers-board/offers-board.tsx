@@ -1,17 +1,11 @@
-import { City } from '../../types/common';
-import { OfferPreview } from '../../types/offer';
+import { useAppSelector } from '../../hooks';
 import CardList from '../card-list/card-list';
 import SortSelector from '../sort-selector/sort-selector';
 
-type OffersBoardProps = {
-  offers: OfferPreview[];
-  currentCity: City;
-};
 
-function OffersBoard({
-  offers,
-  currentCity
-}: OffersBoardProps): JSX.Element {
+function OffersBoard(): JSX.Element {
+  const currentCity = useAppSelector((state) => state.currentCity);
+  const offers = useAppSelector((state) => state.processedOffers);
   return (
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
