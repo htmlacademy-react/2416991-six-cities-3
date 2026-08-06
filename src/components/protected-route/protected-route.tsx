@@ -2,6 +2,7 @@ import { Location, Navigate, useLocation } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { AppRoute } from '../../const/infrastructure';
 import { PropsWithChildren } from 'react';
+import { getUserInfo } from '../../store/slices/user/user.selectors';
 
 type ProtectedRouteProps = {
   onlyNoAuth?: boolean;
@@ -17,7 +18,7 @@ function ProtectedRoute({
 }: PropsWithChildren<ProtectedRouteProps>) {
   const location: Location<FromState> = useLocation() as Location<FromState>;
 
-  const user = useAppSelector((state) => state.userInfo);
+  const user = useAppSelector(getUserInfo);
 
   if (onlyNoAuth && user) {
     const from = location.state?.from || { pathname: AppRoute.Root };

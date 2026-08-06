@@ -1,11 +1,13 @@
 import { useAppSelector } from '../../hooks';
+import { getCurrentCity } from '../../store/slices/app/app.selectors';
+import { getOffers } from '../../store/slices/offers/offers.selectors';
 import CardList from '../card-list/card-list';
 import SortSelector from '../sort-selector/sort-selector';
 
 
 function OffersBoard(): JSX.Element {
-  const currentCity = useAppSelector((state) => state.currentCity);
-  const offers = useAppSelector((state) => state.processedOffers);
+  const currentCity = useAppSelector(getCurrentCity);
+  const offers = useAppSelector(getOffers);
   return (
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>

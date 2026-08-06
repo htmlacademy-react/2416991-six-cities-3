@@ -23,28 +23,13 @@ const sortOffers = (
   }
 };
 
-const processFavoriteStatus = (
-  offers: OfferPreview[],
-  favoriteOffers: OfferPreview[],
-): OfferPreview[] => {
-  const favoriteIds = new Set(favoriteOffers.map((offer) => offer.id));
-
-  return offers.map((offer) => ({
-    ...offer,
-    isFavorite: favoriteIds.has(offer.id),
-  }));
-};
-
 export const prepareOffers = (
   offers: OfferPreview[],
-  favoriteOffers: OfferPreview[],
   city: City,
   sortBy: SortType,
 ): OfferPreview[] => {
   const filteredOffers = filterOffersByCity(offers, city);
-  const sortedOffers = sortOffers(filteredOffers, sortBy);
-
-  return processFavoriteStatus(sortedOffers, favoriteOffers);
+  return sortOffers(filteredOffers, sortBy);
 };
 
 export const adaptOffer = (serverOffer: ServerOffer): Offer => {

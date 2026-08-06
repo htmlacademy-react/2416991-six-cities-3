@@ -2,12 +2,13 @@ import { memo, useCallback, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 
 import { SortType } from '../../types/common';
-import { setSortType } from '../../store/action';
 import { SortOption } from '../../const/business';
 import SortItem from '../sort-item/sort-item';
+import { setSort } from '../../store/slices/app/app.slice';
+import { getSort } from '../../store/slices/app/app.selectors';
 
 function SortSelector(): JSX.Element {
-  const currentSortType = useAppSelector((state) => state.sortOption);
+  const currentSortType = useAppSelector(getSort);
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
 
   useEffect(() => {
@@ -18,7 +19,7 @@ function SortSelector(): JSX.Element {
 
   const setSortOption = useCallback(
     (sortType: SortType) => {
-      dispatch(setSortType(sortType));
+      dispatch(setSort(sortType));
     },
     [dispatch],
   );

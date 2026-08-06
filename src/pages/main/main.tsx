@@ -1,15 +1,17 @@
 import CitiesPanel from '../../components/cities-panel/cities-panel';
 import Map from '../../components/map/map';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setCurrentCity } from '../../store/action';
 import { City } from '../../types/common';
 import OffersBoard from '../../components/offers-board/offers-board';
 import NoPlaces from '../../components/no-places/no-places';
 import { useCallback } from 'react';
+import { getOffers } from '../../store/slices/offers/offers.selectors';
+import { getCurrentCity } from '../../store/slices/app/app.selectors';
+import { setCurrentCity } from '../../store/slices/app/app.slice';
 
 function Main(): JSX.Element {
-  const currentCity = useAppSelector((state) => state.currentCity);
-  const offers = useAppSelector((state) => state.processedOffers);
+  const currentCity = useAppSelector(getCurrentCity);
+  const offers = useAppSelector(getOffers);
   const isEmpty = offers.length === 0;
   const dispatch = useAppDispatch();
 

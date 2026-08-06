@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '.';
 import { useEffect, useMemo } from 'react';
 import {
@@ -6,25 +6,30 @@ import {
   fetchOfferAction,
   fetchReviews,
 } from '../store/api-actions';
-import {
-  setActiveOfferId,
-  setNearOffers,
-  setOffer,
-  setReviews,
-} from '../store/action';
 import { MAX_NEAR_OFFERS_COUNT } from '../const/business';
+import { AppRoute } from '../const/infrastructure';
+import {
+  getIsNearOffersLoading,
+  getNearOffers,
+  getOffer,
+  getOfferStatus,
+} from '../store/slices/offer/offer.selectors';
+import { getReviews } from '../store/slices/reviews/reviews.selectors';
+import { setActiveOfferId } from '../store/slices/app/app.slice';
+import { clearOfferPage } from '../store/slices/offer/offer.slice';
 
 function useOfferPage() {
   const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const isOfferLoading = useAppSelector((state) => state.isOfferLoading);
-  const offer = useAppSelector((state) => state.offer);
-  const isNearOffersLoading = useAppSelector(
-    (state) => state.isNearOffersLoading,
-  );
-  const nearOffers = useAppSelector((state) => state.nearOffers);
-  const reviews = useAppSelector((state) => state.reviews);
+  const { isOfferLoading, isOfferLoadingError } =
+    useAppSelector(getOfferStatus);
+
+  const offer = useAppSelector(getOffer);
+  const isNearOffersLoading = useAppSelector(getIsNearOffersLoading);
+  const nearOffers = useAppSelector(getNearOffers);
+  const reviews = useAppSelector(getReviews);
 
   useEffect(() => {
     if (id) {
@@ -35,12 +40,15 @@ function useOfferPage() {
     }
   }, [id, dispatch]);
 
+  useEffect(() => {
+    if (isOfferLoadingError) {
+      navigate(AppRoute.NotFound, { replace: true });
+    }
+  }, [isOfferLoadingError, navigate]);
+
   useEffect(
     () => () => {
-      dispatch(setOffer(null));
-      dispatch(setNearOffers([]));
-      dispatch(setReviews([]));
-      dispatch(setActiveOfferId(null));
+      dispatch(clearOfferPage());
     },
     [dispatch],
   );

@@ -1,18 +1,62 @@
 import { AxiosInstance } from 'axios';
 import { store } from '../store';
-import { BrowserHistory } from 'history';
+import { AuthStatus } from './infrastructure';
+import { UserData } from './user-data';
+import { Offer, OfferPreview, Review } from './offer';
+import { City, SortType } from './common';
 
 export type State = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
 
-export type AxiosAndHistory = {
+export type AppExtra = {
   api: AxiosInstance;
-  history: BrowserHistory;
+};
+
+export type CustomServerError = {
+  status: number;
+  message: string;
 };
 
 export type AppThunkConfig = {
   dispatch: AppDispatch;
   state: State;
-  extra: AxiosAndHistory;
+  extra: AppExtra;
+  rejectValue: CustomServerError;
+};
+
+export type UserState = {
+  authorizationStatus: AuthStatus;
+  userInfo: null | UserData;
+};
+
+export type OfferState = {
+  offer: null | Offer;
+  isOfferLoading: boolean;
+  isOfferLoadingError: boolean;
+  offerLoadingErrorCode: number | null;
+  nearOffers: OfferPreview[];
+  isNearOffersLoading: boolean;
+};
+
+export type OfferStatus = Pick<OfferState, 'isOfferLoading' | 'isOfferLoadingError' | 'offerLoadingErrorCode'>
+
+export type OffersState = {
+  offers: OfferPreview[];
+  isOffersLoading: boolean;
+  isOffersLoadingError: boolean;
+};
+
+export type AppState = {
+  currentCity: City;
+  sortOption: SortType;
+  activeOfferId: OfferPreview['id'] | null;
+};
+
+export type ReviewsState = {
+  reviews: Review[];
+};
+
+export type FavoritesState = {
+  favoriteOffers: OfferPreview[];
 };

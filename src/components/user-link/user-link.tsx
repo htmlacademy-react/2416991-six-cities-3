@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const/infrastructure';
 import { useAppSelector } from '../../hooks';
 import './user-link.css';
+import { getUserInfo } from '../../store/slices/user/user.selectors';
+import { getFavorites } from '../../store/slices/favorites/favorites.selectors';
 
 function UserLink(): JSX.Element {
-  const user = useAppSelector((state) => state.userInfo);
-  const favoriteOffersCount = useAppSelector(
-    (state) => state.favoriteOffers.length,
-  );
+  const user = useAppSelector(getUserInfo);
+  const favoriteOffersCount = useAppSelector(getFavorites).length;
   return (
     <Link
       className="header__nav-link header__nav-link--profile"

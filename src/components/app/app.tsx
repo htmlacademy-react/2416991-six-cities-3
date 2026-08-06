@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const/infrastructure';
 import Favorites from '../../pages/favorites/favorites';
 import Login from '../../pages/login/login';
@@ -9,22 +9,20 @@ import Layout from '../layout/layout';
 import { Helmet } from 'react-helmet-async';
 import { useAppSelector } from '../../hooks';
 import Loading from '../../pages/loading/loading';
-import HistoryRouter from '../history-router/history-router';
-import browserHistory from '../../browser-history';
 import ProtectedRoute from '../protected-route/protected-route';
+import { getAuthorizationStatus } from '../../store/slices/user/user.selectors';
+import { getOffersLoadingStatus } from '../../store/slices/offers/offers.selectors';
 
 function App(): JSX.Element {
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus,
-  );
-  const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isOffersLoading = useAppSelector(getOffersLoadingStatus).isOffersLoading;
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersLoading) {
     return <Loading />;
   }
 
   return (
-    <HistoryRouter history={browserHistory}>
+    <BrowserRouter>
       <Helmet>
         <title>6 Cities</title>
       </Helmet>
@@ -54,7 +52,7 @@ function App(): JSX.Element {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
-    </HistoryRouter>
+    </BrowserRouter>
   );
 }
 

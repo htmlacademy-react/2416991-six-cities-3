@@ -9,7 +9,7 @@ import Rating from '../rating/rating';
 import { capitalize } from '../../utils/common';
 import { ImageSize } from './const';
 import { useAppDispatch } from '../../hooks';
-import { setActiveOfferId } from '../../store/action';
+import { setActiveOfferId } from '../../store/slices/app/app.slice';
 
 type OfferCardProps = {
   block?: BlockName;

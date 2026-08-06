@@ -7,11 +7,13 @@ import {
   getMainElementModifications,
 } from './utils';
 import { useAppSelector } from '../../hooks';
+import { getAuthorizationStatus } from '../../store/slices/user/user.selectors';
+import { getOffers } from '../../store/slices/offers/offers.selectors';
 
 function Layout(): JSX.Element {
   const locationPathname = useLocation().pathname;
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
-  const isEmpty = useAppSelector((state) => state.processedOffers.length === 0);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isEmpty = useAppSelector(getOffers).length === 0;
 
   const isFooterNeeded =
     !matchPath(AppRoute.Root, locationPathname) &&
@@ -20,7 +22,7 @@ function Layout(): JSX.Element {
 
   const containerModifications = getContainerModifications(
     locationPathname,
-    authStatus,
+    authorizationStatus,
   );
 
   const mainElementModifications = getMainElementModifications(

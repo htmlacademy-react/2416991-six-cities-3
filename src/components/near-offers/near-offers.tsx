@@ -7,7 +7,10 @@ type NearOffersProps = {
   offers: OfferPreview[];
 };
 
-function NearOffers({ offers }: NearOffersProps): JSX.Element {
+function NearOffers({ offers }: NearOffersProps): JSX.Element | null {
+  if (offers.length === 0) {
+    return null;
+  }
   return (
     <section className="near-places places">
       <h2 className="near-places__title">Other places in the neighbourhood</h2>

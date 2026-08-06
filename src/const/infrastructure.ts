@@ -24,3 +24,17 @@ export const APIRoute = {
   Login: '/login',
   Logout: '/logout',
 } as const;
+
+export enum FavoriteStatus {
+  No = 0,
+  Yes = 1,
+}
+
+export const NameSpace = {
+  Offers: 'OFFERS',
+  Offer: 'OFFER',
+  App: 'APP',
+  Reviews: 'REVIEWS',
+  Favorites: 'FAVORITES',
+  User: 'USER',
+} as const;

@@ -7,6 +7,7 @@ import { currentCustomIcon, defaultCustomIcon } from './const';
 import { BlockName, City } from '../../types/common';
 import { Block } from '../../const/common';
 import { useAppSelector } from '../../hooks';
+import { getActiveOffId } from '../../store/slices/app/app.selectors';
 
 type MapProps = {
   city: City;
@@ -15,7 +16,7 @@ type MapProps = {
 };
 
 function Map({ city, offers, block = Block.CITIES }: MapProps): JSX.Element {
-  const selectedOfferId = useAppSelector((state) => state.activeOfferId);
+  const selectedOfferId = useAppSelector(getActiveOffId);
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
