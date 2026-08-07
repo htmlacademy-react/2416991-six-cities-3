@@ -63,7 +63,7 @@ function OfferCard({
             <b className="place-card__price-value">€{offer.price}</b>{' '}
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
-          <Bookmark isActive={offer.isFavorite} />
+          <Bookmark isActive={offer.isFavorite} offerId={offer.id} />
         </div>
         <Rating rating={offer.rating} />
         <h2 className="place-card__name">

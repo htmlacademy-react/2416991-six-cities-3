@@ -1,7 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { OfferState } from '../../../types/state';
 import { NameSpace } from '../../../const/infrastructure';
-import { fetchNearOffersAction, fetchOfferAction } from '../../api-actions';
+import {
+  changeFavoriteStatusAction,
+  fetchNearOffersAction,
+  fetchOfferAction,
+} from '../../api-actions';
 
 const initialState: OfferState = {
   offer: null,
@@ -53,6 +57,11 @@ export const offerSlice = createSlice({
       .addCase(fetchNearOffersAction.rejected, (state) => {
         state.nearOffers = [];
         state.isNearOffersLoading = false;
+      })
+      .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {
+        if (state.offer?.id === action.payload.id) {
+          state.offer = action.payload;
+        }
       });
   },
 });

@@ -1,25 +1,22 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { NameSpace } from '../../../const/infrastructure';
 import { OfferPreview } from '../../../types/offer';
 import { State } from '../../../types/state';
 import { prepareOffers } from '../../utils';
+import { getCurrentCity, getSort } from '../app/app.selectors';
 
-type OffersLoadingStatus = {
-  isOffersLoading: boolean;
-  isOffersLoadingError: boolean;
-};
+export const getRawOffers = (state: State): OfferPreview[] =>
+  state[NameSpace.Offers].offers;
 
-export const getOffers = (state: State): OfferPreview[] => {
-  const offers = state[NameSpace.Offers].offers;
-  const city = state[NameSpace.App].currentCity;
-  const sortOption = state[NameSpace.App].sortOption;
-  return prepareOffers(offers, city, sortOption);
-};
-
-export const getOffersLoadingStatus = (state: State): OffersLoadingStatus => ({
-  isOffersLoading: state[NameSpace.Offers].isOffersLoading,
-  isOffersLoadingError: state[NameSpace.Offers].isOffersLoadingError,
-});
+export const getIsOffersLoading = (state: State): boolean =>
+  state[NameSpace.Offers].isOffersLoading;
 
 export const getIsOffersLoadingError = (state: State): boolean =>
   state[NameSpace.Offers].isOffersLoadingError;
+
+
+export const getOffers = createSelector(
+  [getRawOffers, getCurrentCity, getSort],
+  (offers, city, sortOption) => prepareOffers(offers, city, sortOption)
+);
 

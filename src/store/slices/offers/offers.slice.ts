@@ -1,11 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { OffersState } from '../../../types/state';
 import { NameSpace } from '../../../const/infrastructure';
-import { fetchOffersAction } from '../../api-actions';
+import {
+  changeFavoriteStatusAction,
+  fetchOffersAction,
+} from '../../api-actions';
 
 const initialState: OffersState = {
   offers: [],
-  isOffersLoading: false,
+  isOffersLoading: true,
   isOffersLoadingError: false,
 };
 
@@ -26,6 +29,15 @@ export const offersSlice = createSlice({
       .addCase(fetchOffersAction.rejected, (state) => {
         state.offers = [];
         state.isOffersLoadingError = true;
+      })
+      .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {
+        const updatedOffer = action.payload;
+        const index = state.offers.findIndex(
+          (offer) => offer.id === updatedOffer.id,
+        );
+        if (index !== -1) {
+          state.offers[index].isFavorite = updatedOffer.isFavorite;
+        }
       });
   },
 });

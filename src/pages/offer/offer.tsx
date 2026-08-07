@@ -48,6 +48,7 @@ function Offer(): JSX.Element | null {
               title={offer.title}
               isFavorite={offer.isFavorite}
               isPremium={offer.isPremium}
+              id={offer.id}
             />
 
             <Rating block={Block.OFFER} rating={offer.rating} />

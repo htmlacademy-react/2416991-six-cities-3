@@ -10,9 +10,10 @@ import { MAX_NEAR_OFFERS_COUNT } from '../const/business';
 import { AppRoute } from '../const/infrastructure';
 import {
   getIsNearOffersLoading,
+  getIsOfferLoading,
+  getIsOfferLoadingError,
   getNearOffers,
   getOffer,
-  getOfferStatus,
 } from '../store/slices/offer/offer.selectors';
 import { getReviews } from '../store/slices/reviews/reviews.selectors';
 import { setActiveOfferId } from '../store/slices/app/app.slice';
@@ -23,8 +24,8 @@ function useOfferPage() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { isOfferLoading, isOfferLoadingError } =
-    useAppSelector(getOfferStatus);
+  const isOfferLoading = useAppSelector(getIsOfferLoading);
+  const isOfferLoadingError = useAppSelector(getIsOfferLoadingError);
 
   const offer = useAppSelector(getOffer);
   const isNearOffersLoading = useAppSelector(getIsNearOffersLoading);

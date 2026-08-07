@@ -92,15 +92,18 @@ export const fetchFavoritesAction = createAsyncThunk<
 });
 
 export const changeFavoriteStatusAction = createAsyncThunk<
-  void,
+  Offer,
   {
     offerId: OfferPreview['id'];
     status: FavoriteStatus;
   },
   AppThunkConfig
->('data/changeFavoriteStatus', async ({ offerId, status }, { extra }) => {
+>('data/changeFavoriteStatus', async ({ offerId, status }, {dispatch, extra }) => {
   const { api } = extra;
-  await api.post(`${APIRoute.Favorite}/${offerId}/${status}`);
+  const {data} = await api.post<ServerOffer>(`${APIRoute.Favorite}/${offerId}/${status}`);
+  const adaptedOffer = adaptOffer(data);
+  dispatch(fetchFavoritesAction());
+  return adaptedOffer;
 });
 
 export const checkAuthAction = createAsyncThunk<
