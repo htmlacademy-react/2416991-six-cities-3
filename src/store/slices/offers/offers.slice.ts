@@ -28,6 +28,7 @@ export const offersSlice = createSlice({
       })
       .addCase(fetchOffersAction.rejected, (state) => {
         state.offers = [];
+        state.isOffersLoading = false;
         state.isOffersLoadingError = true;
       })
       .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {

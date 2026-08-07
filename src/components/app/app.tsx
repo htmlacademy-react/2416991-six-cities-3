@@ -11,7 +11,6 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import Loading from '../../pages/loading/loading';
 import ProtectedRoute from '../protected-route/protected-route';
 import { getAuthorizationStatus } from '../../store/slices/user/user.selectors';
-import { getIsOffersLoading } from '../../store/slices/offers/offers.selectors';
 import { useEffect } from 'react';
 import {
   fetchFavoritesAction,
@@ -21,7 +20,6 @@ import {
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const isOffersLoading = useAppSelector(getIsOffersLoading);
 
   useEffect(() => {
     if (authorizationStatus !== AuthorizationStatus.Unknown) {
@@ -32,7 +30,7 @@ function App(): JSX.Element {
     }
   }, [authorizationStatus, dispatch]);
 
-  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersLoading) {
+  if (authorizationStatus === AuthorizationStatus.Unknown) {
     return <Loading />;
   }
 
