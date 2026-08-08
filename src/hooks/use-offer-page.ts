@@ -6,7 +6,6 @@ import {
   fetchOfferAction,
   fetchReviews,
 } from '../store/api-actions';
-import { MAX_NEAR_OFFERS_COUNT } from '../const/business';
 import { AppRoute } from '../const/infrastructure';
 import {
   getIsNearOffersLoading,
@@ -54,20 +53,15 @@ function useOfferPage() {
     [dispatch],
   );
 
-  const cuttedNearOffers = useMemo(
-    () => nearOffers.slice(0, MAX_NEAR_OFFERS_COUNT),
-    [nearOffers],
-  );
-
   const mapOffers = useMemo(
-    () => (offer ? [...cuttedNearOffers, offer] : cuttedNearOffers),
-    [cuttedNearOffers, offer],
+    () => (offer ? [...nearOffers, offer] : nearOffers),
+    [nearOffers, offer],
   );
 
   return {
     offer,
     reviews,
-    cuttedNearOffers,
+    nearOffers,
     mapOffers,
     isOfferLoading,
     isNearOffersLoading,

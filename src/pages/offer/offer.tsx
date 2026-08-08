@@ -20,7 +20,7 @@ function Offer(): JSX.Element | null {
   const {
     offer,
     reviews,
-    cuttedNearOffers,
+    nearOffers,
     mapOffers,
     isOfferLoading,
     isNearOffersLoading,
@@ -84,7 +84,7 @@ function Offer(): JSX.Element | null {
       </section>
       {!isNearOffersLoading && (
         <div className="container">
-          <NearOffers offers={cuttedNearOffers} />
+          <NearOffers offers={nearOffers} />
         </div>
       )}
     </>
