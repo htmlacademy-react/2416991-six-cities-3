@@ -1,6 +1,6 @@
 import { SortOption } from '../const/business';
 import { City, SortType } from '../types/common';
-import { OfferPreview } from '../types/offer';
+import { Offer, OfferPreview, ServerOffer } from '../types/offer';
 
 const filterOffersByCity = (
   offers: OfferPreview[],
@@ -23,26 +23,19 @@ const sortOffers = (
   }
 };
 
-const processFavoriteStatus = (
-  offers: OfferPreview[],
-  favoriteOffers: OfferPreview[],
-): OfferPreview[] => {
-  const favoriteIds = new Set(favoriteOffers.map((offer) => offer.id));
-
-  return offers.map((offer) => ({
-    ...offer,
-    isFavorite: favoriteIds.has(offer.id),
-  }));
-};
-
 export const prepareOffers = (
   offers: OfferPreview[],
-  favoriteOffers: OfferPreview[],
   city: City,
   sortBy: SortType,
 ): OfferPreview[] => {
   const filteredOffers = filterOffersByCity(offers, city);
-  const sortedOffers = sortOffers(filteredOffers, sortBy);
+  return sortOffers(filteredOffers, sortBy);
+};
 
-  return processFavoriteStatus(sortedOffers, favoriteOffers);
+export const adaptOffer = (serverOffer: ServerOffer): Offer => {
+  const { bedrooms, ...rest } = serverOffer;
+  return {
+    ...rest,
+    bedroomsQuantity: bedrooms,
+  };
 };

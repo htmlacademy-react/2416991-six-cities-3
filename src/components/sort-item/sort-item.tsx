@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { SortType } from '../../types/common';
 
 type SortOptionProps = {
@@ -18,4 +19,6 @@ function SortItem({ title, isActive, onItemClick }: SortOptionProps): JSX.Elemen
   );
 }
 
-export default SortItem;
+const MemoizedSortItem = memo(SortItem);
+
+export default MemoizedSortItem;

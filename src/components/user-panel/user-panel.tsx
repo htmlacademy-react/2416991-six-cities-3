@@ -3,12 +3,12 @@ import { AppRoute, AuthorizationStatus } from '../../const/infrastructure';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import UserLink from '../user-link/user-link';
 import { logoutAction } from '../../store/api-actions';
+import { getAuthorizationStatus } from '../../store/slices/user/user.selectors';
 
 function UserPanel(): JSX.Element {
   const dispatch = useAppDispatch();
   const isAuthorized =
-    useAppSelector((state) => state.authorizationStatus) ===
-    AuthorizationStatus.Auth;
+    useAppSelector(getAuthorizationStatus) === AuthorizationStatus.Auth;
 
   return (
     <nav className="header__nav">

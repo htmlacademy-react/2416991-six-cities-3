@@ -1,10 +1,11 @@
+import { memo } from 'react';
 import { Cities } from '../../const/business';
 import { City, CityName } from '../../types/common';
 import CityTab from '../city-tab/city-tab';
 
 type CitiesPanelProps = {
   activeCity: CityName;
-  onCityClick: (city:City) => void;
+  onCityClick: (city: City) => void;
 };
 
 function CitiesPanel({
@@ -29,4 +30,6 @@ function CitiesPanel({
   );
 }
 
-export default CitiesPanel;
+const MemoizedCitiesPanel = memo(CitiesPanel);
+
+export default MemoizedCitiesPanel;

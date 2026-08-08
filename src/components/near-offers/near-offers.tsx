@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Block } from '../../const/common';
 import { OfferPreview } from '../../types/offer';
 import OfferCard from '../offer-card/offer-card';
@@ -6,7 +7,10 @@ type NearOffersProps = {
   offers: OfferPreview[];
 };
 
-function NearOffers({ offers }: NearOffersProps): JSX.Element {
+function NearOffers({ offers }: NearOffersProps): JSX.Element | null {
+  if (offers.length === 0) {
+    return null;
+  }
   return (
     <section className="near-places places">
       <h2 className="near-places__title">Other places in the neighbourhood</h2>
@@ -19,4 +23,6 @@ function NearOffers({ offers }: NearOffersProps): JSX.Element {
   );
 }
 
-export default NearOffers;
+const MemoizedNearOffers = memo(NearOffers);
+
+export default MemoizedNearOffers;

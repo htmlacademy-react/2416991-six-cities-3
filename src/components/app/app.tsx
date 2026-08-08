@@ -1,30 +1,41 @@
-import { Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const/infrastructure';
 import Favorites from '../../pages/favorites/favorites';
 import Login from '../../pages/login/login';
 import Main from '../../pages/main/main';
 import NotFound from '../../pages/not-found/not-found';
 import Offer from '../../pages/offer/offer';
-import AuthGuard from '../auth-guard/auth-guard';
 import Layout from '../layout/layout';
 import { Helmet } from 'react-helmet-async';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import Loading from '../../pages/loading/loading';
-import HistoryRouter from '../history-router/history-router';
-import browserHistory from '../../browser-history';
+import ProtectedRoute from '../protected-route/protected-route';
+import { getAuthorizationStatus } from '../../store/slices/user/user.selectors';
+import { useEffect } from 'react';
+import {
+  fetchFavoritesAction,
+  fetchOffersAction,
+} from '../../store/api-actions';
 
 function App(): JSX.Element {
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus,
-  );
-  const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
+  const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
-  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersLoading) {
+  useEffect(() => {
+    if (authorizationStatus !== AuthorizationStatus.Unknown) {
+      dispatch(fetchOffersAction());
+      if (authorizationStatus === AuthorizationStatus.Auth) {
+        dispatch(fetchFavoritesAction());
+      }
+    }
+  }, [authorizationStatus, dispatch]);
+
+  if (authorizationStatus === AuthorizationStatus.Unknown) {
     return <Loading />;
   }
 
   return (
-    <HistoryRouter history={browserHistory}>
+    <BrowserRouter>
       <Helmet>
         <title>6 Cities</title>
       </Helmet>
@@ -34,12 +45,9 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Login}
             element={
-              <AuthGuard
-                expectedStatus={AuthorizationStatus.NoAuth}
-                redirectTo={AppRoute.Root}
-              >
+              <ProtectedRoute onlyNoAuth>
                 <Login />
-              </AuthGuard>
+              </ProtectedRoute>
             }
           />
 
@@ -48,19 +56,16 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Favorites}
             element={
-              <AuthGuard
-                expectedStatus={AuthorizationStatus.Auth}
-                redirectTo={AppRoute.Login}
-              >
+              <ProtectedRoute>
                 <Favorites />
-              </AuthGuard>
+              </ProtectedRoute>
             }
           />
           <Route path={AppRoute.NotFound} element={<NotFound />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
-    </HistoryRouter>
+    </BrowserRouter>
   );
 }
 

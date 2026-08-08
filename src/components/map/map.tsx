@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import { Offer, OfferPreview } from '../../types/offer';
 import useMap from '../../hooks/use-map';
 import { layerGroup, Marker } from 'leaflet';
@@ -6,15 +6,17 @@ import 'leaflet/dist/leaflet.css';
 import { currentCustomIcon, defaultCustomIcon } from './const';
 import { BlockName, City } from '../../types/common';
 import { Block } from '../../const/common';
+import { useAppSelector } from '../../hooks';
+import { getActiveOffId } from '../../store/slices/app/app.selectors';
 
 type MapProps = {
   city: City;
   offers: (OfferPreview | Offer)[];
-  selectedOfferId: OfferPreview['id'] | null;
   block?: BlockName;
 };
 
-function Map({ city, offers, selectedOfferId, block = Block.CITIES }: MapProps): JSX.Element {
+function Map({ city, offers, block = Block.CITIES }: MapProps): JSX.Element {
+  const selectedOfferId = useAppSelector(getActiveOffId);
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -43,5 +45,31 @@ function Map({ city, offers, selectedOfferId, block = Block.CITIES }: MapProps):
   return <section className={`${block}__map map`} ref={mapRef}></section>;
 }
 
-export default Map;
+const MemoizedMap = memo(
+  Map,
+  (prevProps: MapProps, nextProps: MapProps): boolean => {
+    if (
+      prevProps.block !== nextProps.block ||
+      prevProps.city.name !== nextProps.city.name
+    ) {
+      return false;
+    }
 
+    if (prevProps.offers.length !== nextProps.offers.length) {
+      return false;
+    }
+
+    const prevIds = prevProps.offers
+      .map((offer) => offer.id)
+      .sort()
+      .join(',');
+    const nextIds = nextProps.offers
+      .map((offer) => offer.id)
+      .sort()
+      .join(',');
+
+    return prevIds === nextIds;
+  },
+);
+
+export default MemoizedMap;

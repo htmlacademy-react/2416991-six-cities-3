@@ -1,19 +1,13 @@
-import { City } from '../../types/common';
-import { OfferPreview } from '../../types/offer';
+import { useAppSelector } from '../../hooks';
+import { getCurrentCity } from '../../store/slices/app/app.selectors';
+import { getOffers } from '../../store/slices/offers/offers.selectors';
 import CardList from '../card-list/card-list';
 import SortSelector from '../sort-selector/sort-selector';
 
-type OffersBoardProps = {
-  offers: OfferPreview[];
-  currentCity: City;
-  setActiveOfferId: (id: string | null) => void;
-};
 
-function OffersBoard({
-  offers,
-  currentCity,
-  setActiveOfferId,
-}: OffersBoardProps): JSX.Element {
+function OffersBoard(): JSX.Element {
+  const currentCity = useAppSelector(getCurrentCity);
+  const offers = useAppSelector(getOffers);
   return (
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
@@ -22,7 +16,7 @@ function OffersBoard({
         {currentCity.name}
       </b>
       <SortSelector />
-      <CardList offers={offers} setActiveCardId={setActiveOfferId} />
+      <CardList offers={offers} />
     </section>
   );
 }

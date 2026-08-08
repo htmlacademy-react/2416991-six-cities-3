@@ -2,8 +2,6 @@ export const BACKEND_URL = 'https://15.design.htmlacademy.pro/six-cities';
 
 export const REQUEST_TIMEOUT = 5000;
 
-export const TIMEOUT_SHOW_ERROR = 4000;
-
 export const AppRoute = {
   Root: '/',
   Login: '/login',
@@ -25,4 +23,18 @@ export const APIRoute = {
   Comments: '/comments',
   Login: '/login',
   Logout: '/logout',
+} as const;
+
+export enum FavoriteStatus {
+  No = 0,
+  Yes = 1,
+}
+
+export const NameSpace = {
+  Offers: 'OFFERS',
+  Offer: 'OFFER',
+  App: 'APP',
+  Reviews: 'REVIEWS',
+  Favorites: 'FAVORITES',
+  User: 'USER',
 } as const;

@@ -1,11 +1,11 @@
 import { Helmet } from 'react-helmet-async';
 import FavoritesItem from '../../components/favorites-item/favorites-item';
 import { Cities } from '../../const/business';
-import { OfferPreview } from '../../types/offer';
+import { useAppSelector } from '../../hooks';
+import { getFavorites } from '../../store/slices/favorites/favorites.selectors';
 
 function Favorites(): JSX.Element {
-  //!temp
-  const favoriteOffers = [] as OfferPreview[];
+  const favoriteOffers = useAppSelector(getFavorites);
   const groupedOffers = [...Cities].map((city) => ({
     city,
     offers: favoriteOffers.filter((offer) => offer.city.name === city.name),

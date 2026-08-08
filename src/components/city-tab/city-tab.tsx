@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { City } from '../../types/common';
 
 type CityTabProps = {
@@ -25,4 +26,6 @@ function CityTab({ city, isActive, onTabClick }: CityTabProps): JSX.Element {
   );
 }
 
-export default CityTab;
+const MemoizedCityTab = memo(CityTab);
+
+export default MemoizedCityTab;

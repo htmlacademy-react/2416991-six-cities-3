@@ -1,8 +1,8 @@
 import { FormEvent, useRef } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
-import { processErrorHandle } from '../../services/process-error-handle';
 import { EMAIL_REGEXP, PASSWORD_REGEXP } from '../../const/regexp';
+import { toast } from 'react-toastify';
 
 function LoginForm(): JSX.Element {
   const emailRef = useRef<HTMLInputElement | null>(null);
@@ -18,14 +18,12 @@ function LoginForm(): JSX.Element {
       const password = passwordRef.current.value;
 
       if (!EMAIL_REGEXP.test(email)) {
-        processErrorHandle('Please enter a valid email address');
+        toast.warn('Please enter a valid email address');
         return;
       }
 
       if (!PASSWORD_REGEXP.test(password)) {
-        processErrorHandle(
-          'Password must contain at least one letter and one number',
-        );
+        toast.warn('Password must contain at least one letter and one number');
         return;
       }
 

@@ -2,9 +2,10 @@ import { Helmet } from 'react-helmet-async';
 import CityLink from '../../components/city-link/city-link';
 import LoginForm from '../../components/login-form/login-form';
 import { useAppSelector } from '../../hooks';
+import { getCurrentCity } from '../../store/slices/app/app.selectors';
 
 function Login(): JSX.Element {
-  const currentCity = useAppSelector((state) => state.currentCity);
+  const currentCity = useAppSelector(getCurrentCity);
 
   return (
     <div className="page__login-container container">

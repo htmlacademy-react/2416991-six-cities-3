@@ -1,25 +1,18 @@
-import { useEffect } from 'react';
+import { memo } from 'react';
 import { AuthorizationStatus } from '../../const/infrastructure';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { Offer } from '../../types/offer';
+import { useAppSelector } from '../../hooks';
+import { Review } from '../../types/offer';
 import ReviewForm from '../review-form/review-form';
 import ReviewsList from '../reviews-list/reviews-list';
 import Spinner from '../spinner/spinner';
-import { fetchReviews } from '../../store/api-actions';
+import { getAuthorizationStatus } from '../../store/slices/user/user.selectors';
 
-type OfferReviewsProps = Pick<Offer, 'id'>;
+type OfferReviewsProps = {
+  reviews: Review[];
+};
 
-function OfferReviews({ id }: OfferReviewsProps): JSX.Element {
-  const dispatch = useAppDispatch();
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus,
-  );
-
-  const reviews = useAppSelector((state) => state.reviews);
-
-  useEffect(() => {
-    dispatch(fetchReviews(id));
-  }, [id, dispatch]);
+function OfferReviews({ reviews }: OfferReviewsProps): JSX.Element {
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   return (
     <section className="offer__reviews reviews">
@@ -35,9 +28,11 @@ function OfferReviews({ id }: OfferReviewsProps): JSX.Element {
 
       {authorizationStatus === AuthorizationStatus.Unknown && <Spinner />}
 
-      {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm id={id} />}
+      {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm />}
     </section>
   );
 }
 
-export default OfferReviews;
+const MemoizedOfferReviews = memo(OfferReviews);
+
+export default MemoizedOfferReviews;

@@ -50,7 +50,7 @@ export type Review = {
 export type ReviewServer = {
   id: BaseOffer['id'];
   comment: string;
-  rating: 5 | 4 | 3 | 2 | 1;
+  rating: number;
 };
 
-export type RatingInForm = '' | '5' | '4' | '3' | '2' | '1';
+export type RatingInForm = number;
