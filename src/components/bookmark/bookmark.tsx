@@ -20,12 +20,12 @@ type BookmarkProps = {
   offerId: OfferPreview['id'];
 };
 
-function Bookmark({
+const Bookmark = ({
   isActive,
   block = Block.PLACE_CARD,
   isSmall = true,
   offerId,
-}: BookmarkProps): JSX.Element {
+}: BookmarkProps): JSX.Element => {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -61,6 +61,6 @@ function Bookmark({
       <span className="visually-hidden">To bookmarks</span>
     </button>
   );
-}
+};
 
 export default Bookmark;

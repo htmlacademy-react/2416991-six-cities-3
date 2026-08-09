@@ -5,7 +5,7 @@ import './user-link.css';
 import { getUserInfo } from '../../store/slices/user/user.selectors';
 import { getFavorites } from '../../store/slices/favorites/favorites.selectors';
 
-function UserLink(): JSX.Element {
+const UserLink = (): JSX.Element => {
   const user = useAppSelector(getUserInfo);
   const favoriteOffersCount = useAppSelector(getFavorites).length;
   return (
@@ -24,6 +24,6 @@ function UserLink(): JSX.Element {
       <span className="header__favorite-count">{favoriteOffersCount}</span>
     </Link>
   );
-}
+};
 
 export default UserLink;

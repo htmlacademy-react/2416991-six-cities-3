@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 
-function NotFound(): JSX.Element {
+const NotFound = (): JSX.Element => {
   const notFoundStyles: React.CSSProperties = {
     textAlign: 'center',
     padding: '120px 40px',
@@ -154,6 +154,6 @@ function NotFound(): JSX.Element {
       </Link>
     </section>
   );
-}
+};
 
 export default NotFound;

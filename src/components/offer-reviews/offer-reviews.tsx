@@ -11,7 +11,7 @@ type OfferReviewsProps = {
   reviews: Review[];
 };
 
-function OfferReviews({ reviews }: OfferReviewsProps): JSX.Element {
+const OfferReviews = memo(({ reviews }: OfferReviewsProps): JSX.Element => {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   return (
@@ -31,8 +31,8 @@ function OfferReviews({ reviews }: OfferReviewsProps): JSX.Element {
       {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm />}
     </section>
   );
-}
+});
 
-const MemoizedOfferReviews = memo(OfferReviews);
+OfferReviews.displayName = 'OfferReviews';
 
-export default MemoizedOfferReviews;
+export default OfferReviews;

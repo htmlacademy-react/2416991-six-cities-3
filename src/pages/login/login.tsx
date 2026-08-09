@@ -4,7 +4,7 @@ import LoginForm from '../../components/login-form/login-form';
 import { useAppSelector } from '../../hooks';
 import { getCurrentCity } from '../../store/slices/app/app.selectors';
 
-function Login(): JSX.Element {
+const Login = (): JSX.Element => {
   const currentCity = useAppSelector(getCurrentCity);
 
   return (
@@ -21,6 +21,6 @@ function Login(): JSX.Element {
       </section>
     </div>
   );
-}
+};
 
 export default Login;

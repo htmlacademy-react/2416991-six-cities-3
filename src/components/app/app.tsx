@@ -17,10 +17,9 @@ import {
   fetchOffersAction,
 } from '../../store/api-actions';
 
-function App(): JSX.Element {
+const App = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-
   useEffect(() => {
     if (authorizationStatus !== AuthorizationStatus.Unknown) {
       dispatch(fetchOffersAction());
@@ -67,6 +66,6 @@ function App(): JSX.Element {
       </Routes>
     </BrowserRouter>
   );
-}
+};
 
 export default App;

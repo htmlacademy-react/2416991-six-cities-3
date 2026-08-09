@@ -18,7 +18,7 @@ import { getReviews } from '../store/slices/reviews/reviews.selectors';
 import { setActiveOfferId } from '../store/slices/app/app.slice';
 import { clearOfferPage } from '../store/slices/offer/offer.slice';
 
-function useOfferPage() {
+const useOfferPage = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -66,6 +66,6 @@ function useOfferPage() {
     isOfferLoading,
     isNearOffersLoading,
   };
-}
+};
 
 export default useOfferPage;

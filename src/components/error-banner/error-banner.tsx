@@ -2,7 +2,7 @@ import { useAppDispatch } from '../../hooks';
 import { fetchOffersAction } from '../../store/api-actions';
 import './error-banner.css';
 
-function ErrorBanner(): JSX.Element {
+const ErrorBanner = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   return (
@@ -21,6 +21,6 @@ function ErrorBanner(): JSX.Element {
       </div>
     </section>
   );
-}
+};
 
 export default ErrorBanner;

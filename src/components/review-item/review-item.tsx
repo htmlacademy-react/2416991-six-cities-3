@@ -5,29 +5,31 @@ import ReviewDate from '../review-date/review-date';
 
 type ReviewProps = {
   review: Review;
-}
+};
 
-function ReviewItem({ review }: ReviewProps): JSX.Element {
-  return (
-    <li className="reviews__item">
-      <div className="reviews__user user">
-        <div className={`reviews__avatar-wrapper ${review.user.isPro ? 'reviews__avatar-wrapper--pro' : ''} user__avatar-wrapper`}>
-          <img className="reviews__avatar user__avatar" src={review.user.avatarUrl} width="54" height="54" alt="Reviews avatar" />
-        </div>
-        <span className="reviews__user-name">
-          {review.user.name}
-        </span>
+const ReviewItem = ({ review }: ReviewProps): JSX.Element => (
+  <li className="reviews__item">
+    <div className="reviews__user user">
+      <div
+        className={`reviews__avatar-wrapper ${review.user.isPro ? 'reviews__avatar-wrapper--pro' : ''} user__avatar-wrapper`}
+      >
+        <img
+          className="reviews__avatar user__avatar"
+          src={review.user.avatarUrl}
+          width="54"
+          height="54"
+          alt="Reviews avatar"
+        />
       </div>
-      <div className="reviews__info">
-        <Rating block={Block.REVIEWS} rating={review.rating} />
+      <span className="reviews__user-name">{review.user.name}</span>
+    </div>
+    <div className="reviews__info">
+      <Rating block={Block.REVIEWS} rating={review.rating} />
 
-        <p className="reviews__text">
-          {review.comment}
-        </p>
-        <ReviewDate date={review.date} />
-      </div>
-    </li>
-  );
-}
+      <p className="reviews__text">{review.comment}</p>
+      <ReviewDate date={review.date} />
+    </div>
+  </li>
+);
 
 export default ReviewItem;

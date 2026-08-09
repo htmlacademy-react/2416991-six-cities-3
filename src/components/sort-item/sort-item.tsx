@@ -7,8 +7,8 @@ type SortOptionProps = {
   onItemClick: (sortType: SortType) => void;
 };
 
-function SortItem({ title, isActive, onItemClick }: SortOptionProps): JSX.Element {
-  return (
+const SortItem = memo(
+  ({ title, isActive, onItemClick }: SortOptionProps): JSX.Element => (
     <li
       className={`places__option ${isActive ? 'places__option--active' : ''}`}
       tabIndex={0}
@@ -16,9 +16,9 @@ function SortItem({ title, isActive, onItemClick }: SortOptionProps): JSX.Elemen
     >
       {title}
     </li>
-  );
-}
+  ),
+);
 
-const MemoizedSortItem = memo(SortItem);
+SortItem.displayName = 'SortItem';
 
-export default MemoizedSortItem;
+export default SortItem;

@@ -8,14 +8,14 @@ type ReviewFormRatingStarProps = {
   onChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-function ReviewFormRatingStar({
-  value,
-  title,
-  checked,
-  disabled,
-  onChange,
-}: ReviewFormRatingStarProps): JSX.Element {
-  return (
+const ReviewFormRatingStar = memo(
+  ({
+    value,
+    title,
+    checked,
+    disabled,
+    onChange,
+  }: ReviewFormRatingStarProps): JSX.Element => (
     <>
       <input
         className="form__rating-input visually-hidden"
@@ -38,9 +38,9 @@ function ReviewFormRatingStar({
         </svg>
       </label>
     </>
-  );
-}
+  ),
+);
 
-const MemoizedReviewFormRatingStar = memo(ReviewFormRatingStar);
+ReviewFormRatingStar.displayName = 'ReviewFormRatingStar';
 
-export default MemoizedReviewFormRatingStar;
+export default ReviewFormRatingStar;

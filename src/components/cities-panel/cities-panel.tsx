@@ -8,11 +8,8 @@ type CitiesPanelProps = {
   onCityClick: (city: City) => void;
 };
 
-function CitiesPanel({
-  activeCity,
-  onCityClick,
-}: CitiesPanelProps): JSX.Element {
-  return (
+const CitiesPanel = memo(
+  ({ activeCity, onCityClick }: CitiesPanelProps): JSX.Element => (
     <div className="tabs">
       <section className="locations container">
         <ul className="locations__list tabs__list">
@@ -27,9 +24,8 @@ function CitiesPanel({
         </ul>
       </section>
     </div>
-  );
-}
+  ),
+);
+CitiesPanel.displayName = 'CitiesPanel';
 
-const MemoizedCitiesPanel = memo(CitiesPanel);
-
-export default MemoizedCitiesPanel;
+export default CitiesPanel;

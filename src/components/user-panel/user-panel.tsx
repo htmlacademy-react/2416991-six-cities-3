@@ -5,7 +5,7 @@ import UserLink from '../user-link/user-link';
 import { logoutAction } from '../../store/api-actions';
 import { getAuthorizationStatus } from '../../store/slices/user/user.selectors';
 
-function UserPanel(): JSX.Element {
+const UserPanel = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const isAuthorized =
     useAppSelector(getAuthorizationStatus) === AuthorizationStatus.Auth;
@@ -46,6 +46,6 @@ function UserPanel(): JSX.Element {
       </ul>
     </nav>
   );
-}
+};
 
 export default UserPanel;

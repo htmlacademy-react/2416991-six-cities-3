@@ -4,11 +4,10 @@ import { Offer } from '../../types/offer';
 
 type RatingProps = { block?: BlockName } & Pick<Offer, 'rating'>;
 
-function Rating({
+const Rating = ({
   block = Block.PLACE_CARD,
   rating,
-}: RatingProps): JSX.Element {
-
+}: RatingProps): JSX.Element => {
   const width = `${(rating / 5) * 100}%`;
   return (
     <div className={`${block}__rating rating`}>
@@ -21,6 +20,6 @@ function Rating({
       )}
     </div>
   );
-}
+};
 
 export default Rating;

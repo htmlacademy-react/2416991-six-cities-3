@@ -1,8 +1,7 @@
 import { useAppSelector } from '../../hooks';
 import { getCurrentCity } from '../../store/slices/app/app.selectors';
-// ! наверное стоит сделать кнопку новой загрузки предложений
 
-function NoPlaces(): JSX.Element {
+const NoPlaces = (): JSX.Element => {
   const currentCity = useAppSelector(getCurrentCity);
   return (
     <section className="cities__no-places">
@@ -15,6 +14,6 @@ function NoPlaces(): JSX.Element {
       </div>
     </section>
   );
-}
+};
 
 export default NoPlaces;

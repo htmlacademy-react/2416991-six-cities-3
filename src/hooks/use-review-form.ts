@@ -12,7 +12,7 @@ const INITIAL_FORM_STATE: ReviewFormData = {
   rating: 0,
 };
 
-export const useReviewForm = () => {
+const useReviewForm = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
 
@@ -80,3 +80,5 @@ export const useReviewForm = () => {
     handleSubmit,
   };
 };
+
+export default useReviewForm;

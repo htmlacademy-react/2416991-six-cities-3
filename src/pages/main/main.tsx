@@ -15,7 +15,7 @@ import { setCurrentCity } from '../../store/slices/app/app.slice';
 import Loading from '../loading/loading';
 import ErrorBanner from '../../components/error-banner/error-banner';
 
-function Main(): JSX.Element {
+const Main = (): JSX.Element => {
   const currentCity = useAppSelector(getCurrentCity);
   const offers = useAppSelector(getOffers);
   const hasLoadingError = useAppSelector(getIsOffersLoadingError);
@@ -52,6 +52,6 @@ function Main(): JSX.Element {
       </div>
     </>
   );
-}
+};
 
 export default Main;

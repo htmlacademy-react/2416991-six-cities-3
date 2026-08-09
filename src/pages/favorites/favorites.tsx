@@ -4,7 +4,7 @@ import { Cities } from '../../const/business';
 import { useAppSelector } from '../../hooks';
 import { getFavorites } from '../../store/slices/favorites/favorites.selectors';
 
-function Favorites(): JSX.Element {
+const Favorites = (): JSX.Element => {
   const favoriteOffers = useAppSelector(getFavorites);
   const groupedOffers = [...Cities].map((city) => ({
     city,
@@ -26,6 +26,6 @@ function Favorites(): JSX.Element {
       </section>
     </div>
   );
-}
+};
 
 export default Favorites;

@@ -6,16 +6,16 @@ type ReviewsListProps = {
   reviews: Review[];
 };
 
-function ReviewsList({ reviews }: ReviewsListProps): JSX.Element {
-  return (
+const ReviewsList = memo(
+  ({ reviews }: ReviewsListProps): JSX.Element => (
     <ul className="reviews__list">
       {reviews.map((review) => (
         <ReviewItem key={review.id} review={review} />
       ))}
     </ul>
-  );
-}
+  ),
+);
 
-const MemoizedReviewsList = memo(ReviewsList);
+ReviewsList.displayName = 'ReviewsList';
 
-export default MemoizedReviewsList;
+export default ReviewsList;

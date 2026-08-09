@@ -1,15 +1,18 @@
 import { Block } from '../../const/common';
 import { CityName } from '../../types/common';
 import { OfferPreview } from '../../types/offer';
-import OfferCard from '../offer-card/offer-card';
+import { OfferCard } from '../offer-card/offer-card';
 
 type FavoritesItemProps = {
   city: CityName;
   offers: OfferPreview[];
-}
+};
 
-function FavoritesItem({ city, offers }: FavoritesItemProps): JSX.Element | null {
-  if ((offers.length) === 0) {
+const FavoritesItem = ({
+  city,
+  offers,
+}: FavoritesItemProps): JSX.Element | null => {
+  if (offers.length === 0) {
     return null;
   }
   return (
@@ -28,6 +31,6 @@ function FavoritesItem({ city, offers }: FavoritesItemProps): JSX.Element | null
       </div>
     </li>
   );
-}
+};
 
 export default FavoritesItem;
