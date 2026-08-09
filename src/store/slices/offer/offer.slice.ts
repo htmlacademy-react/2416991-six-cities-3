@@ -6,6 +6,7 @@ import {
   fetchNearOffersAction,
   fetchOfferAction,
 } from '../../api-actions';
+import { clearFavorites } from '../favorites/favorites.slice';
 
 const initialState: OfferState = {
   offer: null,
@@ -72,6 +73,14 @@ export const offerSlice = createSlice({
         if (nearOfferIndex !== -1) {
           state.nearOffers[nearOfferIndex].isFavorite = updatedOffer.isFavorite;
         }
+      })
+      .addCase(clearFavorites, (state) => {
+        if (state.offer) {
+          state.offer.isFavorite = false;
+        }
+        state.nearOffers.forEach((offer) => {
+          offer.isFavorite = false;
+        });
       });
   },
 });

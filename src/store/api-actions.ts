@@ -14,6 +14,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { adaptOffer } from './utils';
 import axios from 'axios';
 import { MAX_NEAR_OFFERS_COUNT } from '../const/business';
+import { clearFavorites } from './slices/favorites/favorites.slice';
 
 export const fetchOffersAction = createAsyncThunk<
   OfferPreview[],
@@ -136,9 +137,10 @@ export const loginAction = createAsyncThunk<UserData, AuthData, AppThunkConfig>(
 
 export const logoutAction = createAsyncThunk<void, undefined, AppThunkConfig>(
   'user/logout',
-  async (_arg, { extra }) => {
+  async (_arg, { dispatch, extra }) => {
     const { api } = extra;
     await api.delete(APIRoute.Logout);
+    dispatch(clearFavorites());
     dropToken();
   },
 );
