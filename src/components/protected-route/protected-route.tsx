@@ -17,7 +17,6 @@ const ProtectedRoute = ({
   onlyNoAuth = false,
 }: PropsWithChildren<ProtectedRouteProps>) => {
   const location: Location<FromState> = useLocation() as Location<FromState>;
-
   const user = useAppSelector(getUserInfo);
 
   if (onlyNoAuth && user) {

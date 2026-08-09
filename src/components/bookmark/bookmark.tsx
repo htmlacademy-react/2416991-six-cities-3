@@ -11,7 +11,7 @@ import { BlockName } from '../../types/common';
 import { OfferPreview } from '../../types/offer';
 import { Size } from './const';
 import { getAuthorizationStatus } from '../../store/slices/user/user.selectors';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 type BookmarkProps = {
   isActive: boolean;
@@ -28,13 +28,14 @@ const Bookmark = ({
 }: BookmarkProps): JSX.Element => {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useAppDispatch();
   const size = isSmall ? Size.SMALL : Size.BIG;
 
   const handleClick = (evt: MouseEvent) => {
     evt.preventDefault();
     if (authorizationStatus !== AuthorizationStatus.Auth) {
-      navigate(AppRoute.Login);
+      navigate(AppRoute.Login, { state: { from: location } });
     } else {
       const statusForFetching = isActive
         ? FavoriteStatus.No

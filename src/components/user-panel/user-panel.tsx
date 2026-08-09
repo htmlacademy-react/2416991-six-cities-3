@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const/infrastructure';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import UserLink from '../user-link/user-link';
@@ -6,7 +6,9 @@ import { logoutAction } from '../../store/api-actions';
 import { getAuthorizationStatus } from '../../store/slices/user/user.selectors';
 
 const UserPanel = (): JSX.Element => {
+  const location = useLocation();
   const dispatch = useAppDispatch();
+
   const isAuthorized =
     useAppSelector(getAuthorizationStatus) === AuthorizationStatus.Auth;
 
@@ -37,6 +39,7 @@ const UserPanel = (): JSX.Element => {
             <Link
               className="header__nav-link header__nav-link--profile"
               to={AppRoute.Login}
+              state={{ from: location }}
             >
               <div className="header__avatar-wrapper user__avatar-wrapper"></div>
               <span className="header__login">Sign in</span>
