@@ -1,28 +1,31 @@
 import { Helmet } from 'react-helmet-async';
-import FavoritesItem from '../../components/favorites-item/favorites-item';
-import { Cities } from '../../const/business';
 import { useAppSelector } from '../../hooks';
-import { getFavorites } from '../../store/slices/favorites/favorites.selectors';
+import {
+  geIsFavoritesLoading,
+  getFavorites,
+} from '../../store/slices/favorites/favorites.selectors';
+import EmptyFavoritesBanner from '../../components/empty-favorites-banner/empty-favorites-banner';
+import FavoritesList from '../../components/favorites-list/favorites-list';
+import Spinner from '../../components/spinner/spinner';
 
 const Favorites = (): JSX.Element => {
   const favoriteOffers = useAppSelector(getFavorites);
-  const groupedOffers = [...Cities].map((city) => ({
-    city,
-    offers: favoriteOffers.filter((offer) => offer.city.name === city.name),
-  }));
+  const isFavoritesLoading = useAppSelector(geIsFavoritesLoading);
+  const isEmpty = !isFavoritesLoading && favoriteOffers.length === 0;
 
   return (
     <div className="page__favorites-container container">
       <Helmet>
         <title>6 Cities | Favorites</title>
       </Helmet>
-      <section className="favorites">
-        <h1 className="favorites__title">Saved listing</h1>
-        <ul className="favorites__list">
-          {groupedOffers.map(({ city, offers }) => (
-            <FavoritesItem key={city.name} city={city.name} offers={offers} />
-          ))}
-        </ul>
+      <section className={`favorites ${isEmpty ? 'favorites--empty' : ''}`}>
+        {isFavoritesLoading && <Spinner />}
+
+        {isEmpty && <h1 className="visually-hidden">Favorites (empty)</h1>}
+        {!isEmpty && <h1 className="favorites__title">Saved listing</h1>}
+
+        {isEmpty && <EmptyFavoritesBanner />}
+        {!isEmpty && <FavoritesList />}
       </section>
     </div>
   );
