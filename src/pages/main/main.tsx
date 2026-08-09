@@ -12,8 +12,8 @@ import {
 } from '../../store/slices/offers/offers.selectors';
 import { getCurrentCity } from '../../store/slices/app/app.selectors';
 import { setCurrentCity } from '../../store/slices/app/app.slice';
-import Loading from '../loading/loading';
 import ErrorBanner from '../../components/error-banner/error-banner';
+import Spinner from '../../components/spinner/spinner';
 
 const Main = (): JSX.Element => {
   const currentCity = useAppSelector(getCurrentCity);
@@ -41,7 +41,7 @@ const Main = (): JSX.Element => {
         <div
           className={`cities__places-container ${isEmpty ? 'cities__places-container--empty' : ''} container`}
         >
-          {isOffersLoading && <Loading />}
+          {isOffersLoading && <Spinner />}
           {hasLoadingError && <ErrorBanner />}
           {isEmpty && !hasLoadingError && !isOffersLoading && <NoPlaces />}
           {!isEmpty && !hasLoadingError && !isOffersLoading && <OffersBoard />}
