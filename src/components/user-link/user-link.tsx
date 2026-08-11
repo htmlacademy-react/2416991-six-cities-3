@@ -19,7 +19,7 @@ const UserLink = (): JSX.Element => {
         <img className="user__avatar-image" src={user?.avatarUrl} />
       </div>
       <span className="header__user-name user__name">
-        {user?.name || user?.email || 'John Doe'}
+        {user?.email || user?.name || 'John Doe'}
       </span>
       <span className="header__favorite-count">{favoriteOffersCount}</span>
     </Link>
