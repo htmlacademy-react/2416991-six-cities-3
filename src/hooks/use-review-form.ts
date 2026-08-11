@@ -50,7 +50,7 @@ const useReviewForm = () => {
 
     setIsSubmitting(true);
 
-    void dispatch(
+    dispatch(
       postReview({
         rating: formData.rating,
         comment: formData.comment,
