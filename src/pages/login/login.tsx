@@ -1,11 +1,12 @@
 import { Helmet } from 'react-helmet-async';
 import CityLink from '../../components/city-link/city-link';
 import LoginForm from '../../components/login-form/login-form';
-import { useAppSelector } from '../../hooks';
-import { getCurrentCity } from '../../store/slices/app/app.selectors';
+import { getRandomElement } from '../../utils/common';
+import { Cities, DefaultCity } from '../../const/business';
+import { City } from '../../types/common';
 
 const Login = (): JSX.Element => {
-  const currentCity = useAppSelector(getCurrentCity);
+  const randomCity = getRandomElement<City>(Cities) || DefaultCity;
 
   return (
     <div className="page__login-container container">
@@ -17,7 +18,7 @@ const Login = (): JSX.Element => {
         <LoginForm />
       </section>
       <section className="locations locations--login locations--current">
-        <CityLink city={currentCity.name} />
+        <CityLink city={randomCity} />
       </section>
     </div>
   );
