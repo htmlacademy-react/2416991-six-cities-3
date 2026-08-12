@@ -4,7 +4,7 @@ import { loginAction } from '../../store/api-actions';
 import { EMAIL_REGEXP, PASSWORD_REGEXP } from '../../const/regexp';
 import { toast } from 'react-toastify';
 
-function LoginForm(): JSX.Element {
+const LoginForm = (): JSX.Element => {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
@@ -70,6 +70,6 @@ function LoginForm(): JSX.Element {
       </button>
     </form>
   );
-}
+};
 
 export default LoginForm;

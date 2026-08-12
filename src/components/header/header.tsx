@@ -2,8 +2,9 @@ import { useLocation } from 'react-router-dom';
 import { AppRoute } from '../../const/infrastructure';
 import LogoLink from '../logo-link/logo-link';
 import UserPanel from '../user-panel/user-panel';
+import { memo } from 'react';
 
-function Header(): JSX.Element {
+const Header = memo((): JSX.Element => {
   const location = useLocation();
   const isLoginPage = location.pathname === AppRoute.Login;
 
@@ -19,6 +20,8 @@ function Header(): JSX.Element {
       </div>
     </header>
   );
-}
+});
+
+Header.displayName = 'Header';
 
 export default Header;

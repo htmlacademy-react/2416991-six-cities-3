@@ -3,12 +3,10 @@ import { formatToServerDate, humanizeDate } from './utils';
 
 type ReviewDateProps = Pick<Review, 'date'>;
 
-function ReviewDate({ date }: ReviewDateProps): JSX.Element {
-  return (
-    <time className="reviews__date" dateTime={formatToServerDate(date)}>
-      {humanizeDate(date)}
-    </time>
-  );
-}
+const ReviewDate = ({ date }: ReviewDateProps): JSX.Element => (
+  <time className="reviews__date" dateTime={formatToServerDate(date)}>
+    {humanizeDate(date)}
+  </time>
+);
 
 export default ReviewDate;

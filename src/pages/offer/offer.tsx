@@ -1,4 +1,3 @@
-
 import NearOffers from '../../components/near-offers/near-offers';
 import OfferFeatures from '../../components/offer-features/offer-features';
 import OfferGallery from '../../components/offer-gallery/offer-gallery';
@@ -16,11 +15,11 @@ import OfferReviews from '../../components/offer-reviews/offer-reviews';
 import { Helmet } from 'react-helmet-async';
 import useOfferPage from '../../hooks/use-offer-page';
 
-function Offer(): JSX.Element | null {
+const Offer = (): JSX.Element | null => {
   const {
     offer,
     reviews,
-    cuttedNearOffers,
+    nearOffers,
     mapOffers,
     isOfferLoading,
     isNearOffersLoading,
@@ -75,20 +74,16 @@ function Offer(): JSX.Element | null {
         </div>
         {isNearOffersLoading && <Spinner />}
         {!isNearOffersLoading && (
-          <Map
-            city={offer.city}
-            offers={mapOffers}
-            block={Block.OFFER}
-          />
+          <Map city={offer.city} offers={mapOffers} block={Block.OFFER} />
         )}
       </section>
       {!isNearOffersLoading && (
         <div className="container">
-          <NearOffers offers={cuttedNearOffers} />
+          <NearOffers offers={nearOffers} />
         </div>
       )}
     </>
   );
-}
+};
 
 export default Offer;

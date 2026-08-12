@@ -5,7 +5,7 @@ import './user-link.css';
 import { getUserInfo } from '../../store/slices/user/user.selectors';
 import { getFavorites } from '../../store/slices/favorites/favorites.selectors';
 
-function UserLink(): JSX.Element {
+const UserLink = (): JSX.Element => {
   const user = useAppSelector(getUserInfo);
   const favoriteOffersCount = useAppSelector(getFavorites).length;
   return (
@@ -19,11 +19,11 @@ function UserLink(): JSX.Element {
         <img className="user__avatar-image" src={user?.avatarUrl} />
       </div>
       <span className="header__user-name user__name">
-        {user?.name || user?.email || 'John Doe'}
+        {user?.email || user?.name || 'John Doe'}
       </span>
       <span className="header__favorite-count">{favoriteOffersCount}</span>
     </Link>
   );
-}
+};
 
 export default UserLink;

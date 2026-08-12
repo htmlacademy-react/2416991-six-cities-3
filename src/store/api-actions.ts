@@ -7,13 +7,14 @@ import {
   ReviewServer,
   ServerOffer,
 } from '../types/offer';
-import { dropToken, saveToken } from '../services/token';
+import { dropToken, getToken, saveToken } from '../services/token';
 import { UserData } from '../types/user-data';
 import { AuthData } from '../types/auth-data';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { adaptOffer } from './utils';
 import axios from 'axios';
 import { MAX_NEAR_OFFERS_COUNT } from '../const/business';
+import { clearFavorites } from './slices/favorites/favorites.slice';
 
 export const fetchOffersAction = createAsyncThunk<
   OfferPreview[],
@@ -115,9 +116,16 @@ export const checkAuthAction = createAsyncThunk<
   UserData,
   undefined,
   AppThunkConfig
->('user/checkAuth', async (_arg, { extra }) => {
+>('user/checkAuth', async (_arg, { extra, rejectWithValue }) => {
+  const token = getToken();
+  if (!token) {
+    return rejectWithValue({
+      status: 401,
+      message: 'No token found',
+    });
+  }
+
   const { api } = extra;
-  await api.get(APIRoute.Login);
   const { data } = await api.get<UserData>(APIRoute.Login);
   return data;
 });
@@ -137,9 +145,10 @@ export const loginAction = createAsyncThunk<UserData, AuthData, AppThunkConfig>(
 
 export const logoutAction = createAsyncThunk<void, undefined, AppThunkConfig>(
   'user/logout',
-  async (_arg, { extra }) => {
+  async (_arg, { dispatch, extra }) => {
     const { api } = extra;
     await api.delete(APIRoute.Logout);
+    dispatch(clearFavorites());
     dropToken();
   },
 );

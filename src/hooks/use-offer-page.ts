@@ -6,7 +6,6 @@ import {
   fetchOfferAction,
   fetchReviews,
 } from '../store/api-actions';
-import { MAX_NEAR_OFFERS_COUNT } from '../const/business';
 import { AppRoute } from '../const/infrastructure';
 import {
   getIsNearOffersLoading,
@@ -19,7 +18,7 @@ import { getReviews } from '../store/slices/reviews/reviews.selectors';
 import { setActiveOfferId } from '../store/slices/app/app.slice';
 import { clearOfferPage } from '../store/slices/offer/offer.slice';
 
-function useOfferPage() {
+const useOfferPage = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -54,24 +53,19 @@ function useOfferPage() {
     [dispatch],
   );
 
-  const cuttedNearOffers = useMemo(
-    () => nearOffers.slice(0, MAX_NEAR_OFFERS_COUNT),
-    [nearOffers],
-  );
-
   const mapOffers = useMemo(
-    () => (offer ? [...cuttedNearOffers, offer] : cuttedNearOffers),
-    [cuttedNearOffers, offer],
+    () => (offer ? [...nearOffers, offer] : nearOffers),
+    [nearOffers, offer],
   );
 
   return {
     offer,
     reviews,
-    cuttedNearOffers,
+    nearOffers,
     mapOffers,
     isOfferLoading,
     isNearOffersLoading,
   };
-}
+};
 
 export default useOfferPage;

@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, useState } from 'react';
 import { Block } from '../../const/common';
 import {
   AppRoute,
@@ -11,7 +11,8 @@ import { BlockName } from '../../types/common';
 import { OfferPreview } from '../../types/offer';
 import { Size } from './const';
 import { getAuthorizationStatus } from '../../store/slices/user/user.selectors';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 type BookmarkProps = {
   isActive: boolean;
@@ -20,29 +21,39 @@ type BookmarkProps = {
   offerId: OfferPreview['id'];
 };
 
-function Bookmark({
+const Bookmark = ({
   isActive,
   block = Block.PLACE_CARD,
   isSmall = true,
   offerId,
-}: BookmarkProps): JSX.Element {
+}: BookmarkProps): JSX.Element => {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const [isFetching, setIsFetching] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useAppDispatch();
   const size = isSmall ? Size.SMALL : Size.BIG;
 
   const handleClick = (evt: MouseEvent) => {
     evt.preventDefault();
+
     if (authorizationStatus !== AuthorizationStatus.Auth) {
-      navigate(AppRoute.Login);
-    } else {
-      const statusForFetching = isActive
-        ? FavoriteStatus.No
-        : FavoriteStatus.Yes;
-      dispatch(
-        changeFavoriteStatusAction({ offerId, status: statusForFetching }),
-      );
+      navigate(AppRoute.Login, { state: { from: location } });
+      return;
     }
+
+    const statusForFetching = isActive ? FavoriteStatus.No : FavoriteStatus.Yes;
+
+    setIsFetching(true);
+
+    dispatch(changeFavoriteStatusAction({ offerId, status: statusForFetching }))
+      .unwrap()
+      .catch(() => {
+        toast.warn('Failed to update favorites. Please try again');
+      })
+      .finally(() => {
+        setIsFetching(false);
+      });
   };
 
   return (
@@ -50,6 +61,7 @@ function Bookmark({
       className={`${block}__bookmark-button ${isActive ? `${block}__bookmark-button--active` : ''} button`}
       type="button"
       onClick={handleClick}
+      disabled={isFetching}
     >
       <svg
         className={`${block}__bookmark-icon`}
@@ -61,6 +73,6 @@ function Bookmark({
       <span className="visually-hidden">To bookmarks</span>
     </button>
   );
-}
+};
 
 export default Bookmark;

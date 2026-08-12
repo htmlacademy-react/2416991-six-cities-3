@@ -10,16 +10,17 @@ import { capitalize } from '../../utils/common';
 import { ImageSize } from './const';
 import { useAppDispatch } from '../../hooks';
 import { setActiveOfferId } from '../../store/slices/app/app.slice';
+import { memo } from 'react';
 
 type OfferCardProps = {
   block?: BlockName;
   offer: OfferPreview;
 };
 
-function OfferCard({
+export const OfferCard = memo(({
   block = Block.CITIES,
   offer,
-}: OfferCardProps): JSX.Element {
+}: OfferCardProps): JSX.Element => {
   const dispatch = useAppDispatch();
   const setActiveCardId = (id: string | null) => {
     dispatch(setActiveOfferId(id));
@@ -73,6 +74,6 @@ function OfferCard({
       </div>
     </article>
   );
-}
+});
 
-export default OfferCard;
+OfferCard.displayName = 'OfferCard';

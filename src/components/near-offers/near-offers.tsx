@@ -1,13 +1,13 @@
 import { memo } from 'react';
 import { Block } from '../../const/common';
 import { OfferPreview } from '../../types/offer';
-import OfferCard from '../offer-card/offer-card';
+import { OfferCard } from '../offer-card/offer-card';
 
 type NearOffersProps = {
   offers: OfferPreview[];
 };
 
-function NearOffers({ offers }: NearOffersProps): JSX.Element | null {
+const NearOffers = memo(({ offers }: NearOffersProps): JSX.Element | null => {
   if (offers.length === 0) {
     return null;
   }
@@ -21,8 +21,8 @@ function NearOffers({ offers }: NearOffersProps): JSX.Element | null {
       </div>
     </section>
   );
-}
+});
 
-const MemoizedNearOffers = memo(NearOffers);
+NearOffers.displayName = 'NearOffers';
 
-export default MemoizedNearOffers;
+export default NearOffers;

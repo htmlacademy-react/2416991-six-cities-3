@@ -4,8 +4,7 @@ import { getOffers } from '../../store/slices/offers/offers.selectors';
 import CardList from '../card-list/card-list';
 import SortSelector from '../sort-selector/sort-selector';
 
-
-function OffersBoard(): JSX.Element {
+const OffersBoard = (): JSX.Element => {
   const currentCity = useAppSelector(getCurrentCity);
   const offers = useAppSelector(getOffers);
   return (
@@ -19,6 +18,6 @@ function OffersBoard(): JSX.Element {
       <CardList offers={offers} />
     </section>
   );
-}
+};
 
 export default OffersBoard;

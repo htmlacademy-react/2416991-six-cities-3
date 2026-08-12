@@ -1,9 +1,9 @@
 import { memo } from 'react';
 import ReviewFormRating from '../review-form-rating/review-form-rating';
 import { MIN_REVIEW_CHARACTERS } from './const';
-import { useReviewForm } from '../../hooks/use-review-form';
+import useReviewForm from '../../hooks/use-review-form';
 
-function ReviewForm(): JSX.Element {
+const ReviewForm = memo((): JSX.Element => {
   const {
     formData,
     isValid,
@@ -61,8 +61,8 @@ function ReviewForm(): JSX.Element {
       </div>
     </form>
   );
-}
+});
 
-const MemoizedReviewForm = memo(ReviewForm);
+ReviewForm.displayName = 'ReviewForm';
 
-export default MemoizedReviewForm;
+export default ReviewForm;

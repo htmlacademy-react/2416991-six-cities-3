@@ -11,11 +11,7 @@ const initialState: ReviewsState = {
 export const reviewsSlice = createSlice({
   name: NameSpace.Reviews,
   initialState,
-  reducers: {
-    clearReviews: (state) => {
-      state.reviews = [];
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(fetchReviews.fulfilled, (state, action) => {
@@ -26,5 +22,3 @@ export const reviewsSlice = createSlice({
       });
   },
 });
-
-export const { clearReviews } = reviewsSlice.actions;

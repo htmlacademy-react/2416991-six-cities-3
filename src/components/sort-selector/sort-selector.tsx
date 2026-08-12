@@ -7,7 +7,7 @@ import SortItem from '../sort-item/sort-item';
 import { setSort } from '../../store/slices/app/app.slice';
 import { getSort } from '../../store/slices/app/app.selectors';
 
-function SortSelector(): JSX.Element {
+const SortSelector = memo((): JSX.Element => {
   const currentSortType = useAppSelector(getSort);
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
 
@@ -52,8 +52,8 @@ function SortSelector(): JSX.Element {
       )}
     </form>
   );
-}
+});
 
-const MemoizedSortSelector = memo(SortSelector);
+SortSelector.displayName = 'SortSelector';
 
-export default MemoizedSortSelector;
+export default SortSelector;

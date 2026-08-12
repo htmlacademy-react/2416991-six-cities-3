@@ -2,7 +2,10 @@ import { matchPath } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const/infrastructure';
 import { AuthStatus } from '../../types/infrastructure';
 
-export const getContainerModifications = (pathname: string, authorizationStatus: AuthStatus): string => {
+export const getContainerModifications = (
+  pathname: string,
+  authorizationStatus: AuthStatus,
+): string => {
   if (authorizationStatus === AuthorizationStatus.Unknown) {
     return '';
   }
@@ -16,7 +19,10 @@ export const getContainerModifications = (pathname: string, authorizationStatus:
   return '';
 };
 
-export const getMainElementModifications = (pathname: string, isEmpty: boolean): string => {
+export const getMainElementModifications = (
+  pathname: string,
+  isEmpty: boolean,
+): string => {
   let baseClass = '';
 
   switch (true) {
@@ -40,6 +46,9 @@ export const getMainElementModifications = (pathname: string, isEmpty: boolean):
     return `${baseClass} page__main--index-empty`;
   }
 
+  if (baseClass === 'page__main--favorites' && isEmpty) {
+    return `${baseClass} page__main--favorites-empty`;
+  }
 
   return baseClass;
 };

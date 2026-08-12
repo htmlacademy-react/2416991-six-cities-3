@@ -5,6 +5,7 @@ import {
   changeFavoriteStatusAction,
   fetchOffersAction,
 } from '../../api-actions';
+import { clearFavorites } from '../favorites/favorites.slice';
 
 const initialState: OffersState = {
   offers: [],
@@ -39,6 +40,11 @@ export const offersSlice = createSlice({
         if (index !== -1) {
           state.offers[index].isFavorite = updatedOffer.isFavorite;
         }
+      })
+      .addCase(clearFavorites, (state) => {
+        state.offers.forEach((offer) => {
+          offer.isFavorite = false;
+        });
       });
   },
 });

@@ -11,12 +11,8 @@ type ReviewFormRatingProps = {
 
 const RATINGS = Object.keys(Rating).reverse();
 
-function ReviewFormRating({
-  rating,
-  disabled,
-  onChange,
-}: ReviewFormRatingProps): JSX.Element {
-  return (
+const ReviewFormRating = memo(
+  ({ rating, disabled, onChange }: ReviewFormRatingProps): JSX.Element => (
     <div className="reviews__rating-form form__rating">
       {RATINGS.map((value) => (
         <ReviewFormRatingStar
@@ -29,9 +25,9 @@ function ReviewFormRating({
         />
       ))}
     </div>
-  );
-}
+  ),
+);
 
-const MemoizedReviewFormRating = memo(ReviewFormRating);
+ReviewFormRating.displayName = 'ReviewFormRating';
 
-export default MemoizedReviewFormRating;
+export default ReviewFormRating;

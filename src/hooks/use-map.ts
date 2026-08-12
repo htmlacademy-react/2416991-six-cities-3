@@ -3,10 +3,10 @@ import { Map, TileLayer } from 'leaflet';
 import { City } from '../types/common';
 import { DefaultCity } from '../const/business';
 
-function useMap(
+const useMap = (
   mapRef: RefObject<HTMLElement | null>,
-  city: City
-): Map | null {
+  city: City,
+): Map | null => {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
 
@@ -25,7 +25,7 @@ function useMap(
         {
           attribution:
             '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        }
+        },
       );
 
       instance.addLayer(layer);
@@ -51,12 +51,12 @@ function useMap(
         city.location.zoom,
         {
           duration: 2,
-        }
+        },
       );
     }
   }, [map, city]);
 
   return map;
-}
+};
 
 export default useMap;
