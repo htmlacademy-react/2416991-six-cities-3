@@ -7,7 +7,7 @@ import {
   ReviewServer,
   ServerOffer,
 } from '../types/offer';
-import { dropToken, getToken, saveToken } from '../services/token';
+import { dropToken, saveToken } from '../services/token';
 import { UserData } from '../types/user-data';
 import { AuthData } from '../types/auth-data';
 import { createAsyncThunk } from '@reduxjs/toolkit';
@@ -116,15 +116,7 @@ export const checkAuthAction = createAsyncThunk<
   UserData,
   undefined,
   AppThunkConfig
->('user/checkAuth', async (_arg, { extra, rejectWithValue }) => {
-  const token = getToken();
-  if (!token) {
-    return rejectWithValue({
-      status: 401,
-      message: 'No token found',
-    });
-  }
-
+>('user/checkAuth', async (_arg, { extra }) => {
   const { api } = extra;
   const { data } = await api.get<UserData>(APIRoute.Login);
   return data;
