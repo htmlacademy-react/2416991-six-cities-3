@@ -1,6 +1,7 @@
 import { Block } from '../../const/common';
 import { BlockName } from '../../types/common';
 import { Offer } from '../../types/offer';
+import { getStarsWidth } from './utils';
 
 type RatingProps = { block?: BlockName } & Pick<Offer, 'rating'>;
 
@@ -8,7 +9,7 @@ const Rating = ({
   block = Block.PLACE_CARD,
   rating,
 }: RatingProps): JSX.Element => {
-  const width = `${(rating / 5) * 100}%`;
+  const width = getStarsWidth(rating);
   return (
     <div className={`${block}__rating rating`}>
       <div className={`${block}__stars rating__stars`}>
