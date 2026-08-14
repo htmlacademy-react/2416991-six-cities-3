@@ -73,3 +73,5 @@ export const MAX_NEAR_OFFERS_COUNT = 3;
 export const STARS_COUNT = 5;
 
 export const MAX_PERCENT_STARS_WIDTH = 100;
+
+export const MAX_IMAGES_COUNT_IN_OFFER_GALLERY = 6;

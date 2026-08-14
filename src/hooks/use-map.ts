@@ -43,14 +43,14 @@ const useMap = (
 
   useEffect(() => {
     if (map) {
-      map.flyTo(
+      map.setView(
         {
           lat: city.location.latitude,
           lng: city.location.longitude,
         },
         city.location.zoom,
         {
-          duration: 2,
+          animate: false,
         },
       );
     }
