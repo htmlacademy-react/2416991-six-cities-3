@@ -38,18 +38,18 @@ const SortSelector = memo((): JSX.Element => {
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      {isOptionsOpen && (
-        <ul className="places__options places__options--custom places__options--opened">
-          {sortTypes.map((sortItem) => (
-            <SortItem
-              key={sortItem}
-              title={sortItem}
-              isActive={sortItem === currentSortType}
-              onItemClick={setSortOption}
-            />
-          ))}
-        </ul>
-      )}
+      <ul
+        className={`places__options places__options--custom ${isOptionsOpen ? 'places__options--opened' : ''}`}
+      >
+        {sortTypes.map((sortItem) => (
+          <SortItem
+            key={sortItem}
+            title={sortItem}
+            isActive={sortItem === currentSortType}
+            onItemClick={setSortOption}
+          />
+        ))}
+      </ul>
     </form>
   );
 });
