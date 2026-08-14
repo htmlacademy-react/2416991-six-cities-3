@@ -5,13 +5,14 @@ import {
   OfferPreview,
   Review,
   ReviewServer,
+  ServerFavoriteResponse,
   ServerOffer,
 } from '../types/offer';
 import { dropToken, saveToken } from '../services/token';
 import { UserData } from '../types/user-data';
 import { AuthData } from '../types/auth-data';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { adaptOffer } from './utils';
+import { adaptFavoriteResponseToPreview, adaptOffer } from './utils';
 import axios from 'axios';
 import { MAX_NEAR_OFFERS_COUNT } from '../const/business';
 import { clearFavorites } from './slices/favorites/favorites.slice';
@@ -93,7 +94,7 @@ export const fetchFavoritesAction = createAsyncThunk<
 });
 
 export const changeFavoriteStatusAction = createAsyncThunk<
-  Offer,
+  OfferPreview,
   {
     offerId: OfferPreview['id'];
     status: FavoriteStatus;
@@ -101,14 +102,26 @@ export const changeFavoriteStatusAction = createAsyncThunk<
   AppThunkConfig
 >(
   'data/changeFavoriteStatus',
-  async ({ offerId, status }, { dispatch, extra }) => {
+  async ({ offerId, status }, { extra, getState }) => {
     const { api } = extra;
-    const { data } = await api.post<ServerOffer>(
+    const { data } = await api.post<ServerFavoriteResponse>(
       `${APIRoute.Favorite}/${offerId}/${status}`,
     );
-    const adaptedOffer = adaptOffer(data);
-    dispatch(fetchFavoritesAction());
-    return adaptedOffer;
+
+    const state = getState();
+    const existingOffer = state?.OFFERS?.offers?.find(
+      (item) => item.id === offerId,
+    );
+
+    const adaptedPreviewOffer = adaptFavoriteResponseToPreview(
+      data,
+      status,
+      existingOffer?.previewImage,
+    );
+
+    return existingOffer
+      ? { ...existingOffer, ...adaptedPreviewOffer }
+      : adaptedPreviewOffer;
   },
 );
 
