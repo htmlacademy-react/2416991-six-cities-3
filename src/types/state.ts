@@ -58,6 +58,7 @@ export type AppState = {
 
 export type ReviewsState = {
   reviews: Review[];
+  isPosting: boolean;
 };
 
 export type FavoritesState = {

@@ -75,3 +75,9 @@ export const STARS_COUNT = 5;
 export const MAX_PERCENT_STARS_WIDTH = 100;
 
 export const MAX_IMAGES_COUNT_IN_OFFER_GALLERY = 6;
+
+export const MIN_REVIEW_CHARACTERS = 50;
+
+export const MAX_REVIEW_CHARACTERS = 300;
+
+export const MAX_REVIEWS_FOR_VIEW = 10;

@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import ReviewFormRating from '../review-form-rating/review-form-rating';
-import { MIN_REVIEW_CHARACTERS } from './const';
 import useReviewForm from '../../hooks/use-review-form';
+import { MIN_REVIEW_CHARACTERS } from '../../const/business';
 
 const ReviewForm = memo((): JSX.Element => {
   const {
@@ -12,7 +12,6 @@ const ReviewForm = memo((): JSX.Element => {
     handleTextChange,
     handleSubmit,
   } = useReviewForm();
-
   return (
     <form
       className="reviews__form form"

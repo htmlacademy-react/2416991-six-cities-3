@@ -73,15 +73,19 @@ export const fetchReviews = createAsyncThunk<
   return data;
 });
 
-export const postReview = createAsyncThunk<void, ReviewServer, AppThunkConfig>(
-  'data/postReview',
-  async ({ id, comment, rating }, { dispatch, extra }) => {
-    const { api } = extra;
+export const postReview = createAsyncThunk<
+  Review,
+  ReviewServer,
+  AppThunkConfig
+>('data/postReview', async ({ id, comment, rating }, { extra }) => {
+  const { api } = extra;
 
-    await api.post<Review>(`${APIRoute.Comments}/${id}`, { comment, rating });
-    dispatch(fetchReviews(id));
-  },
-);
+  const { data } = await api.post<Review>(`${APIRoute.Comments}/${id}`, {
+    comment,
+    rating,
+  });
+  return data;
+});
 
 export const fetchFavoritesAction = createAsyncThunk<
   OfferPreview[],
