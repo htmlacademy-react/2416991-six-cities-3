@@ -16,10 +16,10 @@ const OfferFeatures = ({
       {capitalize(type)}
     </li>
     <li className="offer__feature offer__feature--bedrooms">
-      {bedroomsQuantity} Bedrooms
+      {bedroomsQuantity} Bedroom{bedroomsQuantity > 1 ? 's' : ''}
     </li>
     <li className="offer__feature offer__feature--adults">
-      Max {maxAdults} adults
+      Max {maxAdults} adult{maxAdults > 1 ? 's' : ''}
     </li>
   </ul>
 );
