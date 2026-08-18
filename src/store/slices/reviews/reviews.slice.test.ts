@@ -2,12 +2,12 @@ import { describe, it, expect } from 'vitest';
 import faker from 'faker';
 import { reviewsSlice } from './reviews.slice';
 import { clearOfferPage } from '../offer/offer.slice';
-import { fetchReviews } from '../../api-actions';
+import { fetchReviews, postReview } from '../../api-actions';
 import { Review } from '../../../types/offer';
 
-const createMockReview = (id?: string): Review => ({
+const createMockReview = (id?: string, date?: string): Review => ({
   id: id || faker.datatype.uuid(),
-  date: faker.date.recent().toISOString(),
+  date: date || faker.date.recent().toISOString(),
   user: {
     name: faker.name.firstName(),
     avatarUrl: faker.image.avatar(),
@@ -20,6 +20,7 @@ const createMockReview = (id?: string): Review => ({
 describe('Reviews Slice Reducer', () => {
   const initialState = {
     reviews: [],
+    isPosting: false,
   };
 
   const requestId = 'test-request-id';
@@ -33,16 +34,55 @@ describe('Reviews Slice Reducer', () => {
   });
 
   describe('extraReducers - fetchReviews', () => {
-    it('should set reviews on "fetchReviews.fulfilled"', () => {
-      const mockReviews = [createMockReview(), createMockReview()];
+    it('should set sorted reviews (newest first) on "fetchReviews.fulfilled"', () => {
+      const olderReview = createMockReview('1', '2023-01-01T10:00:00.000Z');
+      const newerReview = createMockReview('2', '2023-06-01T10:00:00.000Z');
 
-      type FetchReviewsArg = Parameters<typeof fetchReviews.fulfilled>[2];
-      const actionArg = offerId as FetchReviewsArg;
+      const mockUnsortedReviews = [olderReview, newerReview];
 
-      const action = fetchReviews.fulfilled(mockReviews, requestId, actionArg);
+      const action = fetchReviews.fulfilled(mockUnsortedReviews, requestId, offerId);
       const result = reviewsSlice.reducer(initialState, action);
 
-      expect(result.reviews).toEqual(mockReviews);
+      expect(result.reviews).toEqual([newerReview, olderReview]);
+    });
+  });
+
+  describe('extraReducers - postReview', () => {
+    const postReviewPayload = { id: offerId, comment: 'Great place!', rating: 5 };
+
+    it('should set "isPosting" to true on "postReview.pending"', () => {
+      const action = postReview.pending(requestId, postReviewPayload);
+      const result = reviewsSlice.reducer(initialState, action);
+
+      expect(result.isPosting).toBe(true);
+    });
+
+    it('should prepend new review and set "isPosting" to false on "postReview.fulfilled"', () => {
+      const existingReview = createMockReview('existing-id');
+      const newReview = createMockReview('new-id');
+
+      const stateWithReview = {
+        reviews: [existingReview],
+        isPosting: true,
+      };
+
+      const action = postReview.fulfilled(newReview, requestId, postReviewPayload);
+      const result = reviewsSlice.reducer(stateWithReview, action);
+
+      expect(result.reviews).toEqual([newReview, existingReview]);
+      expect(result.isPosting).toBe(false);
+    });
+
+    it('should set "isPosting" to false on "postReview.rejected"', () => {
+      const statePosting = {
+        reviews: [],
+        isPosting: true,
+      };
+
+      const action = postReview.rejected(null, requestId, postReviewPayload);
+      const result = reviewsSlice.reducer(statePosting, action);
+
+      expect(result.isPosting).toBe(false);
     });
   });
 
@@ -50,6 +90,7 @@ describe('Reviews Slice Reducer', () => {
     it('should reset reviews to [] on "clearOfferPage"', () => {
       const stateWithReviews = {
         reviews: [createMockReview(), createMockReview()],
+        isPosting: false,
       };
 
       const result = reviewsSlice.reducer(stateWithReviews, clearOfferPage());
