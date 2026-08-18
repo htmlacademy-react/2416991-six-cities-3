@@ -30,11 +30,11 @@ export enum FavoriteStatus {
   Yes = 1,
 }
 
-export const NameSpace = {
-  Offers: 'OFFERS',
-  Offer: 'OFFER',
-  App: 'APP',
-  Reviews: 'REVIEWS',
-  Favorites: 'FAVORITES',
-  User: 'USER',
-} as const;
+export enum NameSpace {
+  Offers = 'OFFERS',
+  Offer = 'OFFER',
+  App = 'APP',
+  Reviews = 'REVIEWS',
+  Favorites = 'FAVORITES',
+  User = 'USER',
+}
