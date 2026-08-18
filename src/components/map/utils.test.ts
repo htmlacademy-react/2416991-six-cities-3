@@ -3,10 +3,10 @@ import faker from 'faker';
 import { MapProps } from './map';
 import { OfferPreview } from '../../types/offer';
 import { City } from '../../types/common';
-import { DefaultCity } from '../../const/business';
+import { DEFAULT_CITY } from '../../const/business';
 import { areMapPropsEqual } from './utils';
 
-const makeFakeCity = (name = DefaultCity.name): City => ({
+const makeFakeCity = (name = DEFAULT_CITY.name): City => ({
   name,
   location: { latitude: 48.8566, longitude: 2.3522, zoom: 10 },
 });

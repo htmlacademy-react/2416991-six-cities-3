@@ -20,6 +20,7 @@ const Loading = (): JSX.Element => (
       </div>
     </header>
     <main className="page__main">
+      <span className="visually-hidden">Loading...</span>
       <Spinner />
     </main>
   </div>

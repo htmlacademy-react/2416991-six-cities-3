@@ -1,13 +1,13 @@
 import { describe, it, expect } from 'vitest';
 import { NameSpace } from '../../../const/infrastructure';
 import { getActiveOffId, getCurrentCity, getSort } from './app.selectors';
-import { DefaultCity, SortOption } from '../../../const/business';
+import { DEFAULT_CITY, DEFAULT_SORT_OPTION } from '../../../const/business';
 
 describe('App selectors', () => {
   const state = {
     [NameSpace.App]: {
-      currentCity: DefaultCity,
-      sortOption: SortOption.POPULAR,
+      currentCity: DEFAULT_CITY,
+      sortOption: DEFAULT_SORT_OPTION,
       activeOfferId: 'test-active-offer-id',
     },
   };

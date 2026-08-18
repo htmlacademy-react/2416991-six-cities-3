@@ -1,13 +1,13 @@
 import { describe, it, expect } from 'vitest';
 import { appSlice, setCurrentCity, setSort, setActiveOfferId } from './app.slice';
 import { clearOfferPage } from '../offer/offer.slice';
-import { DefaultCity, SortOption } from '../../../const/business';
+import { DEFAULT_CITY, DEFAULT_SORT_OPTION, SortOption } from '../../../const/business';
 import { City, SortType } from '../../../types/common';
 
 describe('App Slice Reducer', () => {
   const initialState = {
-    currentCity: DefaultCity,
-    sortOption: SortOption.POPULAR,
+    currentCity: DEFAULT_CITY,
+    sortOption: DEFAULT_SORT_OPTION,
     activeOfferId: null,
   };
 

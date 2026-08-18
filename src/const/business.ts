@@ -51,6 +51,8 @@ export const Cities: readonly City[] = [
   },
 ];
 
+export const DEFAULT_CITY = Cities[0];
+
 export const SortOption = {
   POPULAR: 'Popular',
   PRICE_LOW_TO_HIGH: 'Price: low to high',
@@ -58,7 +60,7 @@ export const SortOption = {
   TOP_RATED_FIRST: 'Top rated first',
 } as const;
 
-export const DefaultCity = Cities[0];
+export const DEFAULT_SORT_OPTION = SortOption.POPULAR;
 
 export const Rating = {
   5: 'perfect',

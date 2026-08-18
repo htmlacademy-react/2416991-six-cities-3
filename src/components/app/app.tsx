@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const/infrastructure';
 import Favorites from '../../pages/favorites/favorites';
 import Login from '../../pages/login/login';
@@ -34,7 +34,7 @@ const App = (): JSX.Element => {
   }
 
   return (
-    <BrowserRouter>
+    <>
       <Helmet>
         <title>6 Cities</title>
       </Helmet>
@@ -64,7 +64,7 @@ const App = (): JSX.Element => {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </>
   );
 };
 

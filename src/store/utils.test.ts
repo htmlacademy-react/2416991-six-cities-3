@@ -5,7 +5,7 @@ import {
   adaptOffer,
   adaptFavoriteResponseToPreview,
 } from './utils';
-import { SortOption } from '../const/business';
+import { DEFAULT_SORT_OPTION, SortOption } from '../const/business';
 import { FavoriteStatus } from '../const/infrastructure';
 import {
   OfferPreview,
@@ -47,7 +47,7 @@ describe('Store Utils', () => {
     const paris = makeFakeCity('Paris');
 
     it('should filter offers by city and keep default order for POPULAR', () => {
-      const result = prepareOffers(offers, paris, SortOption.POPULAR);
+      const result = prepareOffers(offers, paris, DEFAULT_SORT_OPTION);
 
       expect(result).toEqual([parisCheap, parisExpensive]);
     });
@@ -72,7 +72,7 @@ describe('Store Utils', () => {
 
     it('should return empty array if no offers match the city', () => {
       const cologne = makeFakeCity('Cologne');
-      const result = prepareOffers(offers, cologne, SortOption.POPULAR);
+      const result = prepareOffers(offers, cologne, DEFAULT_SORT_OPTION);
 
       expect(result).toEqual([]);
     });

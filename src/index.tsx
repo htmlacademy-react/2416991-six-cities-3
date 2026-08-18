@@ -7,6 +7,7 @@ import { store } from './store';
 import { checkAuthAction } from './store/api-actions';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BrowserRouter } from 'react-router-dom';
 
 store.dispatch(checkAuthAction());
 
@@ -18,8 +19,10 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <HelmetProvider>
-        <ToastContainer />
-        <App />
+        <BrowserRouter>
+          <ToastContainer />
+          <App />
+        </BrowserRouter>
       </HelmetProvider>
     </Provider>
   </React.StrictMode>,

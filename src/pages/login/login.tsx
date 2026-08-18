@@ -2,11 +2,11 @@ import { Helmet } from 'react-helmet-async';
 import CityLink from '../../components/city-link/city-link';
 import LoginForm from '../../components/login-form/login-form';
 import { getRandomElement } from '../../utils/common';
-import { Cities, DefaultCity } from '../../const/business';
+import { Cities, DEFAULT_CITY } from '../../const/business';
 import { City } from '../../types/common';
 
 const Login = (): JSX.Element => {
-  const randomCity = getRandomElement<City>(Cities) || DefaultCity;
+  const randomCity = getRandomElement<City>(Cities) || DEFAULT_CITY;
 
   return (
     <div className="page__login-container container">
