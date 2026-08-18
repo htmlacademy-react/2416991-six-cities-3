@@ -35,7 +35,10 @@ const createMockOffer = (id?: string, isFavorite = false): Offer => ({
   maxAdults: 3,
 });
 
-const createMockOfferPreview = (id?: string, isFavorite = false): OfferPreview => ({
+const createMockOfferPreview = (
+  id?: string,
+  isFavorite = false,
+): OfferPreview => ({
   id: id || faker.datatype.uuid(),
   title: faker.lorem.words(3),
   type: 'room',
@@ -117,7 +120,12 @@ describe('Offer Slice Reducer', () => {
     it('should set error state and status code on "fetchOfferAction.rejected"', () => {
       const errorPayload = { status: 404, message: 'Not Found' };
 
-      const action = fetchOfferAction.rejected(null, requestId, offerId, errorPayload);
+      const action = fetchOfferAction.rejected(
+        null,
+        requestId,
+        offerId,
+        errorPayload,
+      );
       const result = offerSlice.reducer(initialState, action);
 
       expect(result.isOfferLoading).toBe(false);
@@ -135,9 +143,16 @@ describe('Offer Slice Reducer', () => {
     });
 
     it('should update nearOffers on "fetchNearOffersAction.fulfilled"', () => {
-      const mockNearOffers = [createMockOfferPreview(), createMockOfferPreview()];
+      const mockNearOffers = [
+        createMockOfferPreview(),
+        createMockOfferPreview(),
+      ];
 
-      const action = fetchNearOffersAction.fulfilled(mockNearOffers, requestId, offerId);
+      const action = fetchNearOffersAction.fulfilled(
+        mockNearOffers,
+        requestId,
+        offerId,
+      );
       const result = offerSlice.reducer(initialState, action);
 
       expect(result.nearOffers).toEqual(mockNearOffers);
@@ -163,6 +178,18 @@ describe('Offer Slice Reducer', () => {
     it('should update isFavorite in current offer and nearOffers on "changeFavoriteStatusAction.fulfilled"', () => {
       const targetId = 'target-offer-id';
       const currentOffer = createMockOffer(targetId, false);
+      const currentOfferPreview: OfferPreview = {
+        id: targetId,
+        city: currentOffer.city,
+        isFavorite: currentOffer.isFavorite,
+        isPremium: currentOffer.isPremium,
+        location: currentOffer.location,
+        price: currentOffer.price,
+        rating: currentOffer.rating,
+        title: currentOffer.title,
+        type: currentOffer.type,
+        previewImage: currentOffer.images[0],
+      };
       const nearOfferMatching = createMockOfferPreview(targetId, false);
       const nearOfferOther = createMockOfferPreview('other-id', false);
 
@@ -172,7 +199,7 @@ describe('Offer Slice Reducer', () => {
         nearOffers: [nearOfferMatching, nearOfferOther],
       };
 
-      const updatedOfferFromApi = { ...currentOffer, isFavorite: true };
+      const updatedOfferFromApi = { ...currentOfferPreview, isFavorite: true };
 
       const action = changeFavoriteStatusAction.fulfilled(
         updatedOfferFromApi,
@@ -200,7 +227,9 @@ describe('Offer Slice Reducer', () => {
       const result = offerSlice.reducer(stateWithFavorites, clearFavorites());
 
       expect(result.offer?.isFavorite).toBe(false);
-      expect(result.nearOffers.every((offer) => offer.isFavorite === false)).toBe(true);
+      expect(
+        result.nearOffers.every((offer) => offer.isFavorite === false),
+      ).toBe(true);
     });
   });
 });

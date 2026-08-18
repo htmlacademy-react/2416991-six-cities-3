@@ -6,9 +6,12 @@ import {
   fetchOffersAction,
   changeFavoriteStatusAction,
 } from '../../api-actions';
-import { Offer, OfferPreview } from '../../../types/offer';
+import { OfferPreview } from '../../../types/offer';
 
-const createMockOfferPreview = (id?: string, isFavorite = false): OfferPreview => ({
+const createMockOfferPreview = (
+  id?: string,
+  isFavorite = false,
+): OfferPreview => ({
   id: id || faker.datatype.uuid(),
   title: faker.lorem.words(3),
   type: 'apartment',
@@ -22,31 +25,6 @@ const createMockOfferPreview = (id?: string, isFavorite = false): OfferPreview =
   isPremium: faker.datatype.boolean(),
   rating: 4.5,
   previewImage: faker.image.imageUrl(),
-});
-
-const createMockOffer = (id?: string, isFavorite = false): Offer => ({
-  id: id || faker.datatype.uuid(),
-  title: faker.lorem.words(3),
-  type: 'apartment',
-  price: faker.datatype.number({ min: 100, max: 500 }),
-  city: {
-    name: 'Paris',
-    location: { latitude: 48.8566, longitude: 2.3522, zoom: 10 },
-  },
-  location: { latitude: 48.8566, longitude: 2.3522, zoom: 10 },
-  isFavorite,
-  isPremium: faker.datatype.boolean(),
-  rating: 4.5,
-  description: faker.lorem.paragraph(),
-  images: [faker.image.imageUrl()],
-  goods: ['Wi-Fi', 'Heating'],
-  host: {
-    name: faker.name.firstName(),
-    avatarUrl: faker.image.avatar(),
-    isPro: true,
-  },
-  bedroomsQuantity: 2,
-  maxAdults: 3,
 });
 
 describe('Offers Slice Reducer', () => {
@@ -83,7 +61,11 @@ describe('Offers Slice Reducer', () => {
     it('should set offers and set isOffersLoading to "false" on "fetchOffersAction.fulfilled"', () => {
       const mockOffers = [createMockOfferPreview(), createMockOfferPreview()];
 
-      const action = fetchOffersAction.fulfilled(mockOffers, requestId, undefined);
+      const action = fetchOffersAction.fulfilled(
+        mockOffers,
+        requestId,
+        undefined,
+      );
       const result = offersSlice.reducer(initialState, action);
 
       expect(result.offers).toEqual(mockOffers);
@@ -118,9 +100,11 @@ describe('Offers Slice Reducer', () => {
         offers: [offerToUpdate, otherOffer],
       };
 
-      const updatedOfferFromApi = createMockOffer(targetId, true);
+      const updatedOfferFromApi = { ...offerToUpdate, isFavorite: true };
 
-      type ChangeFavoriteArg = Parameters<typeof changeFavoriteStatusAction.fulfilled>[2];
+      type ChangeFavoriteArg = Parameters<
+        typeof changeFavoriteStatusAction.fulfilled
+      >[2];
       const actionArg = { offerId: targetId, status: 1 } as ChangeFavoriteArg;
 
       const action = changeFavoriteStatusAction.fulfilled(
@@ -146,7 +130,9 @@ describe('Offers Slice Reducer', () => {
 
       const result = offersSlice.reducer(stateWithFavorites, clearFavorites());
 
-      expect(result.offers.every((offer) => offer.isFavorite === false)).toBe(true);
+      expect(result.offers.every((offer) => offer.isFavorite === false)).toBe(
+        true,
+      );
     });
   });
 });
