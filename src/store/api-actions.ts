@@ -67,8 +67,7 @@ export const postReview = createAppAsyncThunk<Review, ReviewServer>(
 );
 
 export const fetchFavoritesAction = createAppAsyncThunk<
-  OfferPreview[],
-  undefined
+  OfferPreview[]
 >('data/fetchFavorites', async (_arg, { extra }) => {
   const { api } = extra;
   const { data } = await api.get<OfferPreview[]>(APIRoute.Favorite);
