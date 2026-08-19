@@ -1,7 +1,7 @@
 import { useEffect, useState, RefObject, useRef } from 'react';
 import { Map, TileLayer } from 'leaflet';
 import { City } from '../types/common';
-import { DefaultCity } from '../const/business';
+import { DEFAULT_CITY } from '../const/business';
 
 const useMap = (
   mapRef: RefObject<HTMLElement | null>,
@@ -14,10 +14,10 @@ const useMap = (
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instance = new Map(mapRef.current, {
         center: {
-          lat: DefaultCity.location.latitude,
-          lng: DefaultCity.location.longitude,
+          lat: DEFAULT_CITY.location.latitude,
+          lng: DEFAULT_CITY.location.longitude,
         },
-        zoom: DefaultCity.location.zoom,
+        zoom: DEFAULT_CITY.location.zoom,
       });
 
       const layer = new TileLayer(
@@ -43,14 +43,14 @@ const useMap = (
 
   useEffect(() => {
     if (map) {
-      map.flyTo(
+      map.setView(
         {
           lat: city.location.latitude,
           lng: city.location.longitude,
         },
         city.location.zoom,
         {
-          duration: 2,
+          animate: false,
         },
       );
     }

@@ -40,7 +40,7 @@ const Offer = (): JSX.Element | null => {
       </Helmet>
       <ScrollToTop />
       <section className="offer">
-        <OfferGallery images={offer.images} />
+        <OfferGallery images={offer.images} type={offer.type} />
         <div className="offer__container container">
           <div className="offer__wrapper">
             <OfferHeading

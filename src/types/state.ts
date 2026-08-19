@@ -39,11 +39,6 @@ export type OfferState = {
   isNearOffersLoading: boolean;
 };
 
-export type OfferStatus = Pick<
-  OfferState,
-  'isOfferLoading' | 'isOfferLoadingError' | 'offerLoadingErrorCode'
->;
-
 export type OffersState = {
   offers: OfferPreview[];
   isOffersLoading: boolean;
@@ -58,6 +53,7 @@ export type AppState = {
 
 export type ReviewsState = {
   reviews: Review[];
+  isPosting: boolean;
 };
 
 export type FavoritesState = {

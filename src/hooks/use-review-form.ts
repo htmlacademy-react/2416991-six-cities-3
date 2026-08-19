@@ -3,9 +3,8 @@ import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { ReviewFormData } from '../components/review-form/types';
 import { validateReviewForm } from '../components/review-form/utils';
-import { MIN_REVIEW_CHARACTERS } from '../components/review-form/const';
 import { useAppDispatch } from '.';
-import { postReview } from '../store/api-actions';
+import { postReviewAction } from '../store/api-actions';
 
 const INITIAL_FORM_STATE: ReviewFormData = {
   comment: '',
@@ -41,17 +40,9 @@ const useReviewForm = () => {
       return;
     }
 
-    if (
-      formData.rating === 0 ||
-      formData.comment.length < MIN_REVIEW_CHARACTERS
-    ) {
-      return;
-    }
-
     setIsSubmitting(true);
-
     dispatch(
-      postReview({
+      postReviewAction({
         rating: formData.rating,
         comment: formData.comment,
         id,

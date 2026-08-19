@@ -39,6 +39,9 @@ export type ServerOffer = Omit<Offer, 'bedroomsQuantity'> & {
   bedrooms: number;
 };
 
+//Данный тип решает проблему e2e тестов, так как в них иногда возвращается OfferPreview
+export type ServerFavoriteResponse = ServerOffer | OfferPreview;
+
 export type Review = {
   id: string;
   user: User;

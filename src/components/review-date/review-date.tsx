@@ -4,7 +4,7 @@ import { formatToServerDate, humanizeDate } from './utils';
 type ReviewDateProps = Pick<Review, 'date'>;
 
 const ReviewDate = ({ date }: ReviewDateProps): JSX.Element => (
-  <time className="reviews__date" dateTime={formatToServerDate(date)}>
+  <time className="reviews__time" dateTime={formatToServerDate(date)}>
     {humanizeDate(date)}
   </time>
 );

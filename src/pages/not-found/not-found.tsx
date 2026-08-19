@@ -137,7 +137,7 @@ const NotFound = (): JSX.Element => {
       <h1 className="visually-hidden" style={headingStyles}>
         404
       </h1>
-      <p style={descriptionStyles}>Ой! Вы попали не туда, куда хотели</p>
+      <p style={descriptionStyles}>Oops! That page does not exist</p>
       <Link
         to="/"
         style={linkStyles}
@@ -150,7 +150,7 @@ const NotFound = (): JSX.Element => {
           event.currentTarget.style.color = '#333';
         }}
       >
-        Вернуться на главную
+        Return to the home page
       </Link>
     </section>
   );

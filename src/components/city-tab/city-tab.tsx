@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, MouseEvent } from 'react';
 import { City } from '../../types/common';
 
 type CityTabProps = {
@@ -9,16 +9,18 @@ type CityTabProps = {
 
 const CityTab = memo(
   ({ city, isActive, onTabClick }: CityTabProps): JSX.Element => {
-    const itemClickHandler = () => {
+    const tabClickHandler = (evt: MouseEvent<HTMLAnchorElement>) => {
+      evt.preventDefault();
       if (!isActive) {
         onTabClick(city);
       }
     };
 
     return (
-      <li className="locations__item" onClick={itemClickHandler}>
+      <li className="locations__item">
         <a
           className={`locations__item-link tabs__item ${isActive ? 'tabs__item--active' : ''}`}
+          onClick={tabClickHandler}
           href="#"
         >
           <span>{city.name}</span>

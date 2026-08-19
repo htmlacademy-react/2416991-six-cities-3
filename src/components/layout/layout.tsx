@@ -28,6 +28,7 @@ const Layout = (): JSX.Element => {
   const containerModifications = getContainerModifications(
     locationPathname,
     authorizationStatus,
+    isEmpty
   );
 
   const mainElementModifications = getMainElementModifications(

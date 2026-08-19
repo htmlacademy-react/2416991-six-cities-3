@@ -4,7 +4,7 @@ import { useEffect, useMemo } from 'react';
 import {
   fetchNearOffersAction,
   fetchOfferAction,
-  fetchReviews,
+  fetchReviewsAction,
 } from '../store/api-actions';
 import { AppRoute } from '../const/infrastructure';
 import {
@@ -35,7 +35,7 @@ const useOfferPage = () => {
     if (id) {
       dispatch(fetchOfferAction(id));
       dispatch(fetchNearOffersAction(id));
-      dispatch(fetchReviews(id));
+      dispatch(fetchReviewsAction(id));
       dispatch(setActiveOfferId(id));
     }
   }, [id, dispatch]);

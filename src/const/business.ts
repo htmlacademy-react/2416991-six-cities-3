@@ -51,6 +51,8 @@ export const Cities: readonly City[] = [
   },
 ];
 
+export const DEFAULT_CITY = Cities[0];
+
 export const SortOption = {
   POPULAR: 'Popular',
   PRICE_LOW_TO_HIGH: 'Price: low to high',
@@ -58,7 +60,7 @@ export const SortOption = {
   TOP_RATED_FIRST: 'Top rated first',
 } as const;
 
-export const DefaultCity = Cities[0];
+export const DEFAULT_SORT_OPTION = SortOption.POPULAR;
 
 export const Rating = {
   5: 'perfect',
@@ -69,3 +71,15 @@ export const Rating = {
 } as const;
 
 export const MAX_NEAR_OFFERS_COUNT = 3;
+
+export const STARS_COUNT = 5;
+
+export const MAX_PERCENT_STARS_WIDTH = 100;
+
+export const MAX_IMAGES_COUNT_IN_OFFER_GALLERY = 6;
+
+export const MIN_REVIEW_CHARACTERS = 50;
+
+export const MAX_REVIEW_CHARACTERS = 300;
+
+export const MAX_REVIEWS_FOR_VIEW = 10;

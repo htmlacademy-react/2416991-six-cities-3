@@ -1,5 +1,10 @@
-import { MIN_REVIEW_CHARACTERS } from './const';
+import {
+  MAX_REVIEW_CHARACTERS,
+  MIN_REVIEW_CHARACTERS,
+} from '../../const/business';
 import { ReviewFormData } from './types';
 
 export const validateReviewForm = (reviewFormData: ReviewFormData) =>
-  reviewFormData.comment.length >= MIN_REVIEW_CHARACTERS && reviewFormData.rating !== 0;
+  reviewFormData.comment.length >= MIN_REVIEW_CHARACTERS &&
+  reviewFormData.comment.length <= MAX_REVIEW_CHARACTERS &&
+  reviewFormData.rating !== 0;

@@ -5,18 +5,19 @@ import { State } from '../../../types/state';
 import { prepareOffers } from '../../utils';
 import { getCurrentCity, getSort } from '../app/app.selectors';
 
-export const getRawOffers = (state: State): OfferPreview[] =>
-  state[NameSpace.Offers].offers;
+export const getRawOffers = (
+  state: Pick<State, NameSpace.Offers>,
+): OfferPreview[] => state[NameSpace.Offers].offers;
 
-export const getIsOffersLoading = (state: State): boolean =>
-  state[NameSpace.Offers].isOffersLoading;
+export const getIsOffersLoading = (
+  state: Pick<State, NameSpace.Offers>,
+): boolean => state[NameSpace.Offers].isOffersLoading;
 
-export const getIsOffersLoadingError = (state: State): boolean =>
-  state[NameSpace.Offers].isOffersLoadingError;
-
+export const getIsOffersLoadingError = (
+  state: Pick<State, NameSpace.Offers>,
+): boolean => state[NameSpace.Offers].isOffersLoadingError;
 
 export const getOffers = createSelector(
   [getRawOffers, getCurrentCity, getSort],
-  (offers, city, sortOption) => prepareOffers(offers, city, sortOption)
+  (offers, city, sortOption) => prepareOffers(offers, city, sortOption),
 );
-

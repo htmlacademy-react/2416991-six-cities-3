@@ -5,6 +5,7 @@ import { AuthStatus } from '../../types/infrastructure';
 export const getContainerModifications = (
   pathname: string,
   authorizationStatus: AuthStatus,
+  isEmpty: boolean
 ): string => {
   if (authorizationStatus === AuthorizationStatus.Unknown) {
     return '';
@@ -15,6 +16,9 @@ export const getContainerModifications = (
   }
   if (matchPath(AppRoute.Login, pathname)) {
     return 'page--gray page--login';
+  }
+  if (matchPath(AppRoute.Favorites, pathname) && isEmpty) {
+    return 'page--favorites-empty';
   }
   return '';
 };

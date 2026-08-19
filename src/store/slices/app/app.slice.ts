@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { DefaultCity, SortOption } from '../../../const/business';
+import { DEFAULT_CITY, DEFAULT_SORT_OPTION } from '../../../const/business';
 import { AppState } from '../../../types/state';
 import { NameSpace } from '../../../const/infrastructure';
 import { City, SortType } from '../../../types/common';
@@ -7,8 +7,8 @@ import { OfferPreview } from '../../../types/offer';
 import { clearOfferPage } from '../offer/offer.slice';
 
 const initialState: AppState = {
-  currentCity: DefaultCity,
-  sortOption: SortOption.POPULAR,
+  currentCity: DEFAULT_CITY,
+  sortOption: DEFAULT_SORT_OPTION,
   activeOfferId: null,
 };
 

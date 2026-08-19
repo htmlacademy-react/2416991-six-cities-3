@@ -4,10 +4,10 @@ import { OfferPreview } from '../../../types/offer';
 import { State } from '../../../types/state';
 import { Cities } from '../../../const/business';
 
-export const getFavorites = (state: State): OfferPreview[] =>
+export const getFavorites = (state: Pick<State, NameSpace.Favorites>): OfferPreview[] =>
   state[NameSpace.Favorites].favoriteOffers;
 
-export const geIsFavoritesLoading = (state: State): boolean =>
+export const geIsFavoritesLoading = (state: Pick<State, NameSpace.Favorites>): boolean =>
   state[NameSpace.Favorites].isFavoritesLoading;
 
 export const getGroupedFavorites = createSelector(
