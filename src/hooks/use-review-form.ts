@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { ReviewFormData } from '../components/review-form/types';
 import { validateReviewForm } from '../components/review-form/utils';
 import { useAppDispatch } from '.';
-import { postReview } from '../store/api-actions';
+import { postReviewAction } from '../store/api-actions';
 
 const INITIAL_FORM_STATE: ReviewFormData = {
   comment: '',
@@ -42,7 +42,7 @@ const useReviewForm = () => {
 
     setIsSubmitting(true);
     dispatch(
-      postReview({
+      postReviewAction({
         rating: formData.rating,
         comment: formData.comment,
         id,

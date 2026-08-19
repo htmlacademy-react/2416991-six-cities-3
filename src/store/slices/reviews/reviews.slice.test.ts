@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import faker from 'faker';
 import { reviewsSlice } from './reviews.slice';
 import { clearOfferPage } from '../offer/offer.slice';
-import { fetchReviews, postReview } from '../../api-actions';
+import { fetchReviewsAction, postReviewAction } from '../../api-actions';
 import { Review } from '../../../types/offer';
 
 const createMockReview = (id?: string, date?: string): Review => ({
@@ -40,24 +40,24 @@ describe('Reviews Slice Reducer', () => {
 
       const mockUnsortedReviews = [olderReview, newerReview];
 
-      const action = fetchReviews.fulfilled(mockUnsortedReviews, requestId, offerId);
+      const action = fetchReviewsAction.fulfilled(mockUnsortedReviews, requestId, offerId);
       const result = reviewsSlice.reducer(initialState, action);
 
       expect(result.reviews).toEqual([newerReview, olderReview]);
     });
   });
 
-  describe('extraReducers - postReview', () => {
+  describe('extraReducers - postReviewAction', () => {
     const postReviewPayload = { id: offerId, comment: 'Great place!', rating: 5 };
 
-    it('should set "isPosting" to true on "postReview.pending"', () => {
-      const action = postReview.pending(requestId, postReviewPayload);
+    it('should set "isPosting" to true on "postReviewAction.pending"', () => {
+      const action = postReviewAction.pending(requestId, postReviewPayload);
       const result = reviewsSlice.reducer(initialState, action);
 
       expect(result.isPosting).toBe(true);
     });
 
-    it('should prepend new review and set "isPosting" to false on "postReview.fulfilled"', () => {
+    it('should prepend new review and set "isPosting" to false on "postReviewAction.fulfilled"', () => {
       const existingReview = createMockReview('existing-id');
       const newReview = createMockReview('new-id');
 
@@ -66,20 +66,20 @@ describe('Reviews Slice Reducer', () => {
         isPosting: true,
       };
 
-      const action = postReview.fulfilled(newReview, requestId, postReviewPayload);
+      const action = postReviewAction.fulfilled(newReview, requestId, postReviewPayload);
       const result = reviewsSlice.reducer(stateWithReview, action);
 
       expect(result.reviews).toEqual([newReview, existingReview]);
       expect(result.isPosting).toBe(false);
     });
 
-    it('should set "isPosting" to false on "postReview.rejected"', () => {
+    it('should set "isPosting" to false on "postReviewAction.rejected"', () => {
       const statePosting = {
         reviews: [],
         isPosting: true,
       };
 
-      const action = postReview.rejected(null, requestId, postReviewPayload);
+      const action = postReviewAction.rejected(null, requestId, postReviewPayload);
       const result = reviewsSlice.reducer(statePosting, action);
 
       expect(result.isPosting).toBe(false);

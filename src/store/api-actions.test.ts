@@ -8,8 +8,8 @@ import {
   fetchOffersAction,
   fetchOfferAction,
   fetchNearOffersAction,
-  fetchReviews,
-  postReview,
+  fetchReviewsAction,
+  postReviewAction,
   fetchFavoritesAction,
   changeFavoriteStatusAction,
 } from './api-actions';
@@ -238,37 +238,37 @@ describe('Async actions', () => {
 
       mockAxiosAdapter.onGet(`${APIRoute.Comments}/${offerId}`).reply(200, mockReviews);
 
-      await store.dispatch(fetchReviews(offerId));
+      await store.dispatch(fetchReviewsAction(offerId));
 
       const emittedActions = store.getActions();
       const extractedActionsTypes = extractActionsTypes(emittedActions);
-      const fetchReviewsFulfilled = emittedActions.at(1) as ReturnType<typeof fetchReviews.fulfilled>;
+      const fetchReviewsFulfilled = emittedActions.at(1) as ReturnType<typeof fetchReviewsAction.fulfilled>;
 
       expect(extractedActionsTypes).toEqual([
-        fetchReviews.pending.type,
-        fetchReviews.fulfilled.type,
+        fetchReviewsAction.pending.type,
+        fetchReviewsAction.fulfilled.type,
       ]);
 
       expect(fetchReviewsFulfilled.payload).toEqual(mockReviews);
     });
   });
 
-  describe('postReview', () => {
-    it('should dispatch "postReview.pending" and "postReview.fulfilled" when server response 200', async () => {
+  describe('postReviewAction', () => {
+    it('should dispatch "postReviewAction.pending" and "postReviewAction.fulfilled" when server response 200', async () => {
       const mockReview = makeFakeReview();
       const reviewData = { id: 'test-offer-id', comment: 'Great place!', rating: 5 };
 
       mockAxiosAdapter.onPost(`${APIRoute.Comments}/${reviewData.id}`).reply(200, mockReview);
 
-      await store.dispatch(postReview(reviewData));
+      await store.dispatch(postReviewAction(reviewData));
 
       const emittedActions = store.getActions();
       const extractedActionsTypes = extractActionsTypes(emittedActions);
-      const postReviewFulfilled = emittedActions.at(1) as ReturnType<typeof postReview.fulfilled>;
+      const postReviewFulfilled = emittedActions.at(1) as ReturnType<typeof postReviewAction.fulfilled>;
 
       expect(extractedActionsTypes).toEqual([
-        postReview.pending.type,
-        postReview.fulfilled.type,
+        postReviewAction.pending.type,
+        postReviewAction.fulfilled.type,
       ]);
 
       expect(postReviewFulfilled.payload).toEqual(mockReview);

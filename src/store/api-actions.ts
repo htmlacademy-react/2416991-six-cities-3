@@ -44,7 +44,7 @@ export const fetchNearOffersAction = createAppAsyncThunk<
   return data.slice(0, MAX_NEAR_OFFERS_COUNT);
 });
 
-export const fetchReviews = createAppAsyncThunk<Review[], OfferPreview['id']>(
+export const fetchReviewsAction = createAppAsyncThunk<Review[], OfferPreview['id']>(
   'data/fetchReviews',
   async (id, { extra }) => {
     const { api } = extra;
@@ -53,7 +53,7 @@ export const fetchReviews = createAppAsyncThunk<Review[], OfferPreview['id']>(
   },
 );
 
-export const postReview = createAppAsyncThunk<Review, ReviewServer>(
+export const postReviewAction = createAppAsyncThunk<Review, ReviewServer>(
   'data/postReview',
   async ({ id, comment, rating }, { extra }) => {
     const { api } = extra;

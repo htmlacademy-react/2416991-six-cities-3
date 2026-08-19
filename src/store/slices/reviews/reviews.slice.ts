@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ReviewsState } from '../../../types/state';
 import { NameSpace } from '../../../const/infrastructure';
-import { fetchReviews, postReview } from '../../api-actions';
+import { fetchReviewsAction, postReviewAction } from '../../api-actions';
 import { clearOfferPage } from '../offer/offer.slice';
 
 const initialState: ReviewsState = {
@@ -15,17 +15,17 @@ export const reviewsSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(postReview.pending, (state) => {
+      .addCase(postReviewAction.pending, (state) => {
         state.isPosting = true;
       })
-      .addCase(postReview.fulfilled, (state, action) => {
+      .addCase(postReviewAction.fulfilled, (state, action) => {
         state.reviews.unshift(action.payload);
         state.isPosting = false;
       })
-      .addCase(postReview.rejected, (state) => {
+      .addCase(postReviewAction.rejected, (state) => {
         state.isPosting = false;
       })
-      .addCase(fetchReviews.fulfilled, (state, action) => {
+      .addCase(fetchReviewsAction.fulfilled, (state, action) => {
         state.reviews = [...action.payload].sort(
           (a, b) => Date.parse(b.date) - Date.parse(a.date),
         );
