@@ -7,8 +7,7 @@ import {
   ServerOffer,
 } from '../types/offer';
 import { dropToken, saveToken } from '../services/token';
-import { UserData } from '../types/user-data';
-import { AuthData } from '../types/auth-data';
+import { UserData, AuthData } from '../types/user-data';
 import { adaptFavoriteResponseToPreview, adaptOffer } from './utils';
 import { MAX_NEAR_OFFERS_COUNT } from '../const/business';
 import { clearFavorites } from './slices/favorites/favorites.slice';

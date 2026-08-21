@@ -1,12 +1,10 @@
 import { City, CityLocation } from './common';
 
-export type Host = {
+export type User = {
   name: string;
   avatarUrl: string;
   isPro: boolean;
 };
-
-type User = Host;
 
 type HousingType = 'apartment' | 'room' | 'house' | 'hotel';
 
@@ -30,7 +28,7 @@ export type Offer = BaseOffer & {
   description: string;
   images: string[];
   goods: string[];
-  host: Host;
+  host: User;
   bedroomsQuantity: number;
   maxAdults: number;
 };
@@ -52,5 +50,3 @@ export type ReviewServer = {
   comment: string;
   rating: number;
 };
-
-export type RatingInForm = number;

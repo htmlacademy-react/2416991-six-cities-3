@@ -1,10 +1,9 @@
 import { memo } from 'react';
 import { Rating } from '../../const/business';
-import { RatingInForm } from '../../types/offer';
 import ReviewFormRatingStar from '../review-form-rating-star/review-form-rating-star';
 
 type ReviewFormRatingProps = {
-  rating: RatingInForm;
+  rating: number;
   disabled: boolean;
   onChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
 };

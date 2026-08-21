@@ -9,10 +9,6 @@ export type State = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
 
-export type AppExtra = {
-  api: AxiosInstance;
-};
-
 export type CustomServerError = {
   status: number;
   message: string;
@@ -21,7 +17,9 @@ export type CustomServerError = {
 export type AppThunkConfig = {
   dispatch: AppDispatch;
   state: State;
-  extra: AppExtra;
+  extra: {
+    api: AxiosInstance;
+  };
   rejectValue: CustomServerError;
 };
 

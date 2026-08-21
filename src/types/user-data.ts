@@ -5,3 +5,8 @@ export type UserData = {
   avatarUrl: string;
   isPro: boolean;
 };
+
+export type AuthData = {
+  email: string;
+  password: string;
+};

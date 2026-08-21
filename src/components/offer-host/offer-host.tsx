@@ -1,7 +1,7 @@
-import { Host, Offer } from '../../types/offer';
+import { Offer, User } from '../../types/offer';
 import OfferDescription from '../offer-description/offer-description';
 
-type OfferHostProps = Host & Pick<Offer, 'description'>;
+type OfferHostProps = User & Pick<Offer, 'description'>;
 
 const OfferHost = ({
   name,
