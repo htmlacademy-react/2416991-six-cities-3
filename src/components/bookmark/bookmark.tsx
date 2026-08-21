@@ -64,6 +64,7 @@ const Bookmark = ({
       disabled={isFetching}
     >
       <svg
+        data-testid="bookmark-icon"
         className={`${block}__bookmark-icon`}
         width={size.width}
         height={size.height}

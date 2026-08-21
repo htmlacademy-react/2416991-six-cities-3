@@ -1,39 +1,24 @@
 import { describe, it, expect } from 'vitest';
-import faker from 'faker';
 import { NameSpace } from '../../../const/infrastructure';
-import { OfferPreview } from '../../../types/offer';
-import { City, CityName, SortType } from '../../../types/common';
+import { SortType } from '../../../types/common';
 import {
   getRawOffers,
   getIsOffersLoading,
   getIsOffersLoadingError,
   getOffers,
 } from './offers.selectors';
-
-const makeFakeCity = (name: CityName): City => ({
-  name,
-  location: { latitude: 48.8566, longitude: 2.3522, zoom: 10 },
-});
-
-const makeFakeOfferPreview = (cityName: CityName, price: number, id?: string): OfferPreview => ({
-  id: id || faker.datatype.uuid(),
-  title: faker.lorem.words(3),
-  type: 'apartment',
-  price,
-  city: makeFakeCity(cityName),
-  location: { latitude: 48.8566, longitude: 2.3522, zoom: 10 },
-  isFavorite: false,
-  isPremium: false,
-  rating: 4.5,
-  previewImage: faker.image.imageUrl(),
-});
+import { makeFakeCity, makeFakeOfferPreview } from '../../../utils/mocks';
 
 describe('Offers selectors', () => {
-  const parisOfferLowPrice = makeFakeOfferPreview('Paris', 100, 'paris-1');
-  const parisOfferHighPrice = makeFakeOfferPreview('Paris', 300, 'paris-2');
-  const amsterdamOffer = makeFakeOfferPreview('Amsterdam', 200, 'amsterdam-1');
+  const parisOfferLowPrice = makeFakeOfferPreview('paris-1', 'Paris', 100);
+  const parisOfferHighPrice = makeFakeOfferPreview('paris-2', 'Paris', 300);
+  const amsterdamOffer = makeFakeOfferPreview('amsterdam-1', 'Amsterdam', 200);
 
-  const mockRawOffers = [parisOfferLowPrice, amsterdamOffer, parisOfferHighPrice];
+  const mockRawOffers = [
+    parisOfferLowPrice,
+    amsterdamOffer,
+    parisOfferHighPrice,
+  ];
 
   const state = {
     [NameSpace.Offers]: {

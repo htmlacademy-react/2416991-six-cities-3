@@ -14,6 +14,7 @@ const UserLink = (): JSX.Element => {
       to={AppRoute.Favorites}
     >
       <div
+        data-testid="avatar-wrapper"
         className={`header__avatar-wrapper user__avatar-wrapper ${user?.isPro ? 'user__avatar-wrapper--pro' : ''}`}
       >
         <img className="user__avatar-image" src={user?.avatarUrl} />

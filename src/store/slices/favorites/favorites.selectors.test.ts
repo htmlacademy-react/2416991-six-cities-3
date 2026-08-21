@@ -1,28 +1,17 @@
 import { describe, it, expect } from 'vitest';
-import faker from 'faker';
 import { NameSpace } from '../../../const/infrastructure';
 import { Cities } from '../../../const/business';
-import { OfferPreview } from '../../../types/offer';
-import { geIsFavoritesLoading, getFavorites, getGroupedFavorites } from './favorites.selectors';
-
-
-const makeFakeOfferPreview = (cityName: string, id?: string): OfferPreview => ({
-  id: id || faker.datatype.uuid(),
-  title: faker.lorem.words(3),
-  type: 'apartment',
-  price: 100,
-  city: Cities.find((city) => city.name === cityName) || Cities[0],
-  location: { latitude: 48.8566, longitude: 2.3522, zoom: 10 },
-  isFavorite: true,
-  isPremium: false,
-  rating: 4.5,
-  previewImage: faker.image.imageUrl(),
-});
+import {
+  geIsFavoritesLoading,
+  getFavorites,
+  getGroupedFavorites,
+} from './favorites.selectors';
+import { makeFakeOfferPreview } from '../../../utils/mocks';
 
 describe('Favorites selectors', () => {
-  const parisOffer1 = makeFakeOfferPreview('Paris', 'paris-1');
-  const parisOffer2 = makeFakeOfferPreview('Paris', 'paris-2');
-  const amsterdamOffer = makeFakeOfferPreview('Amsterdam', 'amsterdam-1');
+  const parisOffer1 = makeFakeOfferPreview('paris-1', 'Paris');
+  const parisOffer2 = makeFakeOfferPreview('paris-2', 'Paris');
+  const amsterdamOffer = makeFakeOfferPreview('amsterdam-1', 'Amsterdam');
 
   const mockFavoriteOffers = [parisOffer1, parisOffer2, amsterdamOffer];
 

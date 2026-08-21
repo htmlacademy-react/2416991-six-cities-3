@@ -1,28 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import faker from 'faker';
 import { MapProps } from './map';
-import { OfferPreview } from '../../types/offer';
-import { City } from '../../types/common';
-import { DEFAULT_CITY } from '../../const/business';
 import { areMapPropsEqual } from './utils';
-
-const makeFakeCity = (name = DEFAULT_CITY.name): City => ({
-  name,
-  location: { latitude: 48.8566, longitude: 2.3522, zoom: 10 },
-});
-
-const makeFakeOfferPreview = (id?: string): OfferPreview => ({
-  id: id || faker.datatype.uuid(),
-  title: faker.lorem.words(3),
-  type: 'apartment',
-  price: 100,
-  city: makeFakeCity(),
-  location: { latitude: 48.8566, longitude: 2.3522, zoom: 10 },
-  isFavorite: false,
-  isPremium: false,
-  rating: 4.5,
-  previewImage: faker.image.imageUrl(),
-});
+import { makeFakeCity, makeFakeOfferPreview } from '../../utils/mocks';
 
 describe('areMapPropsEqual', () => {
   const mockBlock = 'cities';

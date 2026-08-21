@@ -11,6 +11,7 @@ const ReviewItem = ({ review }: ReviewProps): JSX.Element => (
   <li className="reviews__item">
     <div className="reviews__user user">
       <div
+        data-testid="review-avatar-wrapper"
         className={`reviews__avatar-wrapper ${review.user.isPro ? 'reviews__avatar-wrapper--pro' : ''} user__avatar-wrapper`}
       >
         <img

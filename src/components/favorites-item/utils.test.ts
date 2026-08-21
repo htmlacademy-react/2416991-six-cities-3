@@ -1,24 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import faker from 'faker';
-import { OfferPreview } from '../../types/offer';
 import { areFavoritesItemPropsEqual } from './utils';
 import { Cities } from '../../const/business';
-
-const makeFakeOfferPreview = (id?: string): OfferPreview => ({
-  id: id || faker.datatype.uuid(),
-  title: faker.lorem.words(3),
-  type: 'apartment',
-  price: 100,
-  city: {
-    name: 'Paris',
-    location: { latitude: 48.8566, longitude: 2.3522, zoom: 10 },
-  },
-  location: { latitude: 48.8566, longitude: 2.3522, zoom: 10 },
-  isFavorite: true,
-  isPremium: false,
-  rating: 4.5,
-  previewImage: faker.image.imageUrl(),
-});
+import { makeFakeOfferPreview } from '../../utils/mocks';
 
 describe('areFavoritesItemPropsEqual', () => {
   const mockCity = Cities[0].name;
