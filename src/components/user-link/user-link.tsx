@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const/infrastructure';
 import { useAppSelector } from '../../hooks';
-import './user-link.css';
 import { getUserInfo } from '../../store/slices/user/user.selectors';
 import { getFavorites } from '../../store/slices/favorites/favorites.selectors';
 

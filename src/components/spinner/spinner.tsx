@@ -1,15 +1,13 @@
-import { SPIN_ANIMATION_STYLE } from './const';
-import { containerStyles, spinnerStyles } from './style';
+import styles from './spinner.module.css';
 
 const Spinner = (): JSX.Element => (
   <div
-    style={containerStyles}
+    className={styles.container}
     role="status"
     aria-label="Loading..."
     data-testid="spinner-container"
   >
-    <div style={spinnerStyles} />
-    <style>{SPIN_ANIMATION_STYLE}</style>
+    <div className={styles.spinner} data-testid="spinner-icon" />
   </div>
 );
 

@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 40px;
+  text-align: center;
+  color: #444;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+.illustration {
+  width: 150px;
+  margin-bottom: 20px;
+}
+
+.heading {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.link {
+  font-size: 1.1rem;
+  color: #333;
+  text-decoration: none;
+  padding: 10px 20px;
+  border: 3px solid rgb(68, 129, 195);
+  border-radius: 7px;
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.link:hover,
+.link:focus-visible {
+  background-color: rgb(68, 129, 195);
+  color: #fff;
+  outline: none;
+}
