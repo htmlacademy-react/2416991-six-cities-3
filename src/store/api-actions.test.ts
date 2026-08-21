@@ -24,7 +24,6 @@ import {
   makeFakeOffer,
   makeFakeOfferPreview,
   makeFakeReview,
-  makeFakeServerFavoriteResponse,
   makeFakeServerOffer,
 } from '../utils/mocks';
 import { Action } from 'redux';
@@ -263,7 +262,7 @@ describe('Async actions', () => {
 
   describe('changeFavoriteStatusAction', () => {
     it('should dispatch "changeFavoriteStatusAction.pending" and "changeFavoriteStatusAction.fulfilled" when server response 200', async () => {
-      const mockServerFavoriteResponse = makeFakeServerFavoriteResponse();
+      const mockServerFavoriteResponse = makeFakeServerOffer();
       const mockOfferPreview = makeFakeOfferPreview();
       const payload = {
         offerId: mockOfferPreview.id,
