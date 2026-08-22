@@ -43,7 +43,7 @@ const Map = ({ city, offers, block = Block.CITIES }: MapProps): JSX.Element => {
       };
     }
   }, [map, offers, selectedOfferId]);
-  return <section className={`${block}__map map`} ref={mapRef}></section>;
+  return <section className={`${block}__map map`} ref={mapRef} data-testid="map"></section>;
 };
 
 const MemoizedMap = memo(Map, areMapPropsEqual);

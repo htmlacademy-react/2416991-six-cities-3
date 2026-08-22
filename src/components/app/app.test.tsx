@@ -1,52 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import { AppRoute, AuthorizationStatus } from '../../const/infrastructure';
-import { makeFakeStore } from '../../utils/mocks';
+import {
+  makeFakeOffer,
+  makeFakeOfferPreview,
+  makeFakeStore,
+} from '../../utils/mocks';
 import { withHistory, withStore } from '../../utils/mock-component';
 import App from './app';
-import { Offer, OfferPreview } from '../../types/offer';
-import faker from 'faker';
-
-const makeFakeOffer = (): Offer => ({
-  id: faker.datatype.uuid(),
-  title: faker.lorem.words(3),
-  type: 'apartment',
-  price: 200,
-  city: {
-    name: 'Paris',
-    location: { latitude: 48.8566, longitude: 2.3522, zoom: 10 },
-  },
-  location: { latitude: 48.8566, longitude: 2.3522, zoom: 10 },
-  isFavorite: false,
-  isPremium: false,
-  rating: 4.5,
-  description: faker.lorem.paragraph(),
-  images: [faker.image.imageUrl()],
-  goods: ['Wi-Fi'],
-  host: {
-    name: faker.name.firstName(),
-    avatarUrl: faker.image.avatar(),
-    isPro: true,
-  },
-  bedroomsQuantity: 2,
-  maxAdults: 3,
-});
-
-const makeFakeOfferPreview = (id?: string): OfferPreview => ({
-  id: id || faker.datatype.uuid(),
-  title: faker.lorem.words(3),
-  type: 'apartment',
-  price: 100,
-  city: {
-    name: 'Paris',
-    location: { latitude: 48.8566, longitude: 2.3522, zoom: 10 },
-  },
-  location: { latitude: 48.8566, longitude: 2.3522, zoom: 10 },
-  isFavorite: true,
-  isPremium: false,
-  rating: 4.5,
-  previewImage: faker.image.imageUrl(),
-});
 
 describe('Application Routing', () => {
   it('should render "Main" page when user navigates to "/"', () => {
@@ -218,7 +179,9 @@ describe('Application Routing', () => {
 
     render(withStoreComponent);
 
-    expect(screen.getByText(/Oops! That page does not exist/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Oops! That page does not exist/i),
+    ).toBeInTheDocument();
   });
 
   it('should render "Loading" screen when authorizationStatus is Unknown', () => {

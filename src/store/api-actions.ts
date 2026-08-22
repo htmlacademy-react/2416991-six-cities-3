@@ -4,12 +4,10 @@ import {
   OfferPreview,
   Review,
   ReviewServer,
-  ServerFavoriteResponse,
   ServerOffer,
 } from '../types/offer';
 import { dropToken, saveToken } from '../services/token';
-import { UserData } from '../types/user-data';
-import { AuthData } from '../types/auth-data';
+import { UserData, AuthData } from '../types/user-data';
 import { adaptFavoriteResponseToPreview, adaptOffer } from './utils';
 import { MAX_NEAR_OFFERS_COUNT } from '../const/business';
 import { clearFavorites } from './slices/favorites/favorites.slice';
@@ -44,14 +42,14 @@ export const fetchNearOffersAction = createAppAsyncThunk<
   return data.slice(0, MAX_NEAR_OFFERS_COUNT);
 });
 
-export const fetchReviewsAction = createAppAsyncThunk<Review[], OfferPreview['id']>(
-  'data/fetchReviews',
-  async (id, { extra }) => {
-    const { api } = extra;
-    const { data } = await api.get<Review[]>(`${APIRoute.Comments}/${id}`);
-    return data;
-  },
-);
+export const fetchReviewsAction = createAppAsyncThunk<
+  Review[],
+  OfferPreview['id']
+>('data/fetchReviews', async (id, { extra }) => {
+  const { api } = extra;
+  const { data } = await api.get<Review[]>(`${APIRoute.Comments}/${id}`);
+  return data;
+});
 
 export const postReviewAction = createAppAsyncThunk<Review, ReviewServer>(
   'data/postReview',
@@ -66,13 +64,14 @@ export const postReviewAction = createAppAsyncThunk<Review, ReviewServer>(
   },
 );
 
-export const fetchFavoritesAction = createAppAsyncThunk<
-  OfferPreview[]
->('data/fetchFavorites', async (_arg, { extra }) => {
-  const { api } = extra;
-  const { data } = await api.get<OfferPreview[]>(APIRoute.Favorite);
-  return data;
-});
+export const fetchFavoritesAction = createAppAsyncThunk<OfferPreview[]>(
+  'data/fetchFavorites',
+  async (_arg, { extra }) => {
+    const { api } = extra;
+    const { data } = await api.get<OfferPreview[]>(APIRoute.Favorite);
+    return data;
+  },
+);
 
 export const changeFavoriteStatusAction = createAppAsyncThunk<
   OfferPreview,
@@ -84,7 +83,7 @@ export const changeFavoriteStatusAction = createAppAsyncThunk<
   'data/changeFavoriteStatus',
   async ({ offerId, status }, { extra, getState }) => {
     const { api } = extra;
-    const { data } = await api.post<ServerFavoriteResponse>(
+    const { data } = await api.post<ServerOffer>(
       `${APIRoute.Favorite}/${offerId}/${status}`,
     );
 

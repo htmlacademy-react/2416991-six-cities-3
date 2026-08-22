@@ -1,20 +1,22 @@
 import { useAppDispatch } from '../../hooks';
 import { fetchOffersAction } from '../../store/api-actions';
-import './error-banner.css';
+import styles from './error-banner.module.css';
 
 const ErrorBanner = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
+  const handleRetryClick = () => {
+    dispatch(fetchOffersAction());
+  };
+
   return (
-    <section className="error-banner">
-      <div className="error-banner__wrapper">
-        <p className="error-banner__text">Failed to load offers</p>
+    <section className={styles.container}>
+      <div className={styles.wrapper}>
+        <p className={styles.text}>Failed to load offers</p>
         <button
-          onClick={() => {
-            dispatch(fetchOffersAction());
-          }}
-          className="error-banner__button button"
           type="button"
+          className={`${styles.button} button`}
+          onClick={handleRetryClick}
         >
           Try again
         </button>

@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const/infrastructure';
 import { useAppSelector } from '../../hooks';
-import './user-link.css';
 import { getUserInfo } from '../../store/slices/user/user.selectors';
 import { getFavorites } from '../../store/slices/favorites/favorites.selectors';
 
@@ -14,6 +13,7 @@ const UserLink = (): JSX.Element => {
       to={AppRoute.Favorites}
     >
       <div
+        data-testid="avatar-wrapper"
         className={`header__avatar-wrapper user__avatar-wrapper ${user?.isPro ? 'user__avatar-wrapper--pro' : ''}`}
       >
         <img className="user__avatar-image" src={user?.avatarUrl} />

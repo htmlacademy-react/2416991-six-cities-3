@@ -1,7 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import faker from 'faker';
 import { NameSpace } from '../../../const/infrastructure';
-import { Offer, OfferPreview } from '../../../types/offer';
 import {
   getOffer,
   getNearOffers,
@@ -10,47 +8,7 @@ import {
   getOfferLoadingErrorCode,
   getIsNearOffersLoading,
 } from './offer.selectors';
-
-const makeFakeOffer = (): Offer => ({
-  id: faker.datatype.uuid(),
-  title: faker.lorem.words(3),
-  type: 'apartment',
-  price: 200,
-  city: {
-    name: 'Paris',
-    location: { latitude: 48.8566, longitude: 2.3522, zoom: 10 },
-  },
-  location: { latitude: 48.8566, longitude: 2.3522, zoom: 10 },
-  isFavorite: false,
-  isPremium: true,
-  rating: 4.8,
-  description: faker.lorem.paragraph(),
-  bedroomsQuantity: 2,
-  goods: ['Wi-Fi', 'Heating'],
-  host: {
-    name: faker.name.firstName(),
-    avatarUrl: faker.image.avatar(),
-    isPro: true,
-  },
-  images: [faker.image.imageUrl()],
-  maxAdults: 3,
-});
-
-const makeFakeOfferPreview = (): OfferPreview => ({
-  id: faker.datatype.uuid(),
-  title: faker.lorem.words(3),
-  type: 'room',
-  price: 80,
-  city: {
-    name: 'Paris',
-    location: { latitude: 48.8566, longitude: 2.3522, zoom: 10 },
-  },
-  location: { latitude: 48.8566, longitude: 2.3522, zoom: 10 },
-  isFavorite: true,
-  isPremium: false,
-  rating: 4.2,
-  previewImage: faker.image.imageUrl(),
-});
+import { makeFakeOffer, makeFakeOfferPreview } from '../../../utils/mocks';
 
 describe('Offer selectors', () => {
   const mockOffer = makeFakeOffer();

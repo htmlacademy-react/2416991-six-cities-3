@@ -1,5 +1,4 @@
 import { describe, it, expect } from 'vitest';
-import faker from 'faker';
 import {
   prepareOffers,
   adaptOffer,
@@ -7,41 +6,18 @@ import {
 } from './utils';
 import { DEFAULT_SORT_OPTION, SortOption } from '../const/business';
 import { FavoriteStatus } from '../const/infrastructure';
+import { ServerOffer } from '../types/offer';
 import {
-  OfferPreview,
-  ServerOffer,
-  ServerFavoriteResponse,
-} from '../types/offer';
-import { City, CityName } from '../types/common';
-
-const makeFakeCity = (name: CityName = 'Paris'): City => ({
-  name,
-  location: { latitude: 48.8566, longitude: 2.3522, zoom: 10 },
-});
-
-const makeFakeOfferPreview = (
-  cityName: CityName = 'Paris',
-  price = 100,
-  rating = 4.0,
-  id?: string,
-): OfferPreview => ({
-  id: id || faker.datatype.uuid(),
-  title: faker.lorem.words(3),
-  type: 'apartment',
-  price,
-  rating,
-  city: makeFakeCity(cityName),
-  location: { latitude: 48.8566, longitude: 2.3522, zoom: 10 },
-  isFavorite: false,
-  isPremium: false,
-  previewImage: faker.image.imageUrl(),
-});
+  makeFakeCity,
+  makeFakeOfferPreview,
+  makeFakeServerOffer,
+} from '../utils/mocks';
 
 describe('Store Utils', () => {
   describe('prepareOffers', () => {
-    const parisCheap = makeFakeOfferPreview('Paris', 100, 3.0, 'p1');
-    const parisExpensive = makeFakeOfferPreview('Paris', 500, 5.0, 'p2');
-    const amsterdamOffer = makeFakeOfferPreview('Amsterdam', 300, 4.5, 'a1');
+    const parisCheap = makeFakeOfferPreview('p1', 'Paris', 100, 3.0);
+    const parisExpensive = makeFakeOfferPreview('p2', 'Paris', 500, 5.0);
+    const amsterdamOffer = makeFakeOfferPreview('a1', 'Amsterdam', 300, 4.5);
 
     const offers = [parisCheap, amsterdamOffer, parisExpensive];
     const paris = makeFakeCity('Paris');
@@ -111,72 +87,86 @@ describe('Store Utils', () => {
     });
   });
 
-  describe('adaptFavoriteResponseToPreview', () => {
-    const baseServerData = {
-      id: 'fav-1',
-      title: 'Favorite Place',
-      type: 'hotel' as const,
-      price: 150,
-      city: makeFakeCity('Paris'),
-      location: { latitude: 48.8566, longitude: 2.3522, zoom: 10 },
-      isFavorite: false,
-      isPremium: true,
-      rating: 4.2,
-    };
-
-    it('should pick "previewImage" if present in data', () => {
-      const data: ServerFavoriteResponse = {
-        ...baseServerData,
-        previewImage: 'preview-image.jpg',
-      };
-
+  describe('Function: adaptFavoriteResponseToPreview', () => {
+    it('should correctly map server offer data to offer preview', () => {
+      const mockServerOffer = makeFakeServerOffer();
       const result = adaptFavoriteResponseToPreview(
-        data,
-        FavoriteStatus.Yes,
-        'fallback.jpg',
+        mockServerOffer,
+        FavoriteStatus.No,
       );
 
-      expect(result.previewImage).toBe('preview-image.jpg');
+      expect(result).toEqual({
+        id: mockServerOffer.id,
+        title: mockServerOffer.title,
+        type: mockServerOffer.type,
+        price: mockServerOffer.price,
+        city: mockServerOffer.city,
+        location: mockServerOffer.location,
+        isFavorite: false,
+        isPremium: Boolean(mockServerOffer.isPremium),
+        rating: mockServerOffer.rating,
+        previewImage: mockServerOffer.images[0],
+      });
+    });
+
+    it('should set isFavorite to true when status is FavoriteStatus.Yes', () => {
+      const mockServerOffer = makeFakeServerOffer();
+      const result = adaptFavoriteResponseToPreview(
+        mockServerOffer,
+        FavoriteStatus.Yes,
+      );
+
       expect(result.isFavorite).toBe(true);
     });
 
-    it('should fallback to fallbackPreviewImage if "previewImage" is missing', () => {
-      const data = {
-        ...baseServerData,
-        images: [],
-      } as unknown as ServerFavoriteResponse;
-
+    it('should set isFavorite to false when status is FavoriteStatus.No', () => {
+      const mockServerOffer = makeFakeServerOffer();
       const result = adaptFavoriteResponseToPreview(
-        data,
-        FavoriteStatus.Yes,
-        'fallback.jpg',
+        mockServerOffer,
+        FavoriteStatus.No,
       );
 
-      expect(result.previewImage).toBe('fallback.jpg');
-      expect(result.isFavorite).toBe(true);
-    });
-
-    it('should pick first item from "images" if "previewImage" and fallback are missing', () => {
-      const data = {
-        ...baseServerData,
-        images: ['first-image.jpg', 'second-image.jpg'],
-      } as unknown as ServerFavoriteResponse;
-
-      const result = adaptFavoriteResponseToPreview(data, FavoriteStatus.No);
-
-      expect(result.previewImage).toBe('first-image.jpg');
       expect(result.isFavorite).toBe(false);
     });
 
-    it('should set empty string for previewImage if no image sources are available', () => {
-      const data = {
-        ...baseServerData,
-      } as unknown as ServerFavoriteResponse;
+    it('should use fallbackPreviewImage when it is provided', () => {
+      const mockServerOffer = makeFakeServerOffer();
+      const fallbackImage = 'https://example.com/fallback.jpg';
 
-      const result = adaptFavoriteResponseToPreview(data, FavoriteStatus.No);
+      const result = adaptFavoriteResponseToPreview(
+        mockServerOffer,
+        FavoriteStatus.Yes,
+        fallbackImage,
+      );
+
+      expect(result.previewImage).toBe(fallbackImage);
+    });
+
+    it('should extract first image from data.images when fallbackPreviewImage is not provided', () => {
+      const mockServerOffer = makeFakeServerOffer();
+      mockServerOffer.images = [
+        'https://example.com/first.jpg',
+        'https://example.com/second.jpg',
+      ];
+
+      const result = adaptFavoriteResponseToPreview(
+        mockServerOffer,
+        FavoriteStatus.Yes,
+      );
+
+      expect(result.previewImage).toBe('https://example.com/first.jpg');
+    });
+
+    it('should set previewImage to empty string when no fallback is provided and images array is empty or missing', () => {
+      const mockServerOffer = makeFakeServerOffer();
+      mockServerOffer.images = [];
+
+      const result = adaptFavoriteResponseToPreview(
+        mockServerOffer,
+        FavoriteStatus.Yes,
+      );
 
       expect(result.previewImage).toBe('');
-      expect(result.isFavorite).toBe(false);
     });
   });
 });

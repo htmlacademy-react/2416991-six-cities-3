@@ -1,9 +1,13 @@
 import { describe, it, expect } from 'vitest';
 import faker from 'faker';
 import { favoritesSlice, clearFavorites } from './favorites.slice';
-import { fetchFavoritesAction } from '../../api-actions';
+import {
+  changeFavoriteStatusAction,
+  fetchFavoritesAction,
+} from '../../api-actions';
 import { OfferPreview } from '../../../types/offer';
 import { Cities } from '../../../const/business';
+import { FavoriteStatus } from '../../../const/infrastructure';
 
 const createMockOffer = (): OfferPreview => ({
   id: faker.datatype.uuid(),
@@ -94,6 +98,50 @@ describe('Favorites Slice Reducer', () => {
       const result = favoritesSlice.reducer(stateWithTrueLoading, action);
 
       expect(result.isFavoritesLoading).toBe(false);
+    });
+  });
+
+  describe('extraReducers (changeFavoriteStatusAction)', () => {
+    const requestId = 'test-request-id';
+
+    it('should add offer to favorites when isFavorite is true', () => {
+      const offer = createMockOffer();
+
+      const action = changeFavoriteStatusAction.fulfilled(offer, requestId, {
+        offerId: offer.id,
+        status: FavoriteStatus.Yes,
+      });
+
+      const result = favoritesSlice.reducer(initialState, action);
+
+      expect(result.favoriteOffers).toEqual([offer]);
+    });
+
+    it('should remove offer from favorites when isFavorite is false', () => {
+      const offer = createMockOffer();
+
+      const stateWithFavorites = {
+        favoriteOffers: [offer],
+        isFavoritesLoading: false,
+      };
+
+      const updatedOffer = {
+        ...offer,
+        isFavorite: false,
+      };
+
+      const action = changeFavoriteStatusAction.fulfilled(
+        updatedOffer,
+        requestId,
+        {
+          offerId: offer.id,
+          status: FavoriteStatus.No,
+        },
+      );
+
+      const result = favoritesSlice.reducer(stateWithFavorites, action);
+
+      expect(result.favoriteOffers).toEqual([]);
     });
   });
 });

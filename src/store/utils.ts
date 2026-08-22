@@ -1,7 +1,7 @@
 import { SortOption } from '../const/business';
 import { FavoriteStatus } from '../const/infrastructure';
 import { City, SortType } from '../types/common';
-import { Offer, OfferPreview, ServerFavoriteResponse, ServerOffer } from '../types/offer';
+import { Offer, OfferPreview, ServerOffer } from '../types/offer';
 
 const filterOffersByCity = (
   offers: OfferPreview[],
@@ -42,15 +42,13 @@ export const adaptOffer = (serverOffer: ServerOffer): Offer => {
 };
 
 export const adaptFavoriteResponseToPreview = (
-  data: ServerFavoriteResponse,
+  data: ServerOffer,
   status: FavoriteStatus,
   fallbackPreviewImage?: string
 ): OfferPreview => {
   let previewImage = '';
 
-  if ('previewImage' in data && data.previewImage) {
-    previewImage = data.previewImage;
-  } else if (fallbackPreviewImage) {
+  if (fallbackPreviewImage) {
     previewImage = fallbackPreviewImage;
   } else if ('images' in data && Array.isArray(data.images) && data.images.length > 0) {
     previewImage = data.images[0];
